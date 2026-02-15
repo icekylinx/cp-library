@@ -37,7 +37,7 @@ void solve_main() {
     int32_t a;
     int64_t b;
     io >> a >> b;
-    t.add({a, b});
+    t.add(make_pair(a, b));
   }
 
   while (q--) {

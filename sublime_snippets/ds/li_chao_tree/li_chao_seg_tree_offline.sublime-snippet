@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+lib/li_chao_tree/li_chao_seg_tree_offline.hpp
+]]></content>
+  <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+  <tabTrigger>lib/li_chao_tree/li_chao_seg_tree_offline.hpp</tabTrigger>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope>source.c++</scope>
+</snippet>
