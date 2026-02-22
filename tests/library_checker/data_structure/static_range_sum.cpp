@@ -8,6 +8,8 @@ using namespace std;
 using ll  = long long;
 using ull = unsigned long long;
 
+constexpr int N = 5e5 + 5;
+
 FastIO<1 << 20, 1 << 20> io;
 
 uint64_t sum[N];
@@ -26,9 +28,8 @@ void solve_main() {
 
   uint32_t l, r;
   while (q--) {
-    io.in->skip_space();
-    io.in->read<uint32_t, 0>(l);
-    io.in->read<uint32_t, 0>(r);
+    io.in->read<uint32_t, false>(l);
+    io.in->read<uint32_t, false>(r);
     io << sum[r] - sum[l] << '\n';
   }
 }

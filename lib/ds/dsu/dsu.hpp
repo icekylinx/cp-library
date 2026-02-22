@@ -7,26 +7,26 @@ struct DSU {
   std::vector<int> fa;
 
   DSU() = default;
-  explicit DSU(int _n) { resize(_n); }
+  explicit constexpr DSU(int _n) { resize(_n); }
 
-  void resize(int _n) {
+  constexpr void resize(int _n) {
     CHECK(_n >= 0);
     n = _n;
     fa.assign(n, -1);
   }
 
-  int find(int x) {
+  constexpr int find(int x) {
     CHECK(0 <= x && x < n);
     return fa[x] < 0 ? x : fa[x] = find(fa[x]);
   }
 
-  int size(int x) {
+  constexpr int size(int x) {
     CHECK(0 <= x && x < n);
     x = find(x);
     return -fa[x];
   }
 
-  bool unite(int x, int y) {
+  constexpr bool merge(int x, int y) {
     CHECK(0 <= x && x < n);
     CHECK(0 <= y && y < n);
     x = find(x);
@@ -40,7 +40,7 @@ struct DSU {
     return true;
   }
 
-  bool same(int x, int y) {
+  constexpr bool same(int x, int y) {
     CHECK(0 <= x && x < n);
     CHECK(0 <= y && y < n);
     return find(x) == find(y);

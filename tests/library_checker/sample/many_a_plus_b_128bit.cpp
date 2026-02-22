@@ -4,15 +4,17 @@
 #include "lib/utils/fast_io.hpp"
 using namespace std;
 
-using ll  = long long;
-using ull = unsigned long long;
-
 FastIO<1 << 20, 1 << 19> io;
 
 void solve_main() {
-  __int128_t a, b;
-  io >> a >> b;
-  io << a + b << '\n';
+  int n;
+  io >> n;
+
+  while (n--) {
+    __int128_t a, b;
+    io >> a >> b;
+    io << a + b << '\n';
+  }
 }
 
 int main() {
@@ -25,8 +27,8 @@ int main() {
 
   int T;
   // cin >> T;
-  io >> T;
-  // T = 1;
+  // io >> T;
+  T = 1;
 
   while (T--) {
     solve_main();

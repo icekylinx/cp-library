@@ -17,6 +17,7 @@ void solve_main() {
 
   vector<pair<uint32_t, uint32_t>> edge(m);
   vector<uint64_t> id(m);
+  vector<uint32_t> mst(n - 1);
 
   for (int i = 0; i < m; ++i) {
     auto& [a, b] = edge[i];
@@ -33,15 +34,18 @@ void solve_main() {
   });
 
   DSU dsu(n);
+  int cnt = 0;
   uint64_t ans = 0;
   for (auto x : id) {
-    int i = x >> 32;
-    if (dsu.unite(edge[i].first, edge[i].second)) {
+    uint32_t i = static_cast<uint32_t>(x >> 32);
+    if (dsu.merge(edge[i].first, edge[i].second)) {
       ans += static_cast<uint32_t>(x);
+      mst[cnt++] = i;
     }
+    if (cnt == n - 1) break;
   }
 
-  io << ans << '\n';
+  io << ans;
 }
 
 int main() {

@@ -5,14 +5,14 @@ struct FastHashMap {
   static constexpr uint32_t Size  = 1u << N;
   static constexpr uint32_t Mask  = Size - 1;
   static constexpr uint32_t Shift = 64 - N;
-  static constexpr uint64_t Magic = 11995408973635179863ull;
+  static constexpr uint64_t Magic = 11400714819323198485ull;
 
   std::array<K, Size> key;
   std::array<V, Size> val;
   std::bitset<Size> used;
 
   static constexpr uint32_t get_hash(const K& k) {
-    return (k * Magic >> Shift) & Mask;
+    return k * Magic >> Shift;
   }
 
   FastHashMap() { clear(); }

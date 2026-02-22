@@ -28,32 +28,36 @@ struct IntegerSet {
     b3 = 0;
   }
 
-  bool insert(uint32_t pos) {
+  template <bool check = true>
+  std::conditional_t<check, bool, void> insert(uint32_t pos) {
     CHECK(pos < n);
-    if (get(pos)) {
-      return false;
-    } else {
-      b0[pos >> 6] |= 1ull << (pos & 63);
-      b1[pos >> 12] |= 1ull << (pos >> 6 & 63);
-      b2[pos >> 18] |= 1ull << (pos >> 12 & 63);
-      b3 |= 1ull << (pos >> 18);
+    if constexpr (check) {
+      if (get(pos)) return false;
+    }
+    b0[pos >> 6] |= 1ull << (pos & 63);
+    b1[pos >> 12] |= 1ull << (pos >> 6 & 63);
+    b2[pos >> 18] |= 1ull << (pos >> 12 & 63);
+    b3 |= 1ull << (pos >> 18);
+    if constexpr (check) {
       ++counter;
       return true;
     }
   }
 
-  bool erase(uint32_t pos) {
+  template <bool check = true>
+  std::conditional_t<check, bool, void> erase(uint32_t pos) {
     CHECK(pos < n);
-    if (get(pos)) {
-      if (!(b0[pos >> 6] &= ~(1ull << (pos & 63))) &&
-          !(b1[pos >> 12] &= ~(1ull << (pos >> 6 & 63))) &&
-          !(b2[pos >> 18] &= ~(1ull << (pos >> 12 & 63)))) {
-        b3 &= ~(1ull << (pos >> 18));
-      }
+    if constexpr (check) {
+      if (!get(pos)) return false;
+    }
+    if (!(b0[pos >> 6] &= ~(1ull << (pos & 63))) &&
+        !(b1[pos >> 12] &= ~(1ull << (pos >> 6 & 63))) &&
+        !(b2[pos >> 18] &= ~(1ull << (pos >> 12 & 63)))) {
+      b3 &= ~(1ull << (pos >> 18));
+    }
+    if constexpr (check) {
       --counter;
       return true;
-    } else {
-      return false;
     }
   }
 

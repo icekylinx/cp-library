@@ -21,9 +21,11 @@ void solve_main() {
   while (q--) {
     bool op;
     uint32_t u, v;
-    io >> op >> u >> v;
+    io.in->read(op);
+    io.in->read<uint32_t, 0>(u);
+    io.in->read<uint32_t, 0>(v);
     if (op == 0) {
-      dsu.unite(u, v);
+      dsu.merge(u, v);
     } else {
       io << dsu.same(u, v) << '\n';
     }

@@ -47,14 +47,11 @@ struct FastInput {
 #endif
 
 #ifdef ENABLE_MMAP
-  template <int N>
   void ensure() {}
 #else
-  template <int N>
   void ensure() {
     int rem = end - cur;
-    if (rem >= N) [[likely]]
-      return;
+    if (rem >= 40) [[likely]] return;
     if (rem > 0 && cur != buf) memmove(buf, cur, rem);
     cur = buf;
     end = buf + rem + fread(buf + rem, 1, BufSize - rem, file);
@@ -63,38 +60,45 @@ struct FastInput {
 #endif
 
   void skip_space() {
-    ensure<1>();
+    ensure();
     while (*cur < 33) [[unlikely]] {
       ++cur;
-      ensure<1>();
+      ensure();
       CHECK(cur < end);
     }
   }
 
   void read(bool& x) {
+    ensure();
     CHECK(*cur == '0' || *cur == '1');
-    x = (*cur++ == '1');
-    ensure<1>();
+    x = *cur++ & 1;
     CHECK(*cur <= 32);
     ++cur;
   }
 
-  template <internal::unsigned_integral T,
-            int N = std::numeric_limits<T>::digits10 / 8>
+  template <internal::unsigned_integral T, bool check = (sizeof(T) == 4)>
+    requires(sizeof(T) < 8)
   void read(T& x) {
-    ensure<40>();
+    ensure();
     CHECK(*cur >= '0' && *cur <= '9');
-    x = *cur++ & 15;
 
-    for (int i = 0; i < N; ++i) {
+    if constexpr (check) {
+      x = 0;
       uint64_t v;
       memcpy(&v, cur, 8);
-      if ((v ^= 0x3030303030303030) & 0xf0f0f0f0f0f0f0f0) break;
-      v = (v * 10 + (v >> 8)) & 0xff00ff00ff00ff;
-      v = (v * 100 + (v >> 16)) & 0xffff0000ffff;
-      v = (v * 10000 + (v >> 32)) & 0xffffffff;
-      x = x * 100000000 + v;
-      cur += 8;
+      if (all_digits(v)) {
+        parse_unit(v);
+        x = v, cur += 8;
+      }
+    } else {
+      x = *cur++ & 15;
+    }
+
+    uint32_t v;
+    memcpy(&v, cur, 4);
+    if (all_digits(v)) {
+      parse_unit(v);
+      x = x * 10000 + v, cur += 4;
     }
 
     for (; *cur >= '0'; ++cur) {
@@ -106,8 +110,71 @@ struct FastInput {
     ++cur;
   }
 
-  template <internal::signed_integral T,
-            int N = std::numeric_limits<T>::digits10 / 8>
+  template <internal::unsigned_integral T, bool check = true>
+    requires(sizeof(T) == 8)
+  void read(T& x) {
+    ensure();
+    CHECK(*cur >= '0' && *cur <= '9');
+
+    uint64_t v[2];
+    memcpy(v, cur, 16);
+    uint64_t a = v[0], b = v[1];
+
+    x = 0;
+    if (all_digits(a)) {
+      parse_unit(a);
+      x = a, cur += 8;
+      if (all_digits(b)) {
+        parse_unit(b);
+        x = a * 100000000 + b, cur += 8;
+      }
+    }
+
+    for (; *cur >= '0'; ++cur) {
+      CHECK(*cur <= '9');
+      x = x * 10 + (*cur & 15);
+    }
+
+    CHECK(*cur <= 32);
+    ++cur;
+  }
+
+  template <internal::unsigned_integral T, bool check = true>
+    requires(sizeof(T) > 8)
+  void read(T& x) {
+    ensure();
+    CHECK(*cur >= '0' && *cur <= '9');
+
+    x = 0;
+    for (int i = 0; i < 4; ++i) {
+      uint64_t v;
+      memcpy(&v, cur, 8);
+      if (!all_digits(v)) break;
+      parse_unit(v);
+      if (i != 0) x *= 100000000;
+      x += v, cur += 8;
+    }
+
+    uint32_t v;
+    memcpy(&v, cur, 4);
+    uint32_t val = 0, pow = 1;
+    if (all_digits(v)) {
+      parse_unit(v);
+      val = v, pow = 10000, cur += 4;
+    }
+
+    for (; *cur >= '0'; ++cur) {
+      CHECK(*cur <= '9');
+      val = val * 10 + (*cur & 15), pow *= 10;
+    }
+
+    x = x * pow + val;
+
+    CHECK(*cur <= 32);
+    ++cur;
+  }
+
+  template <internal::signed_integral T, bool check = true>
   void read(T& x) {
     using U = internal::make_unsigned_t<T>;
 
@@ -115,13 +182,13 @@ struct FastInput {
     cur += neg;
 
     U v;
-    read<U, N>(v);
+    read<U, check>(v);
     x = static_cast<T>(neg ? -v : v);
   }
 
   void read(char& c) {
+    ensure();
     c = *cur++;
-    ensure<1>();
     CHECK(*cur <= 32);
     ++cur;
   }
@@ -145,7 +212,7 @@ struct FastInput {
       } else {
         s.append(cur, last);
         cur = end;
-        ensure<1>();
+        ensure();
       }
     }
 #endif
@@ -162,11 +229,33 @@ struct FastInput {
     skip_space();
     while (*cur > 32) {
       *s++ = *cur++;
-      ensure<1>();
+      ensure();
     }
     *s = 0;
     ++cur;
     return *this;
+  }
+
+ private:
+  constexpr bool all_digits(uint32_t v) {
+    return !(~v & 0x10101010);
+  }
+
+  constexpr bool all_digits(uint64_t v) {
+    return !(~v & 0x1010101010101010ull);
+  }
+
+  constexpr void parse_unit(uint32_t& v) {
+    v ^= 0x30303030;
+    v = (v * 10 + (v >> 8)) & 0xff00ff;
+    v = (v * 100 + (v >> 16)) & 0xffff;
+  }
+
+  constexpr void parse_unit(uint64_t& v) {
+    v ^= 0x3030303030303030ull;
+    v = (v * 10 + (v >> 8)) & 0xff00ff00ff00ffull;
+    v = (v * 100 + (v >> 16)) & 0xffff0000ffffull;
+    v = (v * 10000 + (v >> 32)) & 0xffffffffull;
   }
 };
 
@@ -189,7 +278,7 @@ struct FastOutput {
       res2[i][1] = '0' + i / 100 % 10;
       res2[i][2] = '0' + i / 10 % 10;
       res2[i][3] = '0' + i % 10;
-      
+
       int j = 0;
       if (i >= 1000) res1[i][j++] = res2[i][0];
       if (i >= 100) res1[i][j++] = res2[i][1];
@@ -216,27 +305,6 @@ struct FastOutput {
   ~FastOutput() {
     flush();
     delete[] buf;
-  }
-
-  template <bool head = false>
-  void print_unit(uint32_t x) {
-    if constexpr (head) {
-      memcpy(cur, &table.first[x], 4);
-      cur += 1 + (x > 9) + (x > 99) + (x > 999);
-    } else {
-      memcpy(cur, &table.second[x], 4);
-      cur += 4;
-    }
-  }
-
-  template <int N, bool head = true, typename T>
-  void print(T x) {
-    if constexpr (N == 0) {
-      print_unit<head>(x);
-    } else {
-      print<N - 1, head>(x / 10000);
-      print_unit<false>(x % 10000);
-    }
   }
 
   template <typename T>
@@ -270,20 +338,21 @@ struct FastOutput {
   template <typename T>
     requires(sizeof(T) > 8)
   void write(T x) {
-    static constexpr uint64_t kE16 = 1'0000'0000'0000'0000ull;
-    static constexpr __uint128_t kE32 =
-        static_cast<__uint128_t>(kE16) * static_cast<__uint128_t>(kE16);
-
-    if (x < kE16) {
+    if (x < E19) {
       write(static_cast<uint64_t>(x));
-    } else if (x < kE32) {
-      write(static_cast<uint64_t>(x / kE16));
-      print<3, false>(static_cast<uint64_t>(x % kE16));
-    } else {
-      write(static_cast<uint32_t>(x / kE32));
-      x %= kE32;
-      print<3, false>(static_cast<uint64_t>(x / kE16));
-      print<3, false>(static_cast<uint64_t>(x % kE16));
+    } else if (x < E38) {
+      auto high = x / E19;
+      auto low = x - high * E19;
+      write(static_cast<uint64_t>(high));
+      print_E19(static_cast<uint64_t>(low));
+    } else [[unlikely]] {
+      auto high = x / E38;
+      x -= high * E38;
+      auto mid = x / E19;
+      auto low = x - mid * E19;
+      write(static_cast<uint32_t>(high));
+      print_E19(static_cast<uint64_t>(mid));
+      print_E19(static_cast<uint64_t>(low));
     }
   }
 
@@ -347,6 +416,40 @@ struct FastOutput {
     *cur++ = '\n';
     flush();
     return *this;
+  }
+
+ private:
+  static constexpr uint64_t E16 = 1'0000'0000'0000'0000ull;
+  static constexpr uint64_t E19 = E16 * 1000;
+  static constexpr __uint128_t E38 = static_cast<__uint128_t>(E19) * E19;
+
+  template <bool head>
+  void print_unit(uint32_t x) {
+    if constexpr (head) {
+      memcpy(cur, &table.first[x], 4);
+      cur += 1 + (x > 9) + (x > 99) + (x > 999);
+    } else {
+      memcpy(cur, &table.second[x], 4);
+      cur += 4;
+    }
+  }
+
+  template <int N, bool head = true, typename T>
+  void print(T x) {
+    if constexpr (N == 0) {
+      print_unit<head>(x);
+    } else {
+      print<N - 1, head>(x / 10000);
+      print_unit<false>(x % 10000);
+    }
+  }
+
+  void print_E19(uint64_t x) {
+    auto high = static_cast<uint32_t>(x / E16);
+    auto low = x - high * E16;
+    memcpy(cur, &table.second[high][1], 3);
+    cur += 3;
+    print<3, false>(low);
   }
 };
 
