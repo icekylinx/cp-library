@@ -8,7 +8,7 @@ using namespace std;
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 void solve_main() {
   int n, m;

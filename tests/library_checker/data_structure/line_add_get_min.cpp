@@ -5,7 +5,10 @@
 #include "lib/ds/li_chao_tree/li_chao_tree.hpp"
 using namespace std;
 
-FastIO<1 << 20, 1 << 20> io;
+using ll  = long long;
+using ull = unsigned long long;
+
+FastIO<1 << 20, 1 << 19> io;
 
 struct Node {
   using Line  = pair<int32_t, int64_t>;

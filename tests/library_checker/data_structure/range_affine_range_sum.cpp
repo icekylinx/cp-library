@@ -1,6 +1,5 @@
 // https://judge.yosupo.jp/problem/range_affine_range_sum
 
-#pragma GCC optimize(3)
 #include <bits/stdc++.h>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/seg_tree/lazy_seg_tree.hpp"
@@ -9,7 +8,7 @@ using namespace std;
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 constexpr int P = 998244353;
 
@@ -50,15 +49,15 @@ void solve_main() {
 
   LazySegTree<RangeAffineRangeSum> t(n, [&](int i) {
     RangeAffineRangeSum::Info info;
-    io >> info.sum;
+    info.sum = io.in->read<uint32_t>();
     info.len = 1;
     return info;
   });
 
   while (q--) {
-    bool op;
-    uint32_t l, r;
-    io >> op >> l >> r;
+    bool op = io.in->read<bool>();
+    uint32_t l = io.in->read_small<uint32_t>();
+    uint32_t r = io.in->read_small<uint32_t>();
     if (op == 0) {
       uint32_t b, c;
       io >> b >> c;

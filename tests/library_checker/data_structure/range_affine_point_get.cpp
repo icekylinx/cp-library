@@ -8,7 +8,7 @@ using namespace std;
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 constexpr int P = 998244353;
 
@@ -37,24 +37,20 @@ void solve_main() {
   io >> n >> q;
 
   TagSegTree<RangeAffinePointGet> t(n, [&](int i) {
-    uint32_t v;
-    io >> v;
-    return v;
+    return io.in->read<uint32_t>();
   });
 
   while (q--) {
     bool op;
     io >> op;
     if (op == 0) {
-      uint32_t l, r, b, c;
-      io.in->read<uint32_t, 0>(l);
-      io.in->read<uint32_t, 0>(r);
-      io >> b >> c;
+      uint32_t l = io.in->read_small<uint32_t>();
+      uint32_t r = io.in->read_small<uint32_t>();
+      uint32_t b = io.in->read<uint32_t>();
+      uint32_t c = io.in->read<uint32_t>();
       t.apply(l, r, {b, c});
     } else {
-      uint32_t i;
-      io.in->read<uint32_t, 0>(i);
-      io << t.get(i) << '\n';
+      io << t.get(io.in->read_small<uint32_t>()) << '\n';
     }
   }
 }

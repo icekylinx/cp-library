@@ -6,7 +6,10 @@
 #include "lib/algo/radix_sort.hpp"
 using namespace std;
 
-FastIO<1 << 20, 1 << 20> io;
+using ll  = long long;
+using ull = unsigned long long;
+
+FastIO<1 << 20, 1 << 19> io;
 
 constexpr int64_t inf = 3e18;
 

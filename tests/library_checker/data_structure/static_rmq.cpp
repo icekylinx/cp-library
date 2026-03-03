@@ -9,7 +9,7 @@ using namespace std;
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 template <typename T>
 struct RangeMin {
@@ -27,15 +27,12 @@ void solve_main() {
   io >> n >> q;
 
   BlockedSparseTable<RangeMin<uint32_t>, 16> t(n, [&](int i) {
-    uint32_t x;
-    io >> x;
-    return x;
+    return io.in->read<uint32_t>();
   });
 
   while (q--) {
-    uint32_t l, r;
-    io.in->read<uint32_t, 0>(l);
-    io.in->read<uint32_t, 0>(r);
+    uint32_t l = io.in->read_small<uint32_t>();
+    uint32_t r = io.in->read_small<uint32_t>();
     io << t.prod(l, r) << '\n';
   }
 }

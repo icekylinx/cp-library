@@ -1,14 +1,15 @@
 // https://judge.yosupo.jp/problem/unionfind
 
 #include <bits/stdc++.h>
-#include "lib/utils/fast_io.hpp"
+
 #include "lib/ds/dsu/dsu.hpp"
+#include "lib/utils/fast_io.hpp"
 using namespace std;
 
-using ll  = long long;
+using ll = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 constexpr int N = 2e5 + 5;
 
@@ -19,15 +20,13 @@ void solve_main() {
   DSU dsu(n);
 
   while (q--) {
-    bool op;
-    uint32_t u, v;
-    io.in->read(op);
-    io.in->read<uint32_t, 0>(u);
-    io.in->read<uint32_t, 0>(v);
+    bool op = io.in->read<bool>();
     if (op == 0) {
-      dsu.merge(u, v);
+      dsu.merge(io.in->read_small<uint32_t>(), io.in->read_small<uint32_t>());
     } else {
-      io << dsu.same(u, v) << '\n';
+      io << dsu.same(io.in->read_small<uint32_t>(),
+                     io.in->read_small<uint32_t>())
+         << '\n';
     }
   }
 }

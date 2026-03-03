@@ -1,5 +1,6 @@
 // https://judge.yosupo.jp/problem/associative_array
 
+#pragma GCC optimize("Ofast")
 #include <bits/stdc++.h>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/hash_map/fast_hash_map.hpp"
@@ -8,7 +9,7 @@ using namespace std;
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 FastHashMap<uint64_t, uint64_t, 20> mp;
 

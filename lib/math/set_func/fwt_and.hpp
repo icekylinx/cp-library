@@ -1,10 +1,6 @@
 #pragma once
 
 #include "lib/utils/debug.hpp"
-#include "lib/utils/my_simd.hpp"
-#include "lib/math/my_bit.hpp"
-
-namespace my_simd {
 
 template <uint32_t P, int N, typename It>
 void fwt_and(It f) {
@@ -42,18 +38,24 @@ void ifwt_and(It f) {
   }
 }
 
-template <uint32_t P, typename It>
-void fwt_and(It f, int n) {
-  internal::bit_width_const<30>(n, [&]<uint32_t N>() {
-    fwt_and<P, 1 << N>(f);
-  });
+template <uint32_t P, typename It, uint32_t N = 0>
+void fwt_and(It f, uint32_t n) {
+  if constexpr (N <= 30) {
+    if (n <= 1u << N) {
+      fwt_and<P, 1u << N>(f);
+    } else {
+      fwt_and<P, It, N + 1>(f, n);
+    }
+  }
 }
 
-template <uint32_t P, typename It>
-void ifwt_and(It f, int n) {
-  internal::bit_width_const<30>(n, [&]<uint32_t N>() {
-    ifwt_and<P, 1 << N>(f);
-  });
+template <uint32_t P, typename It, uint32_t N = 0>
+void ifwt_and(It f, uint32_t n) {
+  if constexpr (N <= 30) {
+    if (n <= 1u << N) {
+      ifwt_and<P, 1u << N>(f);
+    } else {
+      ifwt_and<P, It, N + 1>(f, n);
+    }
+  }
 }
-
-}  // namespace my_simd

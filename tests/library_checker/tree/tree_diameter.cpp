@@ -10,7 +10,7 @@ using namespace std;
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 void solve_main() {
   int n;
@@ -18,10 +18,9 @@ void solve_main() {
   XorLinkedTree<true, int> t(n);
 
   for (int i = 0; i < n - 1; ++i) {
-    uint32_t u, v, w;
-    io.in->read<uint32_t, 0>(u);
-    io.in->read<uint32_t, 0>(v);
-    io >> w;
+    uint32_t u = io.in->read_small<uint32_t>();
+    uint32_t v = io.in->read_small<uint32_t>();
+    uint32_t w = io.in->read<uint32_t>();
     t.add_edge(u, v, w);
   }
 

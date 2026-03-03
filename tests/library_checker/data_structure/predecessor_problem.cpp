@@ -2,7 +2,6 @@
 
 #pragma GCC optimize("Ofast,unroll-loops")
 #include <bits/stdc++.h>
-#include "lib/utils/my_simd.hpp"
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/set/integer_set.hpp"
 using namespace std;
@@ -10,7 +9,7 @@ using namespace std;
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 IntegerSet<24> s;
 
@@ -62,12 +61,11 @@ void solve_main() {
     s.b3 |= static_cast<uint64_t>(!!s.b2[j]) << j;
   }
 
+  ++ptr;
+
   while (q--) {
-    char op;
-    uint32_t k;
-    io.in->skip_space();
-    io.in->read(op);
-    io.in->read<uint32_t, 0>(k);
+    char op = io.in->read<char>();
+    uint32_t k = io.in->read_small<uint32_t>();
     if (op == '0') {
       s.insert<false>(k);
     } else if (op == '1') {

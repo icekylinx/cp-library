@@ -9,7 +9,7 @@ using namespace std;
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 constexpr ll inf = 1e18;
 
@@ -43,44 +43,31 @@ void solve_main() {
   io >> n >> m;
 
   TagSegTree<Node> t(n, [&](int i) {
-    uint32_t v;
-    io >> v;
     Node::Info info;
-    info.x = info.hx = v;
+    info.x = info.hx = io.in->read<uint32_t>();
     return info;
   });
 
   while (m--) {
     char op;
-    uint32_t l, r;
-    int x;
     io >> op;
+    uint32_t l = io.in->read_small<uint32_t>();
     if (op == '1') {
-      io.in->read<uint32_t, 0>(l);
-      io.in->read<uint32_t, 0>(r);
-      io >> x;
-      --l;
-      t.apply(l, r, {x, -inf, x, -inf});
+      uint32_t r = io.in->read_small<uint32_t>();
+      int x = io.in->read<uint32_t>();
+      t.apply(--l, r, {x, -inf, x, -inf});
     } else if (op == '2') {
-      io.in->read<uint32_t, 0>(l);
-      io.in->read<uint32_t, 0>(r);
-      io >> x;
-      --l;
-      t.apply(l, r, {-x, 0, -x, 0});
+      uint32_t r = io.in->read_small<uint32_t>();
+      int x = io.in->read<uint32_t>();
+      t.apply(--l, r, {-x, 0, -x, 0});
     } else if (op == '3') {
-      io.in->read<uint32_t, 0>(l);
-      io.in->read<uint32_t, 0>(r);
-      io >> x;
-      --l;
-      t.apply(l, r, {-inf, x, -inf, x});
+      uint32_t r = io.in->read_small<uint32_t>();
+      int x = io.in->read<uint32_t>();
+      t.apply(--l, r, {-inf, x, -inf, x});
     } else if (op == '4') {
-      io.in->read<uint32_t, 0>(l);
-      --l;
-      io << t.get(l).x << '\n';
+      io << t.get(--l).x << '\n';
     } else {
-      io.in->read<uint32_t, 0>(l);
-      --l;
-      io << t.get(l).hx << '\n';
+      io << t.get(--l).hx << '\n';
     }
   }
 }

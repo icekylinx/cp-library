@@ -9,7 +9,7 @@ using namespace std;
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 void solve_main() {
   int n, m;
@@ -21,11 +21,10 @@ void solve_main() {
 
   for (int i = 0; i < m; ++i) {
     auto& [a, b] = edge[i];
-    io.in->read<uint32_t, 0>(a);
-    io.in->read<uint32_t, 0>(b);
+    a = io.in->read_small<uint32_t>();
+    b = io.in->read_small<uint32_t>();
     --a, --b;
-    uint32_t c;
-    io.in->read<uint32_t, 1>(c);
+    uint32_t c = io.in->read<uint32_t>();
     id[i] = static_cast<uint64_t>(i) << 32 | c;
   }
 

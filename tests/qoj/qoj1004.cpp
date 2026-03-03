@@ -3,13 +3,13 @@
 #pragma GCC optimize(3)
 #include <bits/stdc++.h>
 #include "lib/utils/fast_io.hpp"
-#include "lib/math/set_func/fwt_xor_simd.hpp"
+#include "lib/math/set_func/fwt_xor.hpp"
 using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 constexpr uint32_t P = 998244353;
 
@@ -22,12 +22,12 @@ void solve_main() {
   for (auto& x : a) io >> x;
   for (auto& x : b) io >> x;
 
-  my_simd::fwt_xor<P>(a.data(), m);
-  my_simd::fwt_xor<P>(b.data(), m);
+  fwt_xor<P>(a.data(), m);
+  fwt_xor<P>(b.data(), m);
   for (int i = 0; i < m; ++i) {
     a[i] = static_cast<uint64_t>(a[i]) * b[i] % P;
   }
-  my_simd::fwt_xor<P>(a.data(), m);
+  fwt_xor<P>(a.data(), m);
 
   auto qpow = [&](uint64_t x, uint32_t y, uint64_t k = 1) -> uint32_t {
     for (; y; y >>= 1, x = x * x % P) {

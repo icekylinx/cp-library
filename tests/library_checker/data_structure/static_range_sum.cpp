@@ -10,7 +10,7 @@ using ull = unsigned long long;
 
 constexpr int N = 5e5 + 5;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 uint64_t sum[N];
 
@@ -18,18 +18,15 @@ void solve_main() {
   int n, q;
   io >> n >> q;
 
-  uint32_t v;
   for (int i = 1; i <= n; ++i) {
-    io >> v;
-    sum[i] = v;
+    sum[i] = io.in->read<uint32_t>();
   }
 
   partial_sum(sum + 1, sum + n + 1, sum + 1);
 
-  uint32_t l, r;
   while (q--) {
-    io.in->read<uint32_t, false>(l);
-    io.in->read<uint32_t, false>(r);
+    uint32_t l = io.in->read_small<uint32_t>();
+    uint32_t r = io.in->read_small<uint32_t>();
     io << sum[r] - sum[l] << '\n';
   }
 }

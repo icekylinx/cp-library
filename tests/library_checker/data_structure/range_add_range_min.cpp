@@ -9,7 +9,7 @@ using namespace std;
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 struct PrefixMin {
   using Info = pair<int64_t, int64_t>;
@@ -42,11 +42,9 @@ void solve_main() {
   });
 
   while (q--) {
-    bool op;
-    uint32_t l, r;
-    io >> op;
-    io.in->read<uint32_t, 0>(l);
-    io.in->read<uint32_t, 0>(r);
+    bool op = io.in->read<bool>();
+    uint32_t l = io.in->read<uint32_t>();
+    uint32_t r = io.in->read<uint32_t>();
     if (op == 0) {
       int32_t x;
       io >> x;

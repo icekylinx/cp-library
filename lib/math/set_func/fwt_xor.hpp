@@ -1,10 +1,6 @@
 #pragma once
 
 #include "lib/utils/debug.hpp"
-#include "lib/utils/my_simd.hpp"
-#include "lib/math/my_bit.hpp"
-
-namespace my_simd {
 
 template <uint32_t P, int N, typename It>
 void fwt_xor(It f) {
@@ -61,18 +57,24 @@ void ifwt_xor(It f) {
   }
 }
 
-template <uint32_t P, typename It>
-void fwt_xor(It f, int n) {
-  internal::bit_width_const<30>(n, [&]<uint32_t N>() {
-    fwt_xor<P, 1 << N>(f);
-  });
+template <uint32_t P, typename It, uint32_t N = 0>
+void fwt_xor(It f, uint32_t n) {
+  if constexpr (N <= 30) {
+    if (n <= 1u << N) {
+      fwt_xor<P, 1u << N>(f);
+    } else {
+      fwt_xor<P, It, N + 1>(f, n);
+    }
+  }
 }
 
-template <uint32_t P, typename It>
-void ifwt_xor(It f, int n) {
-  internal::bit_width_const<30>(n, [&]<uint32_t N>() {
-    ifwt_xor<P, 1 << N>(f);
-  });
+template <uint32_t P, typename It, uint32_t N = 0>
+void ifwt_xor(It f, uint32_t n) {
+  if constexpr (N <= 30) {
+    if (n <= 1u << N) {
+      ifwt_xor<P, 1u << N>(f);
+    } else {
+      ifwt_xor<P, It, N + 1>(f, n);
+    }
+  }
 }
-
-}  // namespace my_simd

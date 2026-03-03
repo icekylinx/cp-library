@@ -8,7 +8,7 @@ using namespace std;
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 constexpr int P = 998244353;
 
@@ -39,10 +39,15 @@ void solve_main() {
   while (q--) {
     bool op;
     uint32_t a, b, c;
-    io >> op >> a >> b >> c;
+    io >> op;
     if (op == 0) {
+      a = io.in->read_small<uint32_t>();
+      io >> b >> c;
       t.set(a, {b, c});
     } else {
+      a = io.in->read_small<uint32_t>();
+      b = io.in->read_small<uint32_t>();
+      io >> c;
       io << t.evaluate(a, b, c, eval) << '\n';
     }
   }
