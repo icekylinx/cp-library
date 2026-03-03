@@ -4,7 +4,7 @@
 #include "lib/math/my_bit.hpp"
 
 template <typename T>
-struct LiChaoSegTreeOffline {
+struct LiChaoTreeOffline {
   using Line  = typename T::Line;
   using Value = typename T::Value;
   using Range = typename T::Range;
@@ -16,7 +16,7 @@ struct LiChaoSegTreeOffline {
   std::vector<Value> val;
 
   template <typename It>
-  LiChaoSegTreeOffline(It first, It last) { build(first, last); }
+  LiChaoTreeOffline(It first, It last) { build(first, last); }
 
   template <typename It>
   void build(It first, It last) {
@@ -30,46 +30,8 @@ struct LiChaoSegTreeOffline {
     std::copy(first, last, idx.begin());
   }
 
-  void add_seg(int l, int r, const Line& line) {
-    CHECK(0 <= l && l <= r && r <= m);
-    if (l == r) [[unlikely]] return;
-    l += n - 1, r += n;
-    int w = internal::__lg(l ^ r);
-
-    int cl = l;
-    l = ~l & ((1 << w) - 1);
-    while (l > 0) {
-      int i = internal::countr_zero(l);
-      l &= l - 1;
-      add(cl >> i ^ 1, i, line);
-    }
-
-    int cr = r;
-    r &= (1 << w) - 1;
-    while (r > 0) {
-      int i = internal::countr_zero(r);
-      r &= r - 1;
-      add(cr >> i ^ 1, i, line);
-    }
-  }
-
-  void add_line(const Line& line) {
-    add(1, internal::__lg(n), line);
-  }
-
-  Value get(int x) const {
-    CHECK(0 <= x && x < m);
-    Range v = idx[x];
-    Value res = val[x];
-    x += n;
-    while (x >>= 1) res = T::op(res, T::evaluate(t[x], v));
-    return res;
-  }
-
- private:
-  void add(int k, int i, Line x) {
-    int l = (k << i) ^ n;
-    int r = l + (1 << i);
+  void add(Line x) {
+    int k = 1, l = 0, r = n;
     Value xl = T::evaluate(x, idx[l]), xr = T::evaluate(x, idx[r]);
 
     while (true) {
@@ -110,5 +72,14 @@ struct LiChaoSegTreeOffline {
         }
       }
     }
+  }
+
+  Value get(int x) const {
+    CHECK(0 <= x && x < m);
+    Range v = idx[x];
+    Value res = val[x];
+    x += n;
+    while (x >>= 1) res = T::op(res, T::evaluate(t[x], v));
+    return res;
   }
 };

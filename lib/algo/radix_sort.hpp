@@ -4,7 +4,7 @@
 
 template <typename T, uint32_t N = 16, typename It, typename F>
 void radix_sort_u32(It f, int n, F&& func) {
-  CHECK(n >= 0);
+  CHECK(n >= 0 && N <= 16);
 
   static constexpr uint32_t Mask = (1u << N) - 1;
 
@@ -38,7 +38,7 @@ void radix_sort_u32(It f, int n, F&& func) {
 
 template <typename T, uint32_t N = 16, typename It, typename F>
 void radix_sort_u64(It f, int n, F&& func) {
-  CHECK(n >= 0);
+  CHECK(n >= 0 && N <= 16);
 
   static constexpr uint32_t Mask = (1u << N) - 1;
   static constexpr uint32_t N2 = N * 2;
@@ -53,7 +53,7 @@ void radix_sort_u64(It f, int n, F&& func) {
 
   std::array<uint32_t, Mask + 1> cnt1{}, cnt2{}, cnt3{}, cnt4{};
   for (int i = 0; i < n; ++i) {
-    uint32_t val = func(f[i]);
+    uint64_t val = func(f[i]);
     ++cnt1[val & Mask];
     ++cnt2[val >> N & Mask];
     ++cnt3[val >> N2 & Mask];
