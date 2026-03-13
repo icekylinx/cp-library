@@ -9,7 +9,7 @@ struct IntegerSet {
   static constexpr uint32_t L2 = B >= 18 ? B - 18 : 0;
 
   uint32_t n = 0;
-  size_t counter = 0;
+  uint32_t counter = 0;
   std::vector<uint64_t> b0;
   std::vector<uint64_t> b1;
   std::vector<uint64_t> b2;
@@ -134,5 +134,5 @@ struct IntegerSet {
     return b0[pos >> 6] >> (pos & 63) & 1;
   }
 
-  size_t size() const { return counter; }
+  uint32_t size() const { return counter; }
 };

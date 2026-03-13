@@ -7,7 +7,7 @@ struct HashMapCore {
   static constexpr uint32_t Limit = Size >> 7;
   static constexpr uint32_t Shift = 64 - N;
 
-  size_t counter = 0;
+  uint32_t counter = 0;
   std::array<K, Size> key;
   std::array<V, Size> val;
   std::bitset<Size> used;
@@ -69,5 +69,5 @@ struct HashMapCore {
     }
   }
 
-  size_t size() const { return counter; }
+  uint32_t size() const { return counter; }
 };

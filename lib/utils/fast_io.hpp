@@ -44,7 +44,7 @@ struct FastInput {
 #ifdef ENABLE_MMAP
   ~FastInput() { munmap(buf, map_size); }
 #else
-  ~FastInput() { delete[] buf }
+  ~FastInput() { delete[] buf; }
 #endif
 
 #ifndef ENABLE_MMAP
