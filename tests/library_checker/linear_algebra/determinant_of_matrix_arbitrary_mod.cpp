@@ -1,8 +1,9 @@
-// https://judge.yosupo.jp/problem/montmort_number_mod
+// https://judge.yosupo.jp/problem/matrix_det_arbitrary_mod
 
+#pragma GCC optimize("Ofast,unroll-loops")
 #include <bits/stdc++.h>
 #include "lib/utils/fast_io_basic.hpp"
-#include "lib/math/modular/barrett64.hpp"
+#include "lib/math/linear/det_mod.hpp"
 using namespace std;
 
 using ll  = long long;
@@ -11,17 +12,16 @@ using ull = unsigned long long;
 FastIO<1 << 20, 1 << 19> io;
 
 void solve_main() {
-  int n, m;
-  io >> n >> m;
-  Barrett bar(m);
-
-  uint32_t res = 0;
-
-  for (int i = 2, op = 1; i <= n + 1; ++i) {
-    io << res << ' ';
-    res = bar.reduce(static_cast<uint64_t>(res) * i + op);
-    op = -op;
+  int n;
+  uint32_t P;
+  io >> n >> P;
+  vector<vector<uint32_t>> mat(n, vector<uint32_t>(n));
+  for (auto& x : mat) {
+    for (auto& y : x) {
+      io >> y;
+    }
   }
+  io << det_inplace(mat, n, P);
 }
 
 int main() {

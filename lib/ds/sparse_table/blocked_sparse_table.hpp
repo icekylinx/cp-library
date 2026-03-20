@@ -1,15 +1,14 @@
 #pragma once
 
 #include "lib/utils/debug.hpp"
-#include "lib/math/my_bit.hpp"
 
 template <typename T, uint32_t B>
 struct BlockedSparseTable {
   using Info = typename T::Info;
 
-  int n = 0;
-  int m = 0;
-  int size = 0;
+  uint32_t n = 0;
+  uint32_t m = 0;
+  uint32_t size = 0;
   int h = 0;
   std::vector<std::vector<Info>> st;
   std::vector<Info> val, pre, suf;
@@ -20,12 +19,11 @@ struct BlockedSparseTable {
   BlockedSparseTable(It first, It last) { build(first, last); }
 
   template <typename F>
-  BlockedSparseTable(int _n, F&& func) { build(_n, func); }
+  BlockedSparseTable(uint32_t _n, F&& func) { build(_n, func); }
 
   template <typename It>
   void build(It first, It last) {
     n = std::distance(first, last);
-    CHECK(n >= 0);
     if (n == 0) {
       h = 0;
       st.clear();
@@ -34,19 +32,19 @@ struct BlockedSparseTable {
 
     size = (n + B - 1) / B;
     m = size * B;
-    h = internal::__lg(size) + 1;
+    h = std::bit_width(size);
     st.resize(h);
     st[0].resize(size);
     val.assign(m, T::id());
     pre.assign(m, T::id());
     suf.assign(m, T::id());
 
-    for (int i = 0; i < n; ++i) {
+    for (uint32_t i = 0; i < n; ++i) {
       val[i] = *first++;
       pre[i] = i % B == 0 ? val[i] : T::op(pre[i - 1], val[i]);
     }
 
-    for (int i = 0; i < m; i += B) {
+    for (uint32_t i = 0; i < m; i += B) {
       int down = i, up = i + B - 1;
       suf[up] = val[up];
       while (--up >= down) {
@@ -56,33 +54,32 @@ struct BlockedSparseTable {
     }
 
     for (int i = 1; i < h; ++i) {
-      int len = 1 << i;
-      int half = len >> 1;
+      uint32_t len = 1 << i;
+      uint32_t half = len >> 1;
       st[i].resize(size - len + 1);
-      for (int j = 0; j < size - len + 1; ++j) {
+      for (uint32_t j = 0; j < size - len + 1; ++j) {
         st[i][j] = T::op(st[i - 1][j], st[i - 1][j + half]);
       } 
     }
   }
 
   template <typename F>
-  void build(int _n, F&& func) {
-    CHECK(_n >= 0);
+  void build(uint32_t _n, F&& func) {
     std::vector<Info> vec(_n);
-    for (int i = 0; i < _n; ++i) {
+    for (uint32_t i = 0; i < _n; ++i) {
       vec[i] = func(i);
     }
     build(vec.begin(), vec.end());
   }
 
-  Info prod(int l, int r) const {
-    CHECK(0 <= l && l <= r && r <= n);
+  Info prod(uint32_t l, uint32_t r) const {
+    CHECK(l <= r && r <= n);
     if (l == r) [[unlikely]] return T::id();
     --r;
-    int L = l / B, R = r / B;
+    uint32_t L = l / B, R = r / B;
     if (L == R) {
       Info res = val[l];
-      for (int i = l + 1; i <= r; ++i) {
+      for (uint32_t i = l + 1; i <= r; ++i) {
         res = T::op(res, val[i]);
       }
       return res;
@@ -90,7 +87,7 @@ struct BlockedSparseTable {
       return T::op(suf[l], pre[r]);
     } else {
       ++L;
-      int k = internal::__lg(R - L);
+      int k = std::bit_width(R - L) - 1;
       return T::op(T::op(suf[l], st[k][L]), T::op(st[k][R - (1 << k)], pre[r]));
     }
   }

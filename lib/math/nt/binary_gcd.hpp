@@ -1,18 +1,13 @@
 #pragma once
 
-#include "lib/utils/my_type_traits.hpp"
-#include "lib/math/my_bit.hpp"
-
-namespace internal {
-
 // Based on https://en.algorithmica.org/hpc/algorithms/gcd/
-template <basic_signed_integral T>
+template <std::signed_integral T>
 T binary_gcd(T a, T b) {
-  CHECK(a >= 0 && b >= 0);
+  using U = std::make_unsigned_t<T>;
   if (a == 0 || b == 0) return a + b;
 
-  int az = countr_zero(a);
-  int bz = countr_zero(b);
+  int az = std::countr_zero(static_cast<U>(a));
+  int bz = std::countr_zero(static_cast<U>(b));
   int shift = std::min(az, bz);
   b >>= bz;
 
@@ -20,12 +15,10 @@ T binary_gcd(T a, T b) {
     a >>= az;
     T diff = b - a;
     if (diff == 0) break;
-    az = countr_zero(diff);
+    az = std::countr_zero(static_cast<U>(diff));
     b = std::min(a, b);
     a = std::abs(diff);
   }
 
   return b << shift;
 }
-
-}  // namespace internal

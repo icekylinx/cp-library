@@ -1,7 +1,6 @@
 #pragma once
 
 #include "lib/utils/debug.hpp"
-#include "lib/math/my_bit.hpp"
 
 template <typename T>
 struct LiChaoSegTreeOffline {
@@ -9,8 +8,8 @@ struct LiChaoSegTreeOffline {
   using Value = typename T::Value;
   using Range = typename T::Range;
 
-  int n = 0;
-  int m = 0;
+  uint32_t n = 0;
+  uint32_t m = 0;
   std::vector<Line> t;
   std::vector<Range> idx;
   std::vector<Value> val;
@@ -21,7 +20,6 @@ struct LiChaoSegTreeOffline {
   template <typename It>
   void build(It first, It last) {
     m = std::distance(first, last);
-    CHECK(m >= 0);
     n = 1;
     while (n < m) n <<= 1;
     t.assign(n << 1, T::id());
@@ -30,35 +28,35 @@ struct LiChaoSegTreeOffline {
     std::copy(first, last, idx.begin());
   }
 
-  void add_seg(int l, int r, const Line& line) {
-    CHECK(0 <= l && l <= r && r <= m);
+  void add_seg(uint32_t l, uint32_t r, const Line& line) {
+    CHECK(l <= r && r <= m);
     if (l == r) [[unlikely]] return;
     l += n - 1, r += n;
-    int w = internal::__lg(l ^ r);
+    int w = std::bit_width(l ^ r) - 1;
 
-    int cl = l;
+    uint32_t cl = l;
     l = ~l & ((1 << w) - 1);
     while (l > 0) {
-      int i = internal::countr_zero(l);
+      int i = std::countr_zero(l);
       l &= l - 1;
       add(cl >> i ^ 1, i, line);
     }
 
-    int cr = r;
+    uint32_t cr = r;
     r &= (1 << w) - 1;
     while (r > 0) {
-      int i = internal::countr_zero(r);
+      int i = std::countr_zero(r);
       r &= r - 1;
       add(cr >> i ^ 1, i, line);
     }
   }
 
   void add_line(const Line& line) {
-    add(1, internal::__lg(n), line);
+    add(1, std::bit_width(n) - 1, line);
   }
 
-  Value get(int x) const {
-    CHECK(0 <= x && x < m);
+  Value get(uint32_t x) const {
+    CHECK(x < m);
     Range v = idx[x];
     Value res = val[x];
     x += n;
@@ -67,9 +65,9 @@ struct LiChaoSegTreeOffline {
   }
 
  private:
-  void add(int k, int i, Line x) {
-    int l = (k << i) ^ n;
-    int r = l + (1 << i);
+  void add(uint32_t k, int i, Line x) {
+    uint32_t l = (k << i) ^ n;
+    uint32_t r = l + (1 << i);
     Value xl = T::evaluate(x, idx[l]), xr = T::evaluate(x, idx[r]);
 
     while (true) {
@@ -80,7 +78,7 @@ struct LiChaoSegTreeOffline {
 
       Line& y = t[k];
       Value yl = T::evaluate(y, idx[l]), yr = T::evaluate(y, idx[r]);
-      int mid = (l + r) >> 1;
+      uint32_t mid = (l + r) >> 1;
       if (T::compare(xl, yl)) {
         if (T::compare(xr, yr)) {
           std::swap(x, y);

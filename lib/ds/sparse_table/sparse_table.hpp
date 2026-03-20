@@ -1,13 +1,12 @@
 #pragma once
 
 #include "lib/utils/debug.hpp"
-#include "lib/math/my_bit.hpp"
 
 template <typename T>
 struct SparseTable {
   using Info = typename T::Info;
 
-  int n = 0;
+  uint32_t n = 0;
   int h = 0;
   std::vector<std::vector<Info>> st;
 
@@ -17,50 +16,48 @@ struct SparseTable {
   SparseTable(It first, It last) { build(first, last); }
 
   template <typename F>
-  SparseTable(int _n, F&& func) { build(_n, func); }
+  SparseTable(uint32_t _n, F&& func) { build(_n, func); }
 
   template <typename It>
   void build(It first, It last) {
     n = std::distance(first, last);
-    CHECK(n >= 0);
     if (n == 0) {
       h = 0;
       st.clear();
       return;
     }
 
-    h = internal::__lg(n) + 1;
+    h = std::bit_width(n);
     st.resize(h);
 
     st[0].resize(n);
-    for (int i = 0; i < n; ++i) {
+    for (uint32_t i = 0; i < n; ++i) {
       st[0][i] = *first++;
     }
 
     for (int i = 1; i < h; ++i) {
-      int len = 1 << i;
-      int half = len >> 1;
+      uint32_t len = 1 << i;
+      uint32_t half = len >> 1;
       st[i].resize(n - len + 1);
-      for (int j = 0; j < n - len + 1; ++j) {
+      for (uint32_t j = 0; j < n - len + 1; ++j) {
         st[i][j] = T::op(st[i - 1][j], st[i - 1][j + half]);
       } 
     }
   }
 
   template <typename F>
-  void build(int _n, F&& func) {
-    CHECK(_n >= 0);
+  void build(uint32_t _n, F&& func) {
     std::vector<Info> vec(_n);
-    for (int i = 0; i < _n; ++i) {
+    for (uint32_t i = 0; i < _n; ++i) {
       vec[i] = func(i);
     }
     build(vec.begin(), vec.end());
   }
 
-  Info prod(int l, int r) const {
-    CHECK(0 <= l && l <= r && r <= n);
+  Info prod(uint32_t l, uint32_t r) const {
+    CHECK(l <= r && r <= n);
     if (l == r) [[unlikely]] return T::id();
-    int k = internal::__lg(r - l);
+    int k = std::bit_width(r - l) - 1;
     return T::op(st[k][l], st[k][r - (1 << k)]);
   }
 };

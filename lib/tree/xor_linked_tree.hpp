@@ -1,10 +1,9 @@
 #pragma once
 
 #include "lib/utils/debug.hpp"
-#include "lib/utils/my_type_traits.hpp"
 
 // Based on https://codeforces.com/blog/entry/135239
-template <bool weighted = false, internal::integral T = int>
+template <bool weighted = false, typename T = int>
 struct XorLinkedTree {
   int n = 0;
   std::vector<int> deg;

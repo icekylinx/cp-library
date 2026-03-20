@@ -6,7 +6,7 @@ struct Barrett64 {
   uint64_t mod, inv;
 
   Barrett64() = default;
-  explicit Barrett64(uint64_t m) {
+  explicit constexpr Barrett64(uint64_t m) {
     set_mod(m);
   }
 

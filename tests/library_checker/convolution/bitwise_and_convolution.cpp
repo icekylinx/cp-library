@@ -2,14 +2,14 @@
 
 #pragma GCC optimize(3)
 #include <bits/stdc++.h>
-#include "lib/utils/fast_io.hpp"
-#include "lib/math/set_func/fwt_and.hpp"
+#include "lib/utils/fast_io_basic.hpp"
+#include "lib/math/conv/fwt_and.hpp"
 using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
 
-FastIO<1 << 20, 1 << 20> io;
+FastIO<1 << 20, 1 << 19> io;
 
 constexpr uint32_t P = 998244353;
 

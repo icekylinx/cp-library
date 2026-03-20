@@ -1,7 +1,6 @@
 #pragma once
 
 #include "lib/utils/debug.hpp"
-#include "lib/math/my_bit.hpp"
 
 template <typename T>
 struct LiChaoTreeOffline {
@@ -9,8 +8,8 @@ struct LiChaoTreeOffline {
   using Value = typename T::Value;
   using Range = typename T::Range;
 
-  int n = 0;
-  int m = 0;
+  uint32_t n = 0;
+  uint32_t m = 0;
   std::vector<Line> t;
   std::vector<Range> idx;
   std::vector<Value> val;
@@ -21,7 +20,6 @@ struct LiChaoTreeOffline {
   template <typename It>
   void build(It first, It last) {
     m = std::distance(first, last);
-    CHECK(m >= 0);
     n = 1;
     while (n < m) n <<= 1;
     t.assign(n << 1, T::id());
@@ -31,7 +29,7 @@ struct LiChaoTreeOffline {
   }
 
   void add(Line x) {
-    int k = 1, l = 0, r = n;
+    uint32_t k = 1, l = 0, r = n;
     Value xl = T::evaluate(x, idx[l]), xr = T::evaluate(x, idx[r]);
 
     while (true) {
@@ -42,7 +40,7 @@ struct LiChaoTreeOffline {
 
       Line& y = t[k];
       Value yl = T::evaluate(y, idx[l]), yr = T::evaluate(y, idx[r]);
-      int mid = (l + r) >> 1;
+      uint32_t mid = (l + r) >> 1;
       if (T::compare(xl, yl)) {
         if (T::compare(xr, yr)) {
           std::swap(x, y);
@@ -74,8 +72,8 @@ struct LiChaoTreeOffline {
     }
   }
 
-  Value get(int x) const {
-    CHECK(0 <= x && x < m);
+  Value get(uint32_t x) const {
+    CHECK(x < m);
     Range v = idx[x];
     Value res = val[x];
     x += n;
