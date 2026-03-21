@@ -1,7 +1,7 @@
 // https://judge.yosupo.jp/problem/point_set_range_composite_large_array
 
 #include <bits/stdc++.h>
-#include "lib/utils/fast_io.hpp"
+#include "lib/utils/fast_io_basic.hpp"
 #include "lib/ds/seg_tree/seg_tree.hpp"
 #include "lib/algo/radix_sort.hpp"
 using namespace std;
@@ -15,11 +15,11 @@ constexpr int P = 998244353;
 
 struct PointSetRangeComposite {
   using Info = pair<uint32_t, uint32_t>;
-
   static constexpr Info id() noexcept { return {1, 0}; };
+
   static constexpr Info op(const Info& lhs, const Info& rhs) {
-    return {static_cast<uint64_t>(lhs.first) * rhs.first % P,
-            (static_cast<uint64_t>(lhs.second) * rhs.first + rhs.second) % P};
+    return {1ull * lhs.first * rhs.first % P,
+            (1ull * lhs.second * rhs.first + rhs.second) % P};
   }
 };
 
@@ -64,7 +64,7 @@ void solve_main() {
   SegTree<PointSetRangeComposite> t(m);
 
   auto eval = [&](uint32_t x, const auto& info) -> uint32_t {
-    return (static_cast<uint64_t>(x) * info.first + info.second) % P;
+    return (1ull * x * info.first + info.second) % P;
   };
 
   for (const auto& [op, a, b, c] : qry) {

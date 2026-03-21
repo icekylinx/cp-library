@@ -17,8 +17,8 @@ struct PointSetRangeComposite {
   static constexpr Info id() noexcept { return {1, 0}; };
 
   static constexpr Info op(const Info& lhs, const Info& rhs) {
-    return {static_cast<uint64_t>(lhs.first) * rhs.first % P,
-            (static_cast<uint64_t>(lhs.second) * rhs.first + rhs.second) % P};
+    return {1ull * lhs.first * rhs.first % P,
+            (1ull * lhs.second * rhs.first + rhs.second) % P};
   }
 };
 
@@ -33,7 +33,7 @@ void solve_main() {
   });
 
   auto eval = [&](uint32_t x, const auto& info) -> uint32_t {
-    return (static_cast<uint64_t>(x) * info.first + info.second) % P;
+    return (1ull * x * info.first + info.second) % P;
   };
 
   while (q--) {

@@ -15,7 +15,7 @@ FastIO<1 << 20, 1 << 19> io;
 void solve_main() {
   int n;
   io >> n;
-  XorLinkedTree<true, int> t(n);
+  XorLinkedTree<true, uint32_t> t(n);
 
   for (int i = 0; i < n - 1; ++i) {
     uint32_t u = io.in->read_small<uint32_t>();
@@ -24,19 +24,19 @@ void solve_main() {
     t.add_edge(u, v, w);
   }
 
-  vector<ll> mx(n, 0);
-  vector<int> fa(n, 0);
+  vector<uint64_t> mx(n, 0);
+  vector<uint32_t> fa(n, 0);
   auto pos = views::iota(0, n) | ranges::to<vector<uint32_t>>();
 
-  ll ans = 0;
-  int l = 0, r = 0, lca = 0;
+  uint64_t ans = 0;
+  uint32_t l = 0, r = 0, lca = 0;
 
-  t.build(0, [&](int u, int v, int w) -> void {
+  t.build(0, [&](uint32_t u, uint32_t v, uint32_t w) -> void {
     if (u == 0) return;
     fa[u] = v;
 
-    ll new_mx = mx[u] + w;
-    ll new_ans = new_mx + mx[v];
+    uint64_t new_mx = mx[u] + w;
+    uint64_t new_ans = new_mx + mx[v];
 
     if (new_ans > ans) {
       ans = new_ans;
@@ -49,7 +49,7 @@ void solve_main() {
     }
   });
 
-  int cnt = 0;
+  uint32_t cnt = 0;
 
   while (l != lca) {
     pos[cnt] = l, ++cnt;
@@ -57,7 +57,7 @@ void solve_main() {
   }
 
   pos[cnt] = lca;
-  int mid = ++cnt;
+  uint32_t mid = ++cnt;
 
   while (r != lca) {
     pos[cnt] = r, ++cnt;

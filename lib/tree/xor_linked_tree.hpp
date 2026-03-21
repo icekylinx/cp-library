@@ -5,47 +5,44 @@
 // Based on https://codeforces.com/blog/entry/135239
 template <bool weighted = false, typename T = int>
 struct XorLinkedTree {
-  int n = 0;
-  std::vector<int> deg;
-  std::vector<int> link;
+  uint32_t n = 0;
+  std::vector<uint32_t> deg;
+  std::vector<uint32_t> link;
   std::vector<T> val;
 
   XorLinkedTree() = default;
-  explicit XorLinkedTree(int _n) { init(_n); };
+  explicit XorLinkedTree(uint32_t _n) { init(_n); };
 
-  void init(int _n) {
+  void init(uint32_t _n) {
     n = _n;
-    CHECK(n >= 0);
     deg.assign(n, 0);
     link.assign(n, 0);
     if constexpr (weighted) val.assign(n, 0);
   }
 
-  void add_edge(int u, int v) requires(!weighted) {
-    CHECK(0 <= u && u < n);
-    CHECK(0 <= v && v < n);
+  void add_edge(uint32_t u, uint32_t v) requires(!weighted) {
+    CHECK(u < n && v < n);
     CHECK(u != v);
     ++deg[u], link[u] ^= v;
     ++deg[v], link[v] ^= u;
   }
 
-  void add_edge(int u, int v, T w) requires(weighted) {
-    CHECK(0 <= u && u < n);
-    CHECK(0 <= v && v < n);
+  void add_edge(uint32_t u, uint32_t v, T w) requires(weighted) {
+    CHECK(u < n && v < n);
     CHECK(u != v);
     ++deg[u], link[u] ^= v, val[u] ^= w;
     ++deg[v], link[v] ^= u, val[v] ^= w;
   }
 
   template <typename F>
-  void build(int root, F&& func) {
-    CHECK(0 <= root && root < n);
+  void build(uint32_t root, F&& func) {
+    CHECK(root < n);
     ++deg[root];
 
-    for (int i = 0; i < n; ++i) {
-      int u = i;
+    for (uint32_t i = 0; i < n; ++i) {
+      uint32_t u = i;
       while (deg[u] == 1) {
-        int v = link[u];
+        uint32_t v = link[u];
         if constexpr (weighted) {
           T w = val[u];
           func(u, v, w);
