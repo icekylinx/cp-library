@@ -1,9 +1,9 @@
 <snippet>
   <content><![CDATA[
-lib/utils/fast_io_basic.hpp
+lib/utils/fast_io_simd.hpp
 ]]></content>
   <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
-  <tabTrigger>lib/utils/fast_io_basic.hpp</tabTrigger>
+  <tabTrigger>lib/utils/fast_io_simd.hpp</tabTrigger>
   <!-- Optional: Set a scope to limit where the snippet will trigger -->
   <scope>source.c++</scope>
 </snippet>

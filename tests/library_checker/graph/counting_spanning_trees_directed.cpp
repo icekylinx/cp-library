@@ -1,9 +1,9 @@
-// https://qoj.ac/problem/1003
+// https://judge.yosupo.jp/problem/counting_spanning_tree_directed
 
-#pragma GCC optimize(3)
+#pragma GCC optimize("Ofast,unroll-loops")
 #include <bits/stdc++.h>
 #include "lib/utils/fast_io.hpp"
-#include "lib/math/conv/fwt_and.hpp"
+#include "lib/math/linalg/det_fixed_mod.hpp"
 using namespace std;
 
 using ll  = long long;
@@ -14,24 +14,23 @@ FastIO<1 << 20, 1 << 19> io;
 constexpr uint32_t P = 998244353;
 
 void solve_main() {
-  int n, m;
-  io >> n;
-  m = 1 << n;
+  int n, m, r;
+  io >> n >> m >> r;
 
-  vector<uint32_t> a(m), b(m);
-  for (auto& x : a) io >> x;
-  for (auto& x : b) io >> x;
-
-  fwt_and<P>(a.data(), m);
-  fwt_and<P>(b.data(), m);
+  std::vector<std::vector<uint64_t>> mat(n, std::vector<uint64_t>(n, P));
   for (int i = 0; i < m; ++i) {
-    a[i] = 1ull * a[i] * b[i] % P;
+    uint32_t u = io.in->read_small<uint32_t>();
+    uint32_t v = io.in->read_small<uint32_t>();
+    --mat[u][v];
+    ++mat[v][v];
   }
-  ifwt_and<P>(a.data(), m);
 
-  for (auto& x : a) {
-    io << x << ' ';
+  for (int i = 0; i < n; ++i) {
+    mat[i][r] = mat[r][i] = 0;
   }
+  mat[r][r] = 1;
+
+  io << det_inplace<998244353>(mat, n); 
 }
 
 int main() {

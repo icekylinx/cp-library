@@ -1,7 +1,7 @@
 // https://judge.yosupo.jp/problem/montmort_number_mod
 
 #include <bits/stdc++.h>
-#include "lib/utils/fast_io_basic.hpp"
+#include "lib/utils/fast_io.hpp"
 #include "lib/math/modular/barrett64.hpp"
 using namespace std;
 

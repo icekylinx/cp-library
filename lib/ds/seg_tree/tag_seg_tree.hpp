@@ -35,25 +35,13 @@ struct TagSegTree {
 
   template <typename F>
   void build(uint32_t _m, F&& func) {
-    m = _m;
-    n = 1;
-    while (n < m) n <<= 1;
-    h = std::bit_width(n) - 1;
-    val.assign(n, T::id());
-    tag.assign(n << 1, T::tag_id());
-    has_tag.assign(n << 1, 0);
+    build(_m);
     for (uint32_t i = 0; i < m; ++i) val[i] = func(i);
   }
 
   template <typename It>
   void build(It first, It last) {
-    m = std::distance(first, last);
-    n = 1;
-    while (n < m) n <<= 1;
-    h = std::bit_width(n) - 1;
-    val.assign(n, T::id());
-    tag.assign(n << 1, T::tag_id());
-    has_tag.assign(n << 1, 0);
+    build(static_cast<uint32_t>(std::distance(first, last)));
     std::copy(first, last, val.begin());
   }
 

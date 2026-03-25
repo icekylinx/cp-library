@@ -15,9 +15,7 @@ uint32_t det_inplace(Matrix& mat, const uint32_t n) {
   if constexpr (prime) {
     auto qpow = [&](uint32_t x, uint32_t y, uint32_t k = 1) -> uint32_t {
       for (; y; y >>= 1, x = 1ull * x * x % P) {
-        if (y & 1) {
-          k = 1ull * k * x % P;
-        }
+        if (y & 1) k = 1ull * k * x % P;
       }
       return k;
     };

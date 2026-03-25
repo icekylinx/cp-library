@@ -2,7 +2,7 @@
 
 #pragma GCC optimize(3)
 #include <bits/stdc++.h>
-#include "lib/utils/fast_io_basic.hpp"
+#include "lib/utils/fast_io.hpp"
 #include "lib/math/conv/fwt_and.hpp"
 using namespace std;
 
@@ -25,7 +25,7 @@ void solve_main() {
   fwt_and<P>(a.data(), m);
   fwt_and<P>(b.data(), m);
   for (int i = 0; i < m; ++i) {
-    a[i] = static_cast<uint64_t>(a[i]) * b[i] % P;
+    a[i] = 1ull * a[i] * b[i] % P;
   }
   ifwt_and<P>(a.data(), m);
 

@@ -1,6 +1,5 @@
 // https://judge.yosupo.jp/problem/point_add_range_sum
 
-#pragma GCC optimize(3)
 #include <bits/stdc++.h>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/fenwick_tree/fast_fenwick_tree.hpp"
@@ -11,8 +10,6 @@ using ull = unsigned long long;
 
 FastIO<1 << 20, 1 << 19> io;
 
-constexpr int N = 5e5 + 5;
-
 struct Node {
   using Info = uint64_t;
 
@@ -21,19 +18,13 @@ struct Node {
   static constexpr Info inv(uint64_t x) { return -x; }
 };
 
-uint64_t a[N];
-
 void solve_main() {
   int n, q;
   io >> n >> q;
 
-  FastFenwickTree<Node> t(n);
-
-  for (int i = 1; i <= n; ++i) {
-    a[i] = io.in->read<uint32_t>();
-  }
-
-  partial_sum(a + 1, a + n + 1, a + 1);
+  FastFenwickTree<Node> t(n, [&](uint32_t i) {
+    return io.in->read<uint32_t>();
+  });
 
   while (q--) {
     bool op = io.in->read<bool>();
@@ -42,7 +33,7 @@ void solve_main() {
       t.add(x, io.in->read<uint32_t>());
     } else {
       uint32_t y = io.in->read_small<uint32_t>();
-      io << t.sum(x, y) + a[y] - a[x] << '\n';
+      io << t.sum(x, y) << '\n';
     }
   }
 }

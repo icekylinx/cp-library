@@ -2,7 +2,7 @@
 
 #include "lib/utils/debug.hpp"
 
-template <uint32_t P, int N, typename It>
+template <uint32_t P, uint32_t N, std::random_access_iterator It>
 void fwt_xor(It f) {
   auto add = [&](uint32_t x, uint32_t y) -> uint32_t {
     x += y;
@@ -14,12 +14,12 @@ void fwt_xor(It f) {
     return std::min(x, x + P);
   };
 
-  static constexpr int len = N >> 1;
+  static constexpr uint32_t len = N >> 1;
 
   if constexpr (len > 0) {
     fwt_xor<P, len>(f);
     fwt_xor<P, len>(f + len);
-    for (int i = 0; i < len; ++i) {
+    for (uint32_t i = 0; i < len; ++i) {
       uint32_t x = add(f[i], f[i + len]);
       uint32_t y = sub(f[i], f[i + len]);
       f[i] = x, f[i + len] = y;
@@ -27,7 +27,7 @@ void fwt_xor(It f) {
   }
 }
 
-template <uint32_t P, int N, typename It>
+template <uint32_t P, uint32_t N, std::random_access_iterator It>
 void ifwt_xor(It f) {
   auto add = [&](uint32_t x, uint32_t y) -> uint32_t {
     x += y;
@@ -43,12 +43,12 @@ void ifwt_xor(It f) {
     return std::min(x, x - P);
   };
 
-  static constexpr int len = N >> 1;
+  static constexpr uint32_t len = N >> 1;
 
   if constexpr (len > 0) {
     ifwt_xor<P, len>(f);
     ifwt_xor<P, len>(f + len);
-    for (int i = 0; i < len; ++i) {
+    for (uint32_t i = 0; i < len; ++i) {
       uint32_t x = add(f[i], f[i + len]);
       uint32_t y = sub(f[i], f[i + len]);
       f[i] = reduce((x + (x & 1) * P) >> 1);
@@ -57,7 +57,7 @@ void ifwt_xor(It f) {
   }
 }
 
-template <uint32_t P, typename It, uint32_t N = 0>
+template <uint32_t P, std::random_access_iterator It, uint32_t N = 0>
 void fwt_xor(It f, uint32_t n) {
   if constexpr (N <= 30) {
     if (n <= 1u << N) {
@@ -68,7 +68,7 @@ void fwt_xor(It f, uint32_t n) {
   }
 }
 
-template <uint32_t P, typename It, uint32_t N = 0>
+template <uint32_t P, std::random_access_iterator It, uint32_t N = 0>
 void ifwt_xor(It f, uint32_t n) {
   if constexpr (N <= 30) {
     if (n <= 1u << N) {

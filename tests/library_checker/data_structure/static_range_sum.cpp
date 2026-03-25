@@ -2,7 +2,7 @@
 
 #pragma GCC optimize(3)
 #include <bits/stdc++.h>
-#include "lib/utils/fast_io_basic.hpp"
+#include "lib/utils/fast_io.hpp"
 using namespace std;
 
 using ll  = long long;

@@ -1,5 +1,8 @@
 #pragma once
 
+#pragma GCC target("avx2")
+#include <immintrin.h>
+
 #include "lib/utils/debug.hpp"
 
 #ifdef __unix__
@@ -12,6 +15,14 @@
 #endif
 
 namespace fast_io {
+
+template <typename T>
+struct MakeUnsigned : std::make_unsigned<T> {};
+
+template <>
+struct MakeUnsigned<__int128_t> {
+  using type = __uint128_t;
+};
 
 template <uint32_t BufSize>
 struct FastInput {
@@ -127,40 +138,79 @@ struct FastInput {
     ensure();
     CHECK(*cur >= '0' && *cur <= '9');
 
-    union {
-      char ch[16];
-      uint64_t v[2];
-    };
-    memcpy(ch, cur, 16);
-    uint64_t a = v[0] ^ 0x3030303030303030ull;
-    uint64_t b = v[1] ^ 0x3030303030303030ull;
+    __m128i raw = _mm_loadu_si128(reinterpret_cast<const __m128i*>(cur));
+    __m128i diff = _mm_sub_epi8(raw, zero_128);
+    uint32_t mask = _mm_movemask_epi8(diff);
 
-    uint64_t x = 0;
-    if (all_digits(a)) {
-      a = (a * 10 + (a >> 8)) & 0xff00ff00ff00ffull;
-      a = (a * 100 + (a >> 16)) & 0xffff0000ffffull;
-      a = (a * 10000 + (a >> 32)) & 0xffffffffull;
-      x = a, cur += 8;
-      if (all_digits(b)) {
-        b = (b * 10 + (b >> 8)) & 0xff00ff00ff00ffull;
-        b = (b * 100 + (b >> 16)) & 0xffff0000ffffull;
-        b = (b * 10000 + (b >> 32)) & 0xffffffffull;
-        x = a * 100000000 + b, cur += 8;
+    if (mask == 0) {
+      uint64_t x = parse_w16(diff);
+      cur += 16;
+      for (; *cur >= 48; ++cur) {
+        x = x * 10 + (*cur & 15);
       }
+      ++cur;
+      return x;
+    } else {
+      int len = __builtin_ctz(mask);
+      cur += len + 1;
+      diff = _mm_shuffle_epi8(
+          diff, _mm_loadu_si128(reinterpret_cast<const __m128i*>(&LUT[len])));
+      return parse_w16(diff);
     }
-
-    for (; *cur >= 48; ++cur) {
-      x = x * 10 + (*cur & 15);
-    }
-
-    ++cur;
-    return x;
   }
 
-  template <std::signed_integral T>
-    requires(!std::same_as<T, char>)
+  template <typename T>
+    requires(std::same_as<T, __uint128_t>)
+  __uint128_t read() {
+    ensure();
+    CHECK(*cur >= '0' && *cur <= '9');
+
+    __m256i raw = _mm256_loadu_si256(reinterpret_cast<const __m256i*>(cur));
+    __m256i diff = _mm256_sub_epi8(raw, zero_256);
+    uint32_t mask = _mm256_movemask_epi8(diff);
+
+    if (mask == 0) {
+      __uint128_t x = parse_w32(diff);
+      cur += 32;
+
+      uint32_t v;
+      memcpy(&v, cur, 4);
+      v ^= 0x30303030;
+      uint32_t val = 0, pow = 1;
+      if (all_digits(v)) {
+        v = (v * 10 + (v >> 8)) & 0xff00ff;
+        v = (v * 100 + (v >> 16)) & 0xffff;
+        val = v, pow = 10000, cur += 4;
+      }
+
+      for (; *cur >= 48; ++cur, pow *= 10) {
+        val = val * 10 + (*cur & 15);
+      }
+
+      ++cur;
+      return x * pow + val;
+    } else {
+      int len = __builtin_ctz(mask);
+      cur += len + 1;
+      if (len <= 16) {
+        __m128i low = _mm256_castsi256_si128(diff);
+        low = _mm_shuffle_epi8(
+            low, _mm_loadu_si128(reinterpret_cast<const __m128i*>(&LUT[len])));
+        return parse_w16(low);
+      } else {
+        alignas(32) char aux[64]{};
+        _mm256_storeu_si256(reinterpret_cast<__m256i*>(aux + 32 - len), diff);
+        diff = _mm256_load_si256(reinterpret_cast<const __m256i*>(aux));
+        return parse_w32(diff);
+      }
+    }
+  }
+
+  template <typename T>
+    requires((std::is_signed_v<T> || std::same_as<T, __int128_t>) &&
+             !std::same_as<T, char>)
   T read() {
-    using U = std::make_unsigned_t<T>;
+    using U = MakeUnsigned<T>::type;
 
     bool neg = (*cur == '-');
     cur += neg;
@@ -221,7 +271,7 @@ struct FastInput {
   template <typename T>
   FastInput& operator>>(T& x) {
     skip_space();
-    x = read<T>();
+    x = read<std::remove_cvref_t<T>>();
     return *this;
   }
 
@@ -236,6 +286,52 @@ struct FastInput {
   }
 
  private:
+  static constexpr auto E16 = 10'000'000'000'000'000ull;
+
+  static inline const __m128i zero_128 = _mm_set1_epi8(0x30);
+  static inline const __m256i zero_256 = _mm256_set1_epi8(0x30);
+  static inline const __m128i w1_128 = _mm_set1_epi16(0x010a);
+  static inline const __m256i w1_256 = _mm256_set1_epi16(0x010a);
+  static inline const __m128i w2_128 = _mm_set1_epi32(0x00010064);
+  static inline const __m256i w2_256 = _mm256_set1_epi32(0x00010064);
+  static inline const __m128i w3_128 = _mm_set_epi32(1, 10000, 1, 10000);
+  static inline const __m256i w3_256 =
+      _mm256_set_epi32(1, 10000, 1, 10000, 1, 10000, 1, 10000);
+
+  static constexpr auto LUT = [] {
+    std::array<std::array<char, 16>, 17> res;
+    for (int i = 0; i <= 16; ++i) {
+      for (int j = 0; j < 16; ++j) {
+        res[i][j] = (i + j < 16) ? 0x80 : i + j - 16;
+      }
+    }
+    return res;
+  }();
+
+  static inline uint64_t parse_w16(__m128i chunk) {
+    __m128i t1 = _mm_maddubs_epi16(chunk, w1_128);
+    __m128i t2 = _mm_madd_epi16(t1, w2_128);
+    __m128i prod = _mm_mul_epu32(t2, w3_128);
+    __m128i odd = _mm_srli_epi64(t2, 32);
+    __m128i t3 = _mm_add_epi64(prod, odd);
+    uint64_t r0 = _mm_cvtsi128_si64(t3);
+    uint64_t r1 = _mm_extract_epi64(t3, 1);
+    return r0 * 100000000 + r1;
+  }
+
+  static inline __uint128_t parse_w32(__m256i chunk) {
+    __m256i t1 = _mm256_maddubs_epi16(chunk, w1_256);
+    __m256i t2 = _mm256_madd_epi16(t1, w2_256);
+    __m256i prod = _mm256_mul_epu32(t2, w3_256);
+    __m256i odd = _mm256_srli_epi64(t2, 32);
+    __m256i t3 = _mm256_add_epi64(prod, odd);
+    __m128i r0 = _mm256_castsi256_si128(t3);
+    __m128i r1 = _mm256_extracti128_si256(t3, 1);
+    uint64_t s0 = _mm_cvtsi128_si64(r0) * 100000000 + _mm_extract_epi64(r0, 1);
+    uint64_t s1 = _mm_cvtsi128_si64(r1) * 100000000 + _mm_extract_epi64(r1, 1);
+    return static_cast<__uint128_t>(s0) * E16 + s1;
+  }
+
   constexpr bool all_digits(uint32_t v) { return !(v & 0xf0f0f0f0); }
   constexpr bool all_digits(uint64_t v) { return !(v & 0xf0f0f0f0f0f0f0f0ull); }
 };
@@ -285,7 +381,7 @@ struct FastOutput {
   void write(T x) {
     if (x > 9'999'999'999'999'999ull) {
       print<4>(x);
-    } else if (x > 999'999'999'999ull) [[likely]] {
+    } else if (x > 999'999'999'999ull) {
       print<3>(x);
     } else if (x > 99'999'999) {
       print<2>(x);
@@ -296,18 +392,42 @@ struct FastOutput {
     }
   }
 
-  template <std::unsigned_integral T>
+  template <typename T>
+    requires(std::same_as<T, __uint128_t>)
+  void write(T x) {
+    if (x < E19) {
+      write(static_cast<uint64_t>(x));
+    } else if (x < E38) {
+      auto high = x / E19;
+      auto low = x - high * E19;
+      write(static_cast<uint64_t>(high));
+      print_w19(static_cast<uint64_t>(low));
+    } else [[unlikely]] {
+      auto high = x / E38;
+      x -= high * E38;
+      auto mid = x / E19;
+      auto low = x - mid * E19;
+      write(static_cast<uint32_t>(high));
+      print_w19(static_cast<uint64_t>(mid));
+      print_w19(static_cast<uint64_t>(low));
+    }
+  }
+
+  template <typename T>
+    requires(std::is_unsigned_v<std::remove_cvref_t<T>> ||
+             std::same_as<std::remove_cvref_t<T>, __uint128_t>)
   FastOutput& operator<<(T x) {
-    flush<20>();
+    flush<40>();
     write(x);
     return *this;
   }
 
-  template <std::signed_integral T>
+  template <typename T, typename Tp = std::remove_cvref_t<T>>
+    requires(std::is_signed_v<Tp> || std::same_as<Tp, __int128_t>)
   FastOutput& operator<<(T x) {
-    using U = std::make_unsigned_t<T>;
+    using U = MakeUnsigned<T>::type;
 
-    flush<20>();
+    flush<40>();
     *cur = '-';
     cur += (x < 0);
     write(x < 0 ? -static_cast<U>(x) : static_cast<U>(x));
@@ -377,7 +497,11 @@ struct FastOutput {
     return std::make_pair(a, b);
   }();
 
-  template <int N, std::unsigned_integral T>
+  static constexpr auto E16 = 10'000'000'000'000'000ull;
+  static constexpr auto E19 = E16 * 1000;
+  static constexpr auto E38 = static_cast<__uint128_t>(E19) * E19;
+
+  template <int N, typename T>
   void print(T x) {
     if constexpr (N == 0) {
       memcpy(cur, &LUT.first[x], 4);
@@ -387,6 +511,21 @@ struct FastOutput {
       memcpy(cur, &LUT.second[x % 10000], 4);
       cur += 4;
     }
+  }
+
+  template <int N, typename T>
+  void print_full(T x) {
+    if constexpr (N > 0) print_full<N - 1>(x / 10000);
+    memcpy(cur, &LUT.second[x % 10000], 4);
+    cur += 4;
+  }
+
+  void print_w19(uint64_t x) {
+    auto high = static_cast<uint32_t>(x / E16);
+    auto low = x - high * E16;
+    memcpy(cur, &LUT.second[high][1], 3);
+    cur += 3;
+    print_full<3>(low);
   }
 };
 

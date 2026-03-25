@@ -1,7 +1,8 @@
 // https://judge.yosupo.jp/problem/range_affine_point_get
 
+#pragma GCC optimize(3)
 #include <bits/stdc++.h>
-#include "lib/utils/fast_io_basic.hpp"
+#include "lib/utils/fast_io.hpp"
 #include "lib/ds/seg_tree/tag_seg_tree.hpp"
 using namespace std;
 
@@ -23,12 +24,12 @@ struct RangeAffinePointGet {
   static constexpr Tag tag_id() noexcept { return {1, 0}; };
 
   static constexpr void compose(Tag& lhs, const Tag& rhs) {
-    lhs.b = static_cast<uint64_t>(lhs.b) * rhs.b % P;
-    lhs.c = (static_cast<uint64_t>(lhs.c) * rhs.b + rhs.c) % P;
+    lhs.b = 1ull * lhs.b * rhs.b % P;
+    lhs.c = (1ull * lhs.c * rhs.b + rhs.c) % P;
   }
 
   static constexpr void apply(Info& info, const Tag& tag) {
-    info = (static_cast<uint64_t>(tag.b) * info + tag.c) % P;
+    info = (1ull * tag.b * info + tag.c) % P;
   }
 };
 

@@ -1,7 +1,7 @@
 // https://qoj.ac/problem/21608
 
 #include <bits/stdc++.h>
-#include "lib/utils/fast_io_basic.hpp"
+#include "lib/utils/fast_io.hpp"
 #include "lib/math/linalg/det_fixed_mod.hpp"
 using namespace std;
 

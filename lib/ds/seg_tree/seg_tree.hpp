@@ -28,20 +28,14 @@ struct SegTree {
 
   template <typename F>
   void build(uint32_t _m, F&& func) {
-    m = _m;
-    n = 1;
-    while (n < m) n <<= 1;
-    t.assign(n << 1, T::id());
+    build(_m);
     for (uint32_t i = 0; i < m; ++i) t[n + i] = func(i);
     for (uint32_t i = n - 1; i > 0; --i) push_up(i);
   }
 
   template <typename It>
   void build(It first, It last) {
-    m = std::distance(first, last);
-    n = 1;
-    while (n < m) n <<= 1;
-    t.assign(n << 1, T::id());
+    build(static_cast<uint32_t>(std::distance(first, last)));
     std::copy(first, last, t.begin() + n);
     for (uint32_t i = n - 1; i > 0; --i) push_up(i);
   }

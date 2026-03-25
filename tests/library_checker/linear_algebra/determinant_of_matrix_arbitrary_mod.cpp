@@ -2,7 +2,7 @@
 
 #pragma GCC optimize("Ofast,unroll-loops")
 #include <bits/stdc++.h>
-#include "lib/utils/fast_io_basic.hpp"
+#include "lib/utils/fast_io.hpp"
 #include "lib/math/linalg/det_mod.hpp"
 using namespace std;
 

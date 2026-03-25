@@ -2,7 +2,7 @@
 
 #pragma GCC optimize("Ofast")
 #include <bits/stdc++.h>
-#include "lib/utils/fast_io.hpp"
+#include "lib/utils/fast_io_simd.hpp"
 using namespace std;
 
 using ll  = long long;

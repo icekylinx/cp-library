@@ -25,7 +25,7 @@ void solve_main() {
   fwt_or<P>(a.data(), m);
   fwt_or<P>(b.data(), m);
   for (int i = 0; i < m; ++i) {
-    a[i] = static_cast<uint64_t>(a[i]) * b[i] % P;
+    a[i] = 1ull * a[i] * b[i] % P;
   }
   ifwt_or<P>(a.data(), m);
 
