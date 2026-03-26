@@ -19,8 +19,8 @@ void solve_main() {
   uint32_t n = fread(s, 1, N, stdin) - 1;
   auto z = z_algo(s, n);
   z[0] = 0;
-  for (int x : z) {
-    io << static_cast<uint32_t>(x) << ' ';
+  for (uint32_t x : z) {
+    io << x << ' ';
   }
 }
 

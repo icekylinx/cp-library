@@ -4,7 +4,7 @@
 
 template <typename T, uint32_t N = 16, std::random_access_iterator It,
           typename F>
-void radix_sort_u32(It f, uint32_t n, F&& func) {
+void radix_sort_u32(It f, const uint32_t n, F&& func) {
   CHECK(N <= 16);
 
   static constexpr uint32_t Mask = (1u << N) - 1;
@@ -39,7 +39,7 @@ void radix_sort_u32(It f, uint32_t n, F&& func) {
 
 template <typename T, uint32_t N = 16, std::random_access_iterator It,
           typename F>
-void radix_sort_u64(It f, uint32_t n, F&& func) {
+void radix_sort_u64(It f, const uint32_t n, F&& func) {
   CHECK(N <= 16);
 
   static constexpr uint32_t Mask = (1u << N) - 1;
@@ -82,4 +82,14 @@ void radix_sort_u64(It f, uint32_t n, F&& func) {
   for (uint32_t i = n; i--; ) {
     f[--cnt4[func(tmp[i]) >> N3]] = std::move(tmp[i]);
   }
+}
+
+template <typename T, uint32_t N = 16, typename Array, typename F>
+void radix_sort_u32(Array& a, F&& func) {
+  radix_sort_u32<T, N>(a.data(), a.size(), func);
+}
+
+template <typename T, uint32_t N = 16, typename Array, typename F>
+void radix_sort_u64(Array& a, F&& func) {
+  radix_sort_u64<T, N>(a.data(), a.size(), func);
 }

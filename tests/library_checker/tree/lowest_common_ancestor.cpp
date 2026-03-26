@@ -1,8 +1,8 @@
-// https://judge.yosupo.jp/problem/staticrmq
+// https://judge.yosupo.jp/problem/lca
 
-#pragma GCC optimize(3)
 #include <bits/stdc++.h>
 #include "lib/utils/fast_io.hpp"
+#include "lib/tree/parent_to_dfn.hpp"
 #include "lib/ds/sparse_table/blocked_sparse_table.hpp"
 using namespace std;
 
@@ -26,14 +26,25 @@ void solve_main() {
   int n, q;
   io >> n >> q;
 
-  BlockedSparseTable<RangeMin<uint32_t>> t(n, [&](uint32_t i) {
-    return io.in->read<uint32_t>();
+  vector<uint32_t> p(n), rev(n);
+  for (int i = 1; i < n; ++i) {
+    p[i] = io.in->read_small<uint32_t>();
+  }
+  auto dfn = parent_to_dfn(p);
+  for (int i = 1; i < n; ++i) {
+    rev[dfn[i]] = p[i];
+  }
+
+  BlockedSparseTable<RangeMin<uint32_t>, 64> t(n, [&](uint32_t i) {
+    return rev[i];
   });
 
   while (q--) {
     uint32_t l = io.in->read_small<uint32_t>();
     uint32_t r = io.in->read_small<uint32_t>();
-    io << t.prod(l, r) << '\n';
+    uint32_t u = std::min(dfn[l], dfn[r]);
+    uint32_t v = std::max(dfn[l], dfn[r]);
+    io << t.prod(u + 1, v + 1) << '\n';
   }
 }
 

@@ -58,7 +58,7 @@ void ifwt_xor(It f) {
 }
 
 template <uint32_t P, std::random_access_iterator It, uint32_t N = 0>
-void fwt_xor(It f, uint32_t n) {
+void fwt_xor(It f, const uint32_t n) {
   if constexpr (N <= 30) {
     if (n <= 1u << N) {
       fwt_xor<P, 1u << N>(f);
@@ -69,7 +69,7 @@ void fwt_xor(It f, uint32_t n) {
 }
 
 template <uint32_t P, std::random_access_iterator It, uint32_t N = 0>
-void ifwt_xor(It f, uint32_t n) {
+void ifwt_xor(It f, const uint32_t n) {
   if constexpr (N <= 30) {
     if (n <= 1u << N) {
       ifwt_xor<P, 1u << N>(f);
@@ -77,4 +77,14 @@ void ifwt_xor(It f, uint32_t n) {
       ifwt_xor<P, It, N + 1>(f, n);
     }
   }
+}
+
+template <uint32_t P, typename Poly>
+void fwt_xor(Poly& f) {
+  fwt_xor<P>(f.data(), f.size());
+}
+
+template <uint32_t P, typename Poly>
+void ifwt_xor(Poly& f) {
+  ifwt_xor<P>(f.data(), f.size());
 }

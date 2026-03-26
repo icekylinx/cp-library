@@ -39,7 +39,7 @@ void ifwt_and(It f) {
 }
 
 template <uint32_t P, std::random_access_iterator It, uint32_t N = 0>
-void fwt_and(It f, uint32_t n) {
+void fwt_and(It f, const uint32_t n) {
   if constexpr (N <= 30) {
     if (n <= 1u << N) {
       fwt_and<P, 1u << N>(f);
@@ -50,7 +50,7 @@ void fwt_and(It f, uint32_t n) {
 }
 
 template <uint32_t P, std::random_access_iterator It, uint32_t N = 0>
-void ifwt_and(It f, uint32_t n) {
+void ifwt_and(It f, const uint32_t n) {
   if constexpr (N <= 30) {
     if (n <= 1u << N) {
       ifwt_and<P, 1u << N>(f);
@@ -58,4 +58,14 @@ void ifwt_and(It f, uint32_t n) {
       ifwt_and<P, It, N + 1>(f, n);
     }
   }
+}
+
+template <uint32_t P, typename Poly>
+void fwt_and(Poly& f) {
+  fwt_and<P>(f.data(), f.size());
+}
+
+template <uint32_t P, typename Poly>
+void ifwt_and(Poly& f) {
+  ifwt_and<P>(f.data(), f.size());
 }

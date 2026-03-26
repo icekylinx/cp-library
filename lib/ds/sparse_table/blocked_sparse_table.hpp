@@ -2,7 +2,7 @@
 
 #include "lib/utils/debug.hpp"
 
-template <typename T, uint32_t B>
+template <typename T, uint32_t B = 16>
 struct BlockedSparseTable {
   using Info = typename T::Info;
 
@@ -23,7 +23,17 @@ struct BlockedSparseTable {
 
   template <typename It>
   void build(It first, It last) {
-    n = std::distance(first, last);
+    int _n = std::distance(first, last);
+    CHECK(_n >= 0);
+    std::vector<Info> vec(first, last);
+    build(static_cast<uint32_t>(_n), [&](uint32_t i) {
+      return vec[i];
+    });
+  }
+
+  template <typename F>
+  void build(uint32_t _n, F&& func) {
+    n = _n;
     if (n == 0) {
       h = 0;
       st.clear();
@@ -40,14 +50,15 @@ struct BlockedSparseTable {
     suf.assign(m, T::id());
 
     for (uint32_t i = 0; i < n; ++i) {
-      val[i] = *first++;
+      val[i] = func(i);
       pre[i] = i % B == 0 ? val[i] : T::op(pre[i - 1], val[i]);
     }
 
     for (uint32_t i = 0; i < m; i += B) {
-      int down = i, up = i + B - 1;
+      uint32_t down = i, up = i + B - 1;
       suf[up] = val[up];
-      while (--up >= down) {
+      while (up > down) {
+        --up;
         suf[up] = T::op(val[up], suf[up + 1]);
       }
       st[0][i / B] = suf[down];
@@ -61,15 +72,6 @@ struct BlockedSparseTable {
         st[i][j] = T::op(st[i - 1][j], st[i - 1][j + half]);
       } 
     }
-  }
-
-  template <typename F>
-  void build(uint32_t _n, F&& func) {
-    std::vector<Info> vec(_n);
-    for (uint32_t i = 0; i < _n; ++i) {
-      vec[i] = func(i);
-    }
-    build(vec.begin(), vec.end());
   }
 
   Info prod(uint32_t l, uint32_t r) const {

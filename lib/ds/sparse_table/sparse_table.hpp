@@ -20,7 +20,17 @@ struct SparseTable {
 
   template <typename It>
   void build(It first, It last) {
-    n = std::distance(first, last);
+    int _n = std::distance(first, last);
+    CHECK(_n >= 0);
+    std::vector<Info> vec(first, last);
+    build(static_cast<uint32_t>(_n), [&](uint32_t i) {
+      return vec[i];
+    });
+  }
+
+  template <typename F>
+  void build(uint32_t _n, F&& func) {
+    n = _n;
     if (n == 0) {
       h = 0;
       st.clear();
@@ -32,7 +42,7 @@ struct SparseTable {
 
     st[0].resize(n);
     for (uint32_t i = 0; i < n; ++i) {
-      st[0][i] = *first++;
+      st[0][i] = func(i);
     }
 
     for (int i = 1; i < h; ++i) {
@@ -43,15 +53,6 @@ struct SparseTable {
         st[i][j] = T::op(st[i - 1][j], st[i - 1][j + half]);
       } 
     }
-  }
-
-  template <typename F>
-  void build(uint32_t _n, F&& func) {
-    std::vector<Info> vec(_n);
-    for (uint32_t i = 0; i < _n; ++i) {
-      vec[i] = func(i);
-    }
-    build(vec.begin(), vec.end());
   }
 
   Info prod(uint32_t l, uint32_t r) const {
