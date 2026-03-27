@@ -1,11 +1,9 @@
-Updated on March 26, 2026, at 9:27 AM (UTC+8).
+Updated on March 27, 2026, at 1:05 PM (UTC+8).
 
 ## Benchmark (Library Checker)
 
 ### Currently Fastest Submissions
 
-- **[Original]** [Line Add Get Min - 57 ms](https://judge.yosupo.jp/submission/362191)
-- **[Original]** [Segment Add Get Min - 62 ms](https://judge.yosupo.jp/submission/357121)
 - [Deque - 7 ms](https://judge.yosupo.jp/submission/362377)
 - [Range Add Range Min - 89 ms](https://judge.yosupo.jp/submission/361524)
 - [Many A + B (128 bit) - 33 ms](https://judge.yosupo.jp/submission/357182)
@@ -13,6 +11,9 @@ Updated on March 26, 2026, at 9:27 AM (UTC+8).
 - [Static Range Sum - 17 ms](https://judge.yosupo.jp/submission/356315)
 - [Static RMQ - 20 ms](https://judge.yosupo.jp/submission/362370)
 - [Point Set Range Composite (Large Array) - 94 ms](https://judge.yosupo.jp/submission/361521)
+- [Line Add Get Min - 57 ms](https://judge.yosupo.jp/submission/362191)
+- [Segment Add Get Min - 62 ms](https://judge.yosupo.jp/submission/357121)
+- [Static Range Frequency - 46 ms](https://judge.yosupo.jp/submission/362490)
 - [Counting Spanning Trees (Undirected) - 20 ms](https://judge.yosupo.jp/submission/362200)
 - [Counting Spanning Trees (Directed) - 19 ms](https://judge.yosupo.jp/submission/362202)
 - [Tree Diameter - 26 ms](https://judge.yosupo.jp/submission/361517)

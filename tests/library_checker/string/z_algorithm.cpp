@@ -14,8 +14,9 @@ void solve_main() {
   auto& cur = io.in->cur;
   uint32_t n = 0;
   while (cur[n] >= 'a') ++n;
-  for (int x : z_algo(cur, n)) {
-    io << static_cast<uint32_t>(x) << ' ';
+  for (uint32_t x : z_algo(cur, n)) {
+    io.out->write_w8(x);
+    io << ' ';
   }
 }
 

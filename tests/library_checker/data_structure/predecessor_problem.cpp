@@ -75,7 +75,7 @@ void solve_main() {
     } else if (op == '2') {
       io << s.get(k) << '\n';
     } else if (op == '3') {
-      if (k != 0) {
+      if (k != 0) [[likely]] {
         io << s.next(k - 1) << '\n';
       } else {
         io << (s.get(0) ? 0 : s.next(0)) << '\n';

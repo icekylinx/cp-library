@@ -45,7 +45,9 @@ void solve_main() {
   }
 
   io << ans << '\n';
-  for (auto x : mst) io << x << ' ';
+  for (auto x : mst) {
+    io << x << ' ';
+  }
 }
 
 int main() {

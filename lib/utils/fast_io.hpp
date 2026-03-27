@@ -269,6 +269,20 @@ struct FastOutput {
   }
 
   template <std::unsigned_integral T>
+  void write_w4(T x) {
+    print<0>(x);
+  }
+
+  template <std::unsigned_integral T>
+  void write_w8(T x) {
+    if (x > 9999) {
+      print<1>(x);
+    } else {
+      print<0>(x);
+    }
+  }
+
+  template <std::unsigned_integral T>
     requires(sizeof(T) < 8)
   void write(T x) {
     if (x > 99'999'999) {
@@ -285,7 +299,7 @@ struct FastOutput {
   void write(T x) {
     if (x > 9'999'999'999'999'999ull) {
       print<4>(x);
-    } else if (x > 999'999'999'999ull) [[likely]] {
+    } else if (x > 999'999'999'999ull) {
       print<3>(x);
     } else if (x > 99'999'999) {
       print<2>(x);
@@ -315,13 +329,13 @@ struct FastOutput {
   }
 
   FastOutput& operator<<(bool x) {
-    flush<1>();
+    flush<20>();
     *cur++ = x + '0';
     return *this;
   }
 
   FastOutput& operator<<(char x) {
-    flush<1>();
+    flush<20>();
     *cur++ = x;
     return *this;
   }
@@ -351,7 +365,7 @@ struct FastOutput {
   }
 
   FastOutput& operator<<(const EndLine& end_line) {
-    flush<1>();
+    flush<20>();
     *cur++ = '\n';
     flush();
     return *this;
