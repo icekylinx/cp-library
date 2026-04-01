@@ -1,4 +1,4 @@
-Updated on March 27, 2026, at 1:05 PM (UTC+8).
+Updated on Apr 1, 2026, at 12:37 AM (UTC+8).
 
 ## Benchmark (Library Checker)
 
@@ -14,6 +14,7 @@ Updated on March 27, 2026, at 1:05 PM (UTC+8).
 - [Line Add Get Min - 57 ms](https://judge.yosupo.jp/submission/362191)
 - [Segment Add Get Min - 62 ms](https://judge.yosupo.jp/submission/357121)
 - [Static Range Frequency - 46 ms](https://judge.yosupo.jp/submission/362490)
+- [Static Range Count Distinct - 49 ms](https://judge.yosupo.jp/submission/363615)
 - [Counting Spanning Trees (Undirected) - 20 ms](https://judge.yosupo.jp/submission/362200)
 - [Counting Spanning Trees (Directed) - 19 ms](https://judge.yosupo.jp/submission/362202)
 - [Tree Diameter - 26 ms](https://judge.yosupo.jp/submission/361517)
@@ -41,7 +42,7 @@ Updated on March 27, 2026, at 1:05 PM (UTC+8).
 ### Library Code
 - We recommend using the provided `template.cpp`. Otherwise, you will need to include `<bits/stdc++.h>`.
 - Always use half-open intervals `[left, right)`. All data structures are 0-indexed.
-- We assume `uint32_t` is large enough to store sizes. Note that `size = 0` may lead to unexpected behavior.
+- We assume `uint32_t` is large enough to store sizes. Note that `size == 0` may lead to unexpected behavior.
 - Do not call low-level functions or change their arguments unless you clearly understand what you are doing.
 - This library performs only limited safety checks. Please ensure that all input arguments are valid.
 
