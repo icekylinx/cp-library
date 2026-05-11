@@ -2,6 +2,7 @@
 
 #pragma GCC optimize(3)
 #include <bits/stdc++.h>
+#include <cassert>
 #include "lib/utils/fast_io.hpp"
 #include "lib/math/conv/fwt_xor.hpp"
 using namespace std;

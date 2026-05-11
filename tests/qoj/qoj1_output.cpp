@@ -1,4 +1,4 @@
-// https://judge.yosupo.jp/problem/aplusb
+// https://qoj.ac/problem/1
 
 #include <bits/stdc++.h>
 #include <cassert>
@@ -10,10 +10,28 @@ using ull = unsigned long long;
 
 // FastIO<1 << 20, 1 << 19> io;
 
+constexpr int N = 1e7;
+
+char a[10 * N];
+
 void solve_main() {
-  uint32_t a, b;
-  cin >> a >> b;
-  cout << a + b << '\n';
+  int n;
+  cin >> n;
+
+  for (int i = 0; i < n; ++i) {
+    a[i * 10 + 0] = '9';
+    a[i * 10 + 1] = '9';
+    a[i * 10 + 2] = '9';
+    a[i * 10 + 3] = '9';
+    a[i * 10 + 4] = '9';
+    a[i * 10 + 5] = '9';
+    a[i * 10 + 6] = '9';
+    a[i * 10 + 7] = '9';
+    a[i * 10 + 8] = '9';
+    a[i * 10 + 9] = ' ';
+  }
+
+  fwrite(a, 1, n * 10, stdout);
 }
 
 int main() {

@@ -1,6 +1,7 @@
 // https://judge.yosupo.jp/problem/lca
 
 #include <bits/stdc++.h>
+#include <cassert>
 #include "lib/utils/fast_io.hpp"
 #include "lib/tree/parent_to_dfn.hpp"
 #include "lib/ds/sparse_table/blocked_sparse_table.hpp"

@@ -2,6 +2,7 @@
 
 #pragma GCC optimize("Ofast,unroll-loops")
 #include <bits/stdc++.h>
+#include <cassert>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/dsu/dsu.hpp"
 #include "lib/algo/radix_sort.hpp"

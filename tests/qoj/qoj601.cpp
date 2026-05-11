@@ -1,6 +1,7 @@
 // https://qoj.ac/problem/601
 
 #include <bits/stdc++.h>
+#include <cassert>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/li_chao_tree/li_chao_seg_tree_offline.hpp"
 #include "lib/algo/radix_sort.hpp"

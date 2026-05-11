@@ -1,4 +1,4 @@
-Updated on Apr 1, 2026, at 12:37 AM (UTC+8).
+Updated: 2026-05-11T10:30:00+08:00.
 
 ## Benchmark (Library Checker)
 
@@ -27,6 +27,21 @@ Updated on Apr 1, 2026, at 12:37 AM (UTC+8).
 
 - [Minimum Spanning Tree - 29 ms](https://judge.yosupo.jp/submission/361514)
 
+## Benchmark (QOJ)
+
+### Currently Fastest Submissions
+
+- [#1. I/O Test - 28 ms](https://qoj.ac/submission/2076509)
+- [#601. 李超树 - 56 ms](https://qoj.ac/submission/2076625)
+- [#786. Z 函数 - 16 ms](https://qoj.ac/submission/2128639)
+- [#1002. 快速 OR 卷积 - 4 ms](https://qoj.ac/submission/2076634)
+- [#1003. 快速 AND 卷积 - 4 ms](https://qoj.ac/submission/2000420)
+- [#1004. 快速 XOR 卷积 - 4 ms](https://qoj.ac/submission/1998820)
+- [#4535. V - 142 ms](https://qoj.ac/submission/2089149)
+- [#5057. Prof. Pang's sequence - 298 ms](https://qoj.ac/submission/2089165)
+- [#21608. 行列式 - 13 ms](https://qoj.ac/submission/2151525)
+- [#21979. 最小生成树 - 24 ms](https://qoj.ac/submission/2162111)
+
 ## Usage
  
 ### How to Include
@@ -40,7 +55,7 @@ Updated on Apr 1, 2026, at 12:37 AM (UTC+8).
 - Performance is generally better on Unix-like systems.
 
 ### Library Code
-- We recommend using the provided `template.cpp`. Otherwise, you will need to include `<bits/stdc++.h>`.
+- We recommend using the provided `template.cpp`. Otherwise, you will need to include `<bits/stdc++.h>` and `<cassert>`.
 - Always use half-open intervals `[left, right)`. All data structures are 0-indexed.
 - We assume `uint32_t` is large enough to store sizes. Note that `size == 0` may lead to unexpected behavior.
 - Do not call low-level functions or change their arguments unless you clearly understand what you are doing.

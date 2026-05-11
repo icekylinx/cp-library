@@ -2,6 +2,7 @@
 
 #pragma GCC optimize(3)
 #include <bits/stdc++.h>
+#include <cassert>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/seg_tree/tag_seg_tree.hpp"
 using namespace std;

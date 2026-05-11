@@ -1,6 +1,7 @@
 // https://judge.yosupo.jp/problem/point_add_range_sum
 
 #include <bits/stdc++.h>
+#include <cassert>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/fenwick_tree/fast_fenwick_tree.hpp"
 using namespace std;

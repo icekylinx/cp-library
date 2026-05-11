@@ -1,9 +1,9 @@
-// https://judge.yosupo.jp/problem/many_aplusb_128bit
+// https://qoj.ac/problem/1
 
-#pragma GCC optimize("Ofast")
+#pragma GCC optimize(3)
 #include <bits/stdc++.h>
 #include <cassert>
-#include "lib/utils/fast_io_simd.hpp"
+#include "lib/utils/fast_io.hpp"
 using namespace std;
 
 using ll  = long long;
@@ -11,23 +11,17 @@ using ull = unsigned long long;
 
 FastIO<1 << 20, 1 << 19> io;
 
-constexpr uint32_t B = 1 << 12;
-
-__int128_t sum[B];
-
 void solve_main() {
-  uint32_t n;
+  int n;
   io >> n;
 
-  for (uint32_t base = 0; base < n; base += B) {
-    uint32_t cnt = min(B, n - base);
-    for (uint32_t i = 0; i < cnt; ++i) {
-      sum[i] = io.in->read<__int128_t>() + io.in->read<__int128_t>();
-    }
-    for (uint32_t i = 0; i < cnt; ++i) {
-      io << sum[i] << '\n';
-    }
+  uint64_t sum = 0;
+
+  while (n--) {
+    sum += io.in->read<uint32_t>();
   }
+
+  io << sum;
 }
 
 int main() {

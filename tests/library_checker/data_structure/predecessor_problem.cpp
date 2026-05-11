@@ -3,6 +3,7 @@
 #pragma GCC optimize("Ofast,unroll-loops")
 #pragma GCC target("avx2")
 #include <bits/stdc++.h>
+#include <cassert>
 #include <immintrin.h>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/set/integer_set.hpp"

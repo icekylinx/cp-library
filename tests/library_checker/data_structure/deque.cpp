@@ -1,6 +1,7 @@
 // https://judge.yosupo.jp/problem/deque
 
 #include <bits/stdc++.h>
+#include <cassert>
 #include "lib/utils/fast_io.hpp"
 using namespace std;
 

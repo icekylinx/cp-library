@@ -1,6 +1,7 @@
 // https://judge.yosupo.jp/problem/zalgorithm
 
 #include <bits/stdc++.h>
+#include <cassert>
 #include "lib/utils/fast_io.hpp"
 #include "lib/string/z_algo.hpp"
 using namespace std;

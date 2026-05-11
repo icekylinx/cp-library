@@ -2,6 +2,7 @@
 
 #pragma GCC optimize("Ofast")
 #include <bits/stdc++.h>
+#include <cassert>
 #include "lib/utils/fast_io_simd.hpp"
 using namespace std;
 
