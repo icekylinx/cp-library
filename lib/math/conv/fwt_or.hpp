@@ -1,5 +1,9 @@
 #pragma once
 
+#include <algorithm>
+#include <cstdint>
+#include <iterator>
+
 #include "lib/utils/debug.hpp"
 
 template <uint32_t P, uint32_t N, std::random_access_iterator It>

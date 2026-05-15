@@ -1,5 +1,8 @@
 #pragma once
 
+#include <chrono>
+#include <cstdint>
+
 // Based on https://xoshiro.di.unimi.it/splitmix64.c
 struct SplitMix64 {
   uint64_t seed;

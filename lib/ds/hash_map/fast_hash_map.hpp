@@ -1,5 +1,9 @@
 #pragma once
 
+#include <array>
+#include <bitset>
+#include <cstdint>
+
 template <typename K, typename V, uint32_t N>
 struct FastHashMap {
   static constexpr uint32_t Size  = 1u << N;

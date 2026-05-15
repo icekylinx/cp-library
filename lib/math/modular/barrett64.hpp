@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "lib/utils/debug.hpp"
 
 struct Barrett64 {

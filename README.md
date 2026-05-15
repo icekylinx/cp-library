@@ -22,6 +22,7 @@ Updated: 2026-05-11T10:30:00+08:00.
 - [Montmort Number - 12 ms](https://judge.yosupo.jp/submission/361267)
 - [Determinant of Matrix - 15 ms](https://judge.yosupo.jp/submission/361510)
 - [Z Algorithm - 6 ms](https://judge.yosupo.jp/submission/362211)
+- [Longest Increasing Subsequence - 10 ms](https://judge.yosupo.jp/submission/372659)
 
 ### Previously Fastest Submissions
 
@@ -55,7 +56,7 @@ Updated: 2026-05-11T10:30:00+08:00.
 - Performance is generally better on Unix-like systems.
 
 ### Library Code
-- We recommend using the provided `template.cpp`. Otherwise, you will need to include `<bits/stdc++.h>` and `<cassert>`.
+- We recommend using the provided `template.cpp`.
 - Always use half-open intervals `[left, right)`. All data structures are 0-indexed.
 - We assume `uint32_t` is large enough to store sizes. Note that `size == 0` may lead to unexpected behavior.
 - Do not call low-level functions or change their arguments unless you clearly understand what you are doing.

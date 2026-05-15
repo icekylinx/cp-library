@@ -1,5 +1,8 @@
 #pragma once
 
+#include <algorithm>
+#include <cstdint>
+
 #include "lib/utils/debug.hpp"
 #include "lib/math/modular/barrett64.hpp"
 

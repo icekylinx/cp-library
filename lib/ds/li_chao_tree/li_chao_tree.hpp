@@ -1,3 +1,9 @@
+#pragma once
+
+#include <algorithm>
+#include <cstdint>
+#include <vector>
+
 template <typename T>
 struct LiChaoTree {
   using Line  = typename T::Line;

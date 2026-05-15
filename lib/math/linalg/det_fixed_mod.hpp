@@ -1,7 +1,10 @@
 #pragma once
 
 #pragma GCC target("avx2")
+#include <algorithm>
+#include <cstdint>
 #include <immintrin.h>
+#include <vector>
 
 #include "lib/utils/debug.hpp"
 

@@ -1,5 +1,10 @@
 #pragma once
 
+#include <algorithm>
+#include <cstdint>
+#include <iterator>
+#include <vector>
+
 #include "lib/utils/debug.hpp"
 
 template <typename T>

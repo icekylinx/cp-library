@@ -1,5 +1,15 @@
 #pragma once
 
+#include <array>
+#include <concepts>
+#include <cstddef>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <string>
+#include <type_traits>
+#include <utility>
+
 #include "lib/utils/debug.hpp"
 
 #ifdef __unix__

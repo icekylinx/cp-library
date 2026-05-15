@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cstdint>
+#include <vector>
+
 #include "lib/utils/debug.hpp"
 
 struct DSU {

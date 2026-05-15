@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cstdint>
+#include <vector>
+
 #include "lib/utils/debug.hpp"
 
 // Based on https://codeforces.com/blog/entry/135239

@@ -1,5 +1,12 @@
 #pragma once
 
+#include <algorithm>
+#include <array>
+#include <cstdint>
+#include <iterator>
+#include <utility>
+#include <vector>
+
 #include "lib/utils/debug.hpp"
 
 template <typename T, uint32_t N = 16, std::random_access_iterator It,

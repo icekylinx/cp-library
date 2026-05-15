@@ -1,5 +1,10 @@
 #pragma once
 
+#include <algorithm>
+#include <cstdint>
+#include <iterator>
+#include <vector>
+
 template <std::random_access_iterator It>
 auto z_algo(It s, const uint32_t n) {
   if (n == 0) [[unlikely]] return std::vector<uint32_t>{};

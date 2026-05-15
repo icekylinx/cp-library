@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #include "lib/ds/hash_map/hash_map_core.hpp"
 #include "lib/math/hash/splitmix64.hpp"
 

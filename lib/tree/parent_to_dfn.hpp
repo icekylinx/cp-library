@@ -1,5 +1,10 @@
 #pragma once
 
+#include <cstdint>
+#include <iterator>
+#include <utility>
+#include <vector>
+
 #include "lib/utils/debug.hpp"
 
 template <std::random_access_iterator It>

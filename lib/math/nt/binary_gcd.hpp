@@ -1,5 +1,11 @@
 #pragma once
 
+#include <algorithm>
+#include <bit>
+#include <concepts>
+#include <cstdlib>
+#include <type_traits>
+
 // Based on https://en.algorithmica.org/hpc/algorithms/gcd/
 template <std::signed_integral T>
 T binary_gcd(T a, T b) {

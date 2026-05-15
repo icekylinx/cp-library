@@ -1,5 +1,9 @@
 #pragma once
 
+#include <functional>
+#include <type_traits>
+#include <utility>
+
 template <typename F>
 struct y_combinator_t {
   F func;

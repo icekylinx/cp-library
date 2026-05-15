@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 template <typename T>
 struct FastHasher {
   static constexpr uint64_t Magic = 11400714819323198485ull;

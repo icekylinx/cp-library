@@ -1,8 +1,13 @@
 #pragma once
 
+#include <algorithm>
+#include <cstdint>
+#include <iterator>
+#include <vector>
+
 #include "lib/utils/debug.hpp"
 
-// Based on https://en.algorithmica.org/hpc/data-structures/segment-trees/#fenwick-trees
+// Based on https://en.algorithmica.org/hpc/data-structures/segment-trees/
 template <typename T>
 struct FastFenwickTree {
   using Info = typename T::Info;

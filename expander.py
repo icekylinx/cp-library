@@ -8,6 +8,7 @@ Written by ChatGPT (GPT-5.2 Thinking).
 Behavior:
 - Expand only quote-includes that resolve inside lib/... into one file.
 - Ignore all '#pragma once' lines (remove them from output).
+- Preserve only the first occurrence of each angle-bracket include.
 - Preserve original comments from source files; do NOT add any extra comments to generated C++ output.
 - When an include expands a new file, insert a blank line after the expanded chunk.
 - After all operations:
@@ -22,7 +23,9 @@ import re
 import sys
 from pathlib import Path
 
-INCLUDE_RE = re.compile(r'^\s*#\s*include\s*([<"])([^">]+)\1\s*$')
+INCLUDE_RE = re.compile(
+    r'^\s*#\s*include\s*(?:<(?P<official>[^>]+)>|"(?P<quote>[^"]+)")\s*$'
+)
 PRAGMA_ONCE_RE = re.compile(r'^\s*#\s*pragma\s+once(?:\s*//.*)?\s*$')
 
 
@@ -49,6 +52,7 @@ def expand_file(
     project_root: Path,
     lib_dir: Path,
     included: set[Path],
+    official_includes: set[str],
     stack: list[Path],
 ) -> list[str]:
     file_path = file_path.resolve()
@@ -78,11 +82,16 @@ def expand_file(
             out.append(raw_line)
             continue
 
-        bracket, inc = m.group(1), m.group(2).strip()
-
-        if bracket == "<":
+        official_inc = m.group("official")
+        if official_inc is not None:
+            inc = official_inc.strip()
+            if inc in official_includes:
+                continue
+            official_includes.add(inc)
             out.append(raw_line)
             continue
+
+        inc = m.group("quote").strip()
 
         cand = (base_dir / inc).resolve()
         if not cand.exists():
@@ -94,6 +103,7 @@ def expand_file(
                 project_root=project_root,
                 lib_dir=lib_dir,
                 included=included,
+                official_includes=official_includes,
                 stack=stack,
             )
             if inlined:
@@ -164,6 +174,7 @@ def main() -> int:
         project_root=project_root,
         lib_dir=lib_dir,
         included=set(),
+        official_includes=set(),
         stack=[],
     )
 

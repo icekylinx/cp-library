@@ -1,5 +1,9 @@
 #pragma once
 
+#include <cstdint>
+#include <type_traits>
+#include <vector>
+
 #include "lib/utils/debug.hpp"
 
 template <uint32_t B = 24>
