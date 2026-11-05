@@ -216,3 +216,8 @@ int main() {
 ```
 
 The current implementation provides the interfaces above, but no find_first or max_right search members. Implement searches in the caller or extend the type if needed.
+
+## Further reading
+
+- [Ordered monoids](../../guides/algebra.md)
+- [Choosing a range structure](../../guides/data_structures.md)

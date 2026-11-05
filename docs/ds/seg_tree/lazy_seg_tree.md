@@ -57,8 +57,15 @@ int main() {
 
 ## Notes
 
+The constructor length is the logical size, stored internally as m. The internal n is the padded power-of-two leaf count; do not use it as the public index bound.
+
 Require x < n and 0 <= l <= r <= n; empty intervals return id(). The leaf count is padded to a power of two. When using apply_all, tags must leave padded identity values unchanged. Call build before using a default-constructed tree.
 
 ## Related examples
 
 - [data_structure/range_affine_range_sum.cpp](../../../tests/library_checker/data_structure/range_affine_range_sum.cpp)
+
+## Further reading
+
+- [Chronological tag composition](../../guides/algebra.md)
+- [Choosing a range structure](../../guides/data_structures.md)

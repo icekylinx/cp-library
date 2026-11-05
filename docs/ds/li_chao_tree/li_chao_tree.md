@@ -59,3 +59,7 @@ get accepts an actual coordinate; offline variants accept a compressed index ins
 ## Related examples
 
 No existing Library Checker program directly includes this header. The example above checks only the usage shown.
+
+## Further reading
+
+- [Coordinate domains and offline variants](../../guides/offline_coordinates.md)

@@ -66,3 +66,7 @@ fast_io.hpp and fast_io_simd.hpp define the same types in the same namespace; in
 - [data_structure/associative_array.cpp](../../tests/library_checker/data_structure/associative_array.cpp)
 - [sample/many_a_plus_b.cpp](../../tests/library_checker/sample/many_a_plus_b.cpp)
 - [sample/many_a_plus_b_128bit.cpp](../../tests/library_checker/sample/many_a_plus_b_128bit.cpp)
+
+## Further reading
+
+- [Input modes and compilation flags](../usage.md)

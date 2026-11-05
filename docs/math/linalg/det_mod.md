@@ -46,3 +46,7 @@ Modulo 1, the result is zero. For large moduli, ensure multiply-add expressions 
 ## Related examples
 
 - [linear_algebra/determinant_of_matrix_arbitrary_mod.cpp](../../../tests/library_checker/linear_algebra/determinant_of_matrix_arbitrary_mod.cpp)
+
+## Further reading
+
+- [Official checker evidence and timing limits](../../guides/verification.md)

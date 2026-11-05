@@ -12,8 +12,8 @@ Maintain point increments and prefix or interval aggregates.
 
 | Interface | Behavior |
 | --- | --- |
-| `Class(n) / build(n)` | Create n identity elements. |
-| `Class(n, func) / Class(first, last)` | Build in linear time from a generator or iterator range; Class denotes the type on this page. |
+| `FenwickTree(n) / build(n)` | Create n identity elements. |
+| `FenwickTree(n, func) / FenwickTree(first, last)` | Build in linear time from a generator or iterator range. |
 | `add(x, v)` | Combine the value at x with v. |
 | `sum(x)` | Aggregate [0, x), allowing x = 0 or n. |
 | `sum(l, r)` | Aggregate [l, r). |
@@ -54,3 +54,8 @@ Intervals must satisfy `0 <= l <= r <= n`. `add` applies an increment rather tha
 ## Related examples
 
 No existing Library Checker program directly includes this header. The example above checks only the usage shown.
+
+## Further reading
+
+- [Choosing a range structure](../../guides/data_structures.md)
+- [Commutative groups](../../guides/algebra.md)

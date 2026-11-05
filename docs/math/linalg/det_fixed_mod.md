@@ -49,3 +49,7 @@ The file enables GCC target("avx2") and requires a compatible x86 CPU. With prim
 - [graph/counting_spanning_trees_directed.cpp](../../../tests/library_checker/graph/counting_spanning_trees_directed.cpp)
 - [graph/counting_spanning_trees_undirected.cpp](../../../tests/library_checker/graph/counting_spanning_trees_undirected.cpp)
 - [linear_algebra/determinant_of_matrix.cpp](../../../tests/library_checker/linear_algebra/determinant_of_matrix.cpp)
+
+## Further reading
+
+- [Official checker evidence and timing limits](../../guides/verification.md)

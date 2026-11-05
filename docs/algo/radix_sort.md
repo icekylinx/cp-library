@@ -48,3 +48,7 @@ Convert signed keys to an order-preserving unsigned representation first, for ex
 - [data_structure/point_set_range_composite_large_array.cpp](../../tests/library_checker/data_structure/point_set_range_composite_large_array.cpp)
 - [data_structure/segment_add_get_min.cpp](../../tests/library_checker/data_structure/segment_add_get_min.cpp)
 - [graph/minimum_spanning_tree.cpp](../../tests/library_checker/graph/minimum_spanning_tree.cpp)
+
+## Further reading
+
+- [Sorting packed coordinate events](../guides/offline_coordinates.md)

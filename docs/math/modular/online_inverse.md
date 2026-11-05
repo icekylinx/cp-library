@@ -8,11 +8,6 @@ This header currently contains only a TODO comment; online modular inversion is 
 
 No callable types or functions are available.
 
-## Interface
-
-| Interface | Behavior |
-| --- | --- |
-
 ## Complexity
 
 No implementation is present, so no complexity or online-inversion capability is provided.

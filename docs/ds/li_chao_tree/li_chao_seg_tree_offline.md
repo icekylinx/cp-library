@@ -60,3 +60,7 @@ To insert a segment over actual coordinates [a, b), use lower_bound on the coord
 ## Related examples
 
 - [data_structure/segment_add_get_min.cpp](../../../tests/library_checker/data_structure/segment_add_get_min.cpp)
+
+## Further reading
+
+- [Coordinate compression and restricted segments](../../guides/offline_coordinates.md)

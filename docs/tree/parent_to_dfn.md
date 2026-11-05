@@ -47,3 +47,7 @@ Sibling-subtree order is implementation-defined; do not assume adjacency-list or
 ## Related examples
 
 - [tree/lowest_common_ancestor.cpp](../../tests/library_checker/tree/lowest_common_ancestor.cpp)
+
+## Further reading
+
+- [LCA recipe under ordered-parent constraints](../recipes/lca.md)

@@ -9,10 +9,11 @@ A C++ competitive programming library with 38 headers, 38 module documents, 31 L
 | [lib/](lib/) | Algorithms, data structures, mathematics, strings, trees, and utilities |
 | [tests/](tests/) | Library Checker programs |
 | [sublime_snippets/](sublime_snippets/) | Sublime Text snippets organized by module |
+| [docs/README.md](docs/README.md) | Build instructions, selection guides, algebra contracts, and recipes |
 | [docs/catalog.md](docs/catalog.md) | Index of module documents, headers, snippets, and examples |
 | [docs/usage.md](docs/usage.md) | Usage reference |
 | [benchmarks/README.md](benchmarks/README.md) | Official generators, local verification, and benchmark reproduction |
-| [benchmarks/results/2026-11-05.md](benchmarks/results/2026-11-05.md) | Local benchmark results for eight problems, compared with official reference solutions |
+| [benchmarks/coverage.md](benchmarks/coverage.md) | Per-program benchmark records and current-source header consumers |
 | [docs/benchmarks.md](docs/benchmarks.md) | Historical performance records and submission links from the original README |
 | [template.cpp](template.cpp) | Contest program template |
 | [expander.py](expander.py) | Expand includes under `lib/` into a single source file |
@@ -68,14 +69,19 @@ Each header has a corresponding `docs/module/path/name.md` page covering require
 
 ```sh
 python3 tools/update_catalog.py
+python3 tools/update_benchmark_index.py
 python3 tools/check_docs.py
 ```
 
-The first command rebuilds the catalog. The second checks header-document coverage and local links, then compiles and runs examples marked as standalone programs. See the [benchmark guide](benchmarks/README.md) for official data generation, checker verification, and timing.
+These commands rebuild the module catalog and benchmark coverage index, then check header-document coverage and local links and compile and run standalone examples. See the [benchmark guide](benchmarks/README.md) for official data generation, checker verification, and timing.
 
 ## Local benchmark
 
-The [November 5, 2026 run](benchmarks/results/2026-11-05.md) covers eight problems, with all 158 official cases accepted by their checkers. Two large inputs per problem were timed for five runs of both the library and reference programs. Raw JSON records include source hashes, input hashes, and the upstream revision. Older online performance data are retained in the [historical records](docs/benchmarks.md).
+The [coverage index](benchmarks/coverage.md) now includes evaluations for all 31 existing programs. Across the original and [expanded records](benchmarks/results/2026-11-05-expanded.md), 29 programs pass every registered case, with 581/583 official cases passing overall. Passing programs have 79 timed inputs in total.
+
+The [recorded failures](docs/known_issues.md) are the two static range programs on an official zero-query input accepted by their input verifiers. They are excluded from timing. Library and solution sources are unchanged by this expansion.
+
+The original eight-problem measurements are preserved. The expansion adds 23 evaluations, generator-diverse timing inputs, observed timing ranges, and input-contract hashes. Raw JSON records retain individual samples and source/input provenance. Older online performance data remain in the [historical records](docs/benchmarks.md).
 
 ## License
 

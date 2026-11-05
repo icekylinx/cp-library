@@ -56,8 +56,15 @@ int main() {
 
 ## Notes
 
+The constructor length is the logical size, stored internally as m. The internal n is the padded power-of-two leaf count; do not use it as the public index bound.
+
 A reference returned by get_ref does not automatically reflect later updates that have not been pushed down. Call get or get_ref again to read the current logical value. Do not retain references across build.
 
 ## Related examples
 
 - [data_structure/range_affine_point_get.cpp](../../../tests/library_checker/data_structure/range_affine_point_get.cpp)
+
+## Further reading
+
+- [Chronological tag composition](../../guides/algebra.md)
+- [Choosing a range structure](../../guides/data_structures.md)

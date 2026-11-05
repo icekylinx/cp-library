@@ -53,3 +53,8 @@ Empty intervals are allowed. Products and sums in the additive example must fit 
 ## Related examples
 
 No existing Library Checker program directly includes this header. The example above checks only the usage shown.
+
+## Further reading
+
+- [Choosing a range structure](../../guides/data_structures.md)
+- [Groups and repetition](../../guides/algebra.md)

@@ -12,8 +12,8 @@ Maintain point increments and prefix or interval aggregates. Internally, `hole(i
 
 | Interface | Behavior |
 | --- | --- |
-| `Class(n) / build(n)` | Create n identity elements. |
-| `Class(n, func) / Class(first, last)` | Build in linear time from a generator or iterator range; Class denotes the type on this page. |
+| `FastFenwickTree(n) / build(n)` | Create n identity elements. |
+| `FastFenwickTree(n, func) / FastFenwickTree(first, last)` | Build in linear time from a generator or iterator range. |
 | `add(x, v)` | Combine the value at x with v. |
 | `sum(x)` | Aggregate [0, x), allowing x = 0 or n. |
 | `sum(l, r)` | Aggregate [l, r). |
@@ -55,3 +55,8 @@ Intervals must satisfy `0 <= l <= r <= n`. `add` applies an increment rather tha
 
 - [data_structure/point_add_range_sum.cpp](../../../tests/library_checker/data_structure/point_add_range_sum.cpp)
 - [data_structure/static_range_count_distinct.cpp](../../../tests/library_checker/data_structure/static_range_count_distinct.cpp)
+
+## Further reading
+
+- [Choosing a range structure](../../guides/data_structures.md)
+- [Commutative groups](../../guides/algebra.md)

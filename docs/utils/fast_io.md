@@ -90,3 +90,7 @@ fast_io.hpp and fast_io_simd.hpp define the same types in the same namespace; in
 - [string/z_algorithm.cpp](../../tests/library_checker/string/z_algorithm.cpp)
 - [tree/lowest_common_ancestor.cpp](../../tests/library_checker/tree/lowest_common_ancestor.cpp)
 - [tree/tree_diameter.cpp](../../tests/library_checker/tree/tree_diameter.cpp)
+
+## Further reading
+
+- [Input modes and compilation flags](../usage.md)

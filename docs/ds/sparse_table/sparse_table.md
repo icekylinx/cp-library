@@ -53,3 +53,8 @@ Ordinary range sums are not supported because addition is not idempotent.
 ## Related examples
 
 No existing Library Checker program directly includes this header. The example above checks only the usage shown.
+
+## Further reading
+
+- [Idempotence](../../guides/algebra.md)
+- [LCA recipe and its official constraints](../../recipes/lca.md)

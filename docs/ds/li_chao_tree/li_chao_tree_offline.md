@@ -59,3 +59,7 @@ Determine all query coordinates before construction. Insertions can still be pro
 ## Related examples
 
 - [data_structure/line_add_get_min.cpp](../../../tests/library_checker/data_structure/line_add_get_min.cpp)
+
+## Further reading
+
+- [Coordinate compression and sentinels](../../guides/offline_coordinates.md)

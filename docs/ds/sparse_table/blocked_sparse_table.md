@@ -54,3 +54,8 @@ Ordinary range sums are not supported because addition is not idempotent. B must
 
 - [data_structure/static_rmq.cpp](../../../tests/library_checker/data_structure/static_rmq.cpp)
 - [tree/lowest_common_ancestor.cpp](../../../tests/library_checker/tree/lowest_common_ancestor.cpp)
+
+## Further reading
+
+- [Idempotence](../../guides/algebra.md)
+- [LCA recipe and its official constraints](../../recipes/lca.md)
