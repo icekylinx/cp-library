@@ -1,12 +1,14 @@
 // https://judge.yosupo.jp/problem/minimum_spanning_tree
 
 #pragma GCC optimize("Ofast,unroll-loops")
-#include <bits/stdc++.h>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <utility>
+#include <vector>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/dsu/dsu.hpp"
 #include "lib/algo/radix_sort.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -17,9 +19,9 @@ void solve_main() {
   int n, m;
   io >> n >> m;
 
-  vector<pair<uint32_t, uint32_t>> edge(m);
-  vector<uint64_t> id(m);
-  vector<uint32_t> mst(n - 1);
+  std::vector<std::pair<uint32_t, uint32_t>> edge(m);
+  std::vector<uint64_t> id(m);
+  std::vector<uint32_t> mst(n - 1);
 
   for (int i = 0; i < m; ++i) {
     auto& [a, b] = edge[i];
@@ -56,17 +58,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

@@ -1,19 +1,17 @@
 // https://judge.yosupo.jp/problem/aplusb
 
-#include <bits/stdc++.h>
 #include <cassert>
-// #include "lib/utils/fast_io.hpp"
-using namespace std;
+#include <cstdint>
+#include <cstdio>
+#include <iostream>
 
 using ll  = long long;
 using ull = unsigned long long;
 
-// FastIO<1 << 20, 1 << 19> io;
-
 void solve_main() {
   uint32_t a, b;
-  cin >> a >> b;
-  cout << a + b << '\n';
+  std::cin >> a >> b;
+  std::cout << a + b << '\n';
 }
 
 int main() {
@@ -21,17 +19,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  cin.tie(nullptr)->sync_with_stdio(false);
-  // io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  std::cin.tie(nullptr)->sync_with_stdio(false);
+  solve_main();
   return 0;
 }

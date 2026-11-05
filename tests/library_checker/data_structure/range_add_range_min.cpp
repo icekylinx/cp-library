@@ -1,11 +1,14 @@
 // https://judge.yosupo.jp/problem/range_add_range_min
 
 #pragma GCC optimize(3)
-#include <bits/stdc++.h>
+#include <algorithm>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <utility>
+#include <vector>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/seg_tree/seg_tree.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -13,14 +16,14 @@ using ull = unsigned long long;
 FastIO<1 << 20, 1 << 19> io;
 
 struct PrefixMin {
-  using Info = pair<int64_t, int64_t>;
+  using Info = std::pair<int64_t, int64_t>;
 
   static constexpr int64_t inf = 1e18;
-  static constexpr Info id() { return make_pair(0, inf); }
+  static constexpr Info id() { return std::make_pair(0, inf); }
 
   static constexpr Info op(const Info& lhs, const Info& rhs) {
-    return make_pair(lhs.first + rhs.first,
-                     min(lhs.second, lhs.first + rhs.second));
+    return std::make_pair(lhs.first + rhs.first,
+                     std::min(lhs.second, lhs.first + rhs.second));
   }
 };
 
@@ -28,7 +31,7 @@ void solve_main() {
   uint32_t n, q;
   io >> n >> q;
 
-  vector<int64_t> a(n);
+  std::vector<int64_t> a(n);
 
   int32_t lst = 0;
   for (auto& x : a) {
@@ -39,7 +42,7 @@ void solve_main() {
   }
 
   SegTree<PrefixMin> t(n, [&](int i) {
-    return make_pair(a[i], a[i]);
+    return std::make_pair(a[i], a[i]);
   });
 
   while (q--) {
@@ -50,10 +53,10 @@ void solve_main() {
       int32_t x;
       io >> x;
       a[l] += x;
-      t.set(l, make_pair(a[l], a[l]));
+      t.set(l, std::make_pair(a[l], a[l]));
       if (r < n) [[likely]] {
         a[r] -= x;
-        t.set(r, make_pair(a[r], a[r]));
+        t.set(r, std::make_pair(a[r], a[r]));
       }
     } else {
       io << t.evaluate(0, l, 0ll, [&](int64_t a, const auto& x) {
@@ -68,17 +71,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

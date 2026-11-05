@@ -1,12 +1,14 @@
 // https://judge.yosupo.jp/problem/static_range_count_distinct
 
 #pragma GCC optimize("Ofast,unroll-loops")
-#include <bits/stdc++.h>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <utility>
+#include <vector>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/hash_map/fast_hash_map.hpp"
 #include "lib/ds/fenwick_tree/fast_fenwick_tree.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -27,12 +29,12 @@ void solve_main() {
   uint32_t n, q;
   io >> n >> q;
 
-  vector<uint32_t> pre(n + 1), ans(q), cnt(n + 1, 1);
-  vector<pair<uint32_t, uint32_t>> aux(n + q), qry(q);
+  std::vector<uint32_t> pre(n + 1), ans(q), cnt(n + 1, 1);
+  std::vector<std::pair<uint32_t, uint32_t>> aux(n + q), qry(q);
 
   cnt[0] = 0;
   for (uint32_t i = 1; i <= n; ++i) {
-    pre[i] = exchange(mp[io.in->read<uint32_t>()], i);
+    pre[i] = std::exchange(mp[io.in->read<uint32_t>()], i);
   }
 
   io.in->skip_space();
@@ -42,7 +44,7 @@ void solve_main() {
     uint32_t r = io.in->read_small<uint32_t>();
     ++cnt[r];
     ans[i] = -l;
-    qry[i] = make_pair(l, r);
+    qry[i] = std::make_pair(l, r);
   }
 
   for (uint32_t i = 0; i < n; ++i) {
@@ -51,11 +53,11 @@ void solve_main() {
   
   for (uint32_t i = 0; i < q; ++i) {
     auto [l, r] = qry[i];
-    aux[--cnt[r]] = make_pair(i, l + 1);
+    aux[--cnt[r]] = std::make_pair(i, l + 1);
   }
 
   for (uint32_t i = 1; i <= n; ++i) {
-    aux[--cnt[i]] = make_pair(-1u, pre[i]);
+    aux[--cnt[i]] = std::make_pair(-1u, pre[i]);
   }
 
   FastFenwickTree<Sum> t(n + 1);
@@ -79,17 +81,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

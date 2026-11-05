@@ -113,5 +113,5 @@ uint32_t det(const Matrix& mat, const uint32_t n) {
       a[i][j] = mat[i][j];
     }
   }
-  return det<P, N, prime>(a, n);
+  return det_inplace<P, N, prime>(a, n);
 }

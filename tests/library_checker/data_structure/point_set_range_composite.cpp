@@ -1,10 +1,11 @@
 // https://judge.yosupo.jp/problem/point_set_range_composite
 
-#include <bits/stdc++.h>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <utility>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/seg_tree/seg_tree.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -14,7 +15,7 @@ FastIO<1 << 20, 1 << 19> io;
 constexpr int P = 998244353;
 
 struct PointSetRangeComposite {
-  using Info = pair<uint32_t, uint32_t>;
+  using Info = std::pair<uint32_t, uint32_t>;
   static constexpr Info id() noexcept { return {1, 0}; };
 
   static constexpr Info op(const Info& lhs, const Info& rhs) {
@@ -30,7 +31,7 @@ void solve_main() {
   SegTree<PointSetRangeComposite> t(n, [&](int i) {
     uint32_t a, b;
     io >> a >> b;
-    return make_pair(a, b);
+    return std::make_pair(a, b);
   });
 
   auto eval = [&](uint32_t x, const auto& info) -> uint32_t {
@@ -59,17 +60,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

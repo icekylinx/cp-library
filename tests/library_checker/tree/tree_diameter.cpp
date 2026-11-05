@@ -1,12 +1,13 @@
 // https://judge.yosupo.jp/problem/tree_diameter
 
 #pragma GCC optimize(3)
-#include <bits/stdc++.h>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <ranges>
+#include <vector>
 #include "lib/utils/fast_io.hpp"
 #include "lib/tree/xor_linked_tree.hpp"
-
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -25,9 +26,9 @@ void solve_main() {
     t.add_edge(u, v, w);
   }
 
-  vector<uint64_t> mx(n, 0);
-  vector<uint32_t> fa(n, 0);
-  auto pos = views::iota(0, n) | ranges::to<vector<uint32_t>>();
+  std::vector<uint64_t> mx(n, 0);
+  std::vector<uint32_t> fa(n, 0);
+  auto pos = std::views::iota(0, n) | std::ranges::to<std::vector<uint32_t>>();
 
   uint64_t ans = 0;
   uint32_t l = 0, r = 0, lca = 0;
@@ -76,17 +77,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

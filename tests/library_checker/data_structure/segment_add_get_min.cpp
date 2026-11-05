@@ -1,11 +1,15 @@
 // https://judge.yosupo.jp/problem/segment_add_get_min
 
-#include <bits/stdc++.h>
+#include <algorithm>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <tuple>
+#include <utility>
+#include <vector>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/li_chao_tree/li_chao_seg_tree_offline.hpp"
 #include "lib/algo/radix_sort.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -15,11 +19,11 @@ FastIO<1 << 20, 1 << 19> io;
 constexpr int64_t inf = 3e18;
 
 struct Node {
-  using Line  = pair<int32_t, int64_t>;
+  using Line  = std::pair<int32_t, int64_t>;
   using Value = int64_t;
   using Range = int32_t;
 
-  static constexpr Line id() { return make_pair(0, inf); }
+  static constexpr Line id() { return std::make_pair(0, inf); }
 
   static constexpr Range range_id() { return 1e9 + 5; }
 
@@ -29,16 +33,16 @@ struct Node {
 
   static constexpr bool compare(Value x, Value y) { return x < y; }
 
-  static constexpr Value op(Value x, Value y) { return min(x, y); }
+  static constexpr Value op(Value x, Value y) { return std::min(x, y); }
 };
 
 void solve_main() {
   int n, q;
   io >> n >> q;
-  vector<tuple<int, int, int, int64_t>> seg;
+  std::vector<std::tuple<int, int, int, int64_t>> seg;
   seg.resize(n + q);
-  vector<int> points;
-  vector<uint64_t> aux;
+  std::vector<int> points;
+  std::vector<uint64_t> aux;
   points.reserve(q);
   aux.reserve((n + q) << 1);
 
@@ -53,7 +57,7 @@ void solve_main() {
     int32_t l, r, a;
     int64_t b;
     io >> l >> r >> a >> b;
-    seg[i] = make_tuple(l, r, a, b);
+    seg[i] = std::make_tuple(l, r, a, b);
     aux.push_back(compress(i << 2 | 2, l));
     aux.push_back(compress(i << 2, r));
   }
@@ -65,13 +69,13 @@ void solve_main() {
       int32_t l, r, a;
       int64_t b;
       io >> l >> r >> a >> b;
-      seg[i] = make_tuple(l, r, a, b);
+      seg[i] = std::make_tuple(l, r, a, b);
       aux.push_back(compress(i << 2 | 2, l));
       aux.push_back(compress(i << 2, r));
     } else {
       int32_t p;
       io >> p;
-      seg[i] = make_tuple(p, 0, 0, inf + 1);
+      seg[i] = std::make_tuple(p, 0, 0, inf + 1);
       aux.push_back(compress(i << 2 | 1, p));
     }
   }
@@ -90,9 +94,9 @@ void solve_main() {
         points.push_back(static_cast<int32_t>(low - offset));
         lst = low;
       }
-      get<0>(x) = cnt - 1;
+      std::get<0>(x) = cnt - 1;
     } else {
-      (high & 2 ? get<0>(x) : get<1>(x)) = cnt - (low == lst);
+      (high & 2 ? std::get<0>(x) : std::get<1>(x)) = cnt - (low == lst);
     }
   }
 
@@ -100,7 +104,7 @@ void solve_main() {
 
   for (int i = 0; i < n; ++i) {
     auto [l, r, a, b] = seg[i];
-    t.add_seg(l, r, make_pair(a, b));
+    t.add_seg(l, r, std::make_pair(a, b));
   }
 
   for (int i = n; i < n + q; ++i) {
@@ -113,7 +117,7 @@ void solve_main() {
         io << v << '\n';
       }
     } else {
-      t.add_seg(l, r, make_pair(a, b));
+      t.add_seg(l, r, std::make_pair(a, b));
     }
   }
 }
@@ -123,17 +127,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

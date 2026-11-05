@@ -1,10 +1,11 @@
 // https://judge.yosupo.jp/problem/static_range_sum
 
 #pragma GCC optimize(3)
-#include <bits/stdc++.h>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <numeric>
 #include "lib/utils/fast_io.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -23,7 +24,7 @@ void solve_main() {
     sum[i] = io.in->read<uint32_t>();
   }
 
-  partial_sum(sum + 1, sum + n + 1, sum + 1);
+  std::partial_sum(sum + 1, sum + n + 1, sum + 1);
 
   while (q--) {
     uint32_t l = io.in->read_small<uint32_t>();
@@ -37,17 +38,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

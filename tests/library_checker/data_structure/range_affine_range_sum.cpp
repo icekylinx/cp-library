@@ -1,10 +1,11 @@
 // https://judge.yosupo.jp/problem/range_affine_range_sum
 
-#include <bits/stdc++.h>
+#include <algorithm>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/seg_tree/lazy_seg_tree.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -74,17 +75,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

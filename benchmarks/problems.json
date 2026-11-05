@@ -1,0 +1,10 @@
+{
+  "unionfind": "tests/library_checker/data_structure/unionfind.cpp",
+  "staticrmq": "tests/library_checker/data_structure/static_rmq.cpp",
+  "point_add_range_sum": "tests/library_checker/data_structure/point_add_range_sum.cpp",
+  "range_affine_range_sum": "tests/library_checker/data_structure/range_affine_range_sum.cpp",
+  "line_add_get_min": "tests/library_checker/data_structure/line_add_get_min.cpp",
+  "zalgorithm": "tests/library_checker/string/z_algorithm.cpp",
+  "bitwise_xor_convolution": "tests/library_checker/convolution/bitwise_xor_convolution.cpp",
+  "tree_diameter": "tests/library_checker/tree/tree_diameter.cpp"
+}

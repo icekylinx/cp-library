@@ -1,11 +1,14 @@
 // https://judge.yosupo.jp/problem/line_add_get_min
 
-#include <bits/stdc++.h>
+#include <algorithm>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <utility>
+#include <vector>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/li_chao_tree/li_chao_tree_offline.hpp"
 #include "lib/algo/radix_sort.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -15,11 +18,11 @@ FastIO<1 << 20, 1 << 19> io;
 constexpr int64_t inf = 3e18;
 
 struct Node {
-  using Line  = pair<int32_t, int64_t>;
+  using Line  = std::pair<int32_t, int64_t>;
   using Value = int64_t;
   using Range = int32_t;
 
-  static constexpr Line id() { return make_pair(0, inf); }
+  static constexpr Line id() { return std::make_pair(0, inf); }
 
   static constexpr Range range_id() { return 1e9 + 5; }
 
@@ -29,15 +32,15 @@ struct Node {
 
   static constexpr bool compare(Value x, Value y) { return x < y; }
 
-  static constexpr Value op(Value x, Value y) { return min(x, y); }
+  static constexpr Value op(Value x, Value y) { return std::min(x, y); }
 };
 
 void solve_main() {
   int n, q;
   io >> n >> q;
-  vector<pair<int, int64_t>> line;
+  std::vector<std::pair<int, int64_t>> line;
   line.resize(n + q);
-  vector<uint64_t> aux;
+  std::vector<uint64_t> aux;
   aux.reserve(q);
 
   uint32_t offset = 1u << 31;
@@ -51,7 +54,7 @@ void solve_main() {
     int32_t a;
     int64_t b;
     io >> a >> b;
-    line[i] = make_pair(a, b);
+    line[i] = std::make_pair(a, b);
   }
 
   for (int i = n; i < n + q; ++i) {
@@ -61,11 +64,11 @@ void solve_main() {
       int32_t a;
       int64_t b;
       io >> a >> b;
-      line[i] = make_pair(a, b);
+      line[i] = std::make_pair(a, b);
     } else {
       int32_t p;
       io >> p;
-      line[i] = make_pair(p, inf + 1);
+      line[i] = std::make_pair(p, inf + 1);
       aux.push_back(compress(i, p));
     }
   }
@@ -74,7 +77,7 @@ void solve_main() {
     return static_cast<uint32_t>(x);
   });
 
-  vector<int> points(aux.size());
+  std::vector<int> points(aux.size());
 
   for (uint32_t i = 0; i < aux.size(); ++i) {
     uint64_t pos = aux[i];
@@ -105,17 +108,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

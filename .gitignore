@@ -9,3 +9,11 @@ submit*
 gen*
 template
 tmp*
+
+# Local working files and generated output
+/local/
+/build/
+/build_test_compile/
+/collected_cpp/
+__pycache__/
+*.pyc

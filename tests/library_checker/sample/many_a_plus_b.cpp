@@ -1,10 +1,11 @@
 // https://judge.yosupo.jp/problem/many_aplusb
 
 #pragma GCC optimize("Ofast")
-#include <bits/stdc++.h>
+#include <algorithm>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
 #include "lib/utils/fast_io_simd.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -20,7 +21,7 @@ void solve_main() {
   io >> n;
 
   for (uint32_t base = 0; base < n; base += B) {
-    uint32_t cnt = min(B, n - base);
+    uint32_t cnt = std::min(B, n - base);
     for (uint32_t i = 0; i < cnt; ++i) {
       sum[i] = io.in->read<uint64_t>() + io.in->read<uint64_t>();
     }
@@ -35,17 +36,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

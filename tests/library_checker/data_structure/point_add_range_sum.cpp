@@ -1,10 +1,10 @@
 // https://judge.yosupo.jp/problem/point_add_range_sum
 
-#include <bits/stdc++.h>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/fenwick_tree/fast_fenwick_tree.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -44,17 +44,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

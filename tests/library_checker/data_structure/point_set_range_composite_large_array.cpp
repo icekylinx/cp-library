@@ -1,11 +1,14 @@
 // https://judge.yosupo.jp/problem/point_set_range_composite_large_array
 
-#include <bits/stdc++.h>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <tuple>
+#include <utility>
+#include <vector>
 #include "lib/utils/fast_io.hpp"
 #include "lib/ds/seg_tree/seg_tree.hpp"
 #include "lib/algo/radix_sort.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -15,7 +18,7 @@ FastIO<1 << 20, 1 << 19> io;
 constexpr int P = 998244353;
 
 struct PointSetRangeComposite {
-  using Info = pair<uint32_t, uint32_t>;
+  using Info = std::pair<uint32_t, uint32_t>;
   static constexpr Info id() noexcept { return {1, 0}; };
 
   static constexpr Info op(const Info& lhs, const Info& rhs) {
@@ -28,8 +31,8 @@ void solve_main() {
   int n, q;
   io >> n >> q;
 
-  vector<tuple<bool, uint32_t, uint32_t, uint32_t>> qry(q);
-  vector<uint64_t> aux;
+  std::vector<std::tuple<bool, uint32_t, uint32_t, uint32_t>> qry(q);
+  std::vector<uint64_t> aux;
   aux.reserve(q << 1);
 
   for (int i = 0; i < q; ++i) {
@@ -54,11 +57,11 @@ void solve_main() {
     uint32_t y = val >> 32;
     auto& t = qry[y >> 2];
     if (y & 3) {
-      (y & 1 ? get<1>(t) : get<2>(t)) = m - (x == lst);
+      (y & 1 ? std::get<1>(t) : std::get<2>(t)) = m - (x == lst);
     } else {
       m += (x != lst);
       lst = x;
-      get<1>(t) = m - 1;
+      std::get<1>(t) = m - 1;
     }
   }
 
@@ -82,17 +85,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

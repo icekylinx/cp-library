@@ -1,11 +1,14 @@
 // https://judge.yosupo.jp/problem/lca
 
-#include <bits/stdc++.h>
+#include <algorithm>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <limits>
+#include <vector>
 #include "lib/utils/fast_io.hpp"
 #include "lib/tree/parent_to_dfn.hpp"
 #include "lib/ds/sparse_table/blocked_sparse_table.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -16,10 +19,10 @@ template <typename T>
 struct RangeMin {
   using Info = T;
 
-  static constexpr Info id() { return numeric_limits<T>::max(); }
+  static constexpr Info id() { return std::numeric_limits<T>::max(); }
 
   static constexpr Info op(const Info& lhs, const Info& rhs) {
-    return min(lhs, rhs);
+    return std::min(lhs, rhs);
   }
 };
 
@@ -27,7 +30,7 @@ void solve_main() {
   int n, q;
   io >> n >> q;
 
-  vector<uint32_t> p(n), rev(n);
+  std::vector<uint32_t> p(n), rev(n);
   for (int i = 1; i < n; ++i) {
     p[i] = io.in->read_small<uint32_t>();
   }
@@ -54,17 +57,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

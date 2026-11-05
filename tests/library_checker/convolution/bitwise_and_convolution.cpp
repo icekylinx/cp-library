@@ -1,11 +1,12 @@
 // https://judge.yosupo.jp/problem/bitwise_and_convolution
 
 #pragma GCC optimize(3)
-#include <bits/stdc++.h>
 #include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <vector>
 #include "lib/utils/fast_io.hpp"
 #include "lib/math/conv/fwt_and.hpp"
-using namespace std;
 
 using ll  = long long;
 using ull = unsigned long long;
@@ -19,7 +20,7 @@ void solve_main() {
   io >> n;
   m = 1 << n;
 
-  vector<uint32_t> a(m), b(m);
+  std::vector<uint32_t> a(m), b(m);
   for (auto& x : a) io >> x;
   for (auto& x : b) io >> x;
 
@@ -40,17 +41,7 @@ int main() {
   assert(freopen("test.in", "r", stdin));
   assert(freopen("test.out", "w", stdout));
 #endif
-  // cin.tie(nullptr)->sync_with_stdio(false);
   io.init();
-
-  int T;
-  // cin >> T;
-  // io >> T;
-  T = 1;
-
-  while (T--) {
-    solve_main();
-  }
-
+  solve_main();
   return 0;
 }

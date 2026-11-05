@@ -1,4 +1,4 @@
-Header: `lib/ds/seg_tree/seg_tree.hpp`
+Header: [`lib/ds/seg_tree/seg_tree.hpp`](../../../lib/ds/seg_tree/seg_tree.hpp)
 
 # SegTree
 
@@ -190,3 +190,29 @@ void example(std::vector<std::pair<uint32_t, uint32_t>> a) {
 Use `SegTree` when point assignment and interval monoid query are enough.
 
 If you need range updates, use `LazySegTree` or `TagSegTree` instead.
+
+## 可运行示例
+
+<!-- runnable-example -->
+```cpp
+#include <cassert>
+#include <cstdint>
+#include "lib/ds/seg_tree/seg_tree.hpp"
+
+struct Sum {
+  using Info = long long;
+  static Info id() { return 0; }
+  static Info op(Info a, Info b) { return a + b; }
+};
+
+int main() {
+  SegTree<Sum> tree(4u, [](uint32_t i) { return i + 1; });
+  assert(tree.prod(1, 4) == 9);
+  tree.set(2, 10);
+  assert(tree.all_prod() == 17);
+  tree.reset();
+  assert(tree.prod(0, 4) == 0);
+}
+```
+
+当前实现提供上述接口，不包含 find_first、max_right 等搜索成员。需要搜索时应在调用方实现或扩展此类型。
