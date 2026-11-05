@@ -4,7 +4,8 @@ Check library programs with official generators and checkers, then compare local
 
 ## Recorded measurements
 
-- [Expanded evaluation](results/2026-11-05-expanded.md) and [raw data](results/2026-11-05-expanded.json): 23 additional programs and 425 official cases. Twenty-one programs passed all cases and contributed 63 timed inputs; the two remaining programs each failed one valid zero-query case. Overall, 423/425 new cases passed. See [failure evidence](../docs/known_issues.md).
+- [Zero-query fix recheck](results/2026-11-05-zero-query-fix.md) and [raw data](results/2026-11-05-zero-query-fix.json): both repaired programs pass all 22 official cases and add six timed inputs. The current-source index now has 31 passing programs, 583/583 accepted cases, and 85 timed inputs.
+- [Expanded evaluation](results/2026-11-05-expanded.md) and [raw data](results/2026-11-05-expanded.json): 23 additional programs and 425 official cases. Twenty-one programs passed all cases and contributed 63 timed inputs; the two remaining programs each failed one valid zero-query case at that revision. Overall, 423/425 new cases passed. The failures are resolved by the targeted recheck above; the original [failure evidence](../docs/known_issues.md) is retained.
 - [November 5, 2026 results](results/2026-11-05.md): all 158 official cases across eight problems passed verification. Sixteen large inputs were timed with one warmup and five measured runs per program.
 - [Raw data](results/2026-11-05.json): individual timings, compiler commands, source and input hashes, and checker records.
 - This run uses upstream commit [`73876f1cbcf082d2b22722924b924d3d65a2f00e`](https://github.com/yosupo06/library-checker-problems/tree/73876f1cbcf082d2b22722924b924d3d65a2f00e), fetched from the official default branch on November 5, 2026.

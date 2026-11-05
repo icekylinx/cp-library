@@ -28,6 +28,7 @@ struct Sum {
 void solve_main() {
   uint32_t n, q;
   io >> n >> q;
+  if (q == 0) return;
 
   std::vector<uint32_t> pre(n + 1), ans(q), cnt(n + 1, 1);
   std::vector<std::pair<uint32_t, uint32_t>> aux(n + q), qry(q);

@@ -20,6 +20,7 @@ FastHashMap<uint32_t, uint32_t, 19> mp;
 void solve_main() {
   uint32_t n, q;
   io >> n >> q;
+  if (q == 0) return;
 
   std::vector<uint32_t> ans(q), a(n), cnt(n + 1, 1);
   std::vector<std::pair<uint32_t, uint32_t>> aux(n + (q << 1));

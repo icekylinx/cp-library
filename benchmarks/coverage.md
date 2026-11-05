@@ -1,6 +1,6 @@
 # Benchmark coverage
 
-31/31 configured programs have completed evaluation records matching their current source and all current library headers. 29 programs passed every registered case: 581/583 official cases passed overall, with 79 timed inputs from passing programs.
+31/31 configured programs have completed evaluation records matching their current source and all current library headers. 31 programs passed every registered case: 583/583 official cases passed overall, with 85 timed inputs from passing programs.
 
 This index selects the newest completed record per problem. Source status compares both the program SHA256 and the full library source digest; a changed source makes a record historical rather than evidence for the current version. Failed evaluations remain visible and are excluded from timing and passing-consumer coverage. An unrecorded program remains explicitly unmeasured.
 
@@ -32,8 +32,8 @@ This index selects the newest completed record per problem. Source status compar
 | [range_affine_point_get](../tests/library_checker/data_structure/range_affine_point_get.cpp) | 19/19 | 3 | diverse | [2026-11-05-expanded](results/2026-11-05-expanded.md) | current |
 | [range_affine_range_sum](../tests/library_checker/data_structure/range_affine_range_sum.cpp) | 19/19 | 2 | largest | [2026-11-05](results/2026-11-05.md) | current |
 | [segment_add_get_min](../tests/library_checker/data_structure/segment_add_get_min.cpp) | 13/13 | 3 | diverse | [2026-11-05-expanded](results/2026-11-05-expanded.md) | current |
-| [static_range_count_distinct](../tests/library_checker/data_structure/static_range_count_distinct.cpp) | 10/11 | 0 | diverse | [2026-11-05-expanded](results/2026-11-05-expanded.md) | current; FAILED |
-| [static_range_frequency](../tests/library_checker/data_structure/static_range_frequency.cpp) | 10/11 | 0 | diverse | [2026-11-05-expanded](results/2026-11-05-expanded.md) | current; FAILED |
+| [static_range_count_distinct](../tests/library_checker/data_structure/static_range_count_distinct.cpp) | 11/11 | 3 | diverse | [2026-11-05-zero-query-fix](results/2026-11-05-zero-query-fix.md) | current |
+| [static_range_frequency](../tests/library_checker/data_structure/static_range_frequency.cpp) | 11/11 | 3 | diverse | [2026-11-05-zero-query-fix](results/2026-11-05-zero-query-fix.md) | current |
 | [static_range_sum](../tests/library_checker/data_structure/static_range_sum.cpp) | 11/11 | 3 | diverse | [2026-11-05-expanded](results/2026-11-05-expanded.md) | current |
 | [staticrmq](../tests/library_checker/data_structure/static_rmq.cpp) | 27/27 | 2 | largest | [2026-11-05](results/2026-11-05.md) | current |
 | [tree_diameter](../tests/library_checker/tree/tree_diameter.cpp) | 16/16 | 2 | largest | [2026-11-05](results/2026-11-05.md) | current |
@@ -49,10 +49,10 @@ A listed program includes the header directly or transitively and has a current-
 | [algo/fast_bounds.hpp](../docs/algo/fast_bounds.md) | `longest_increasing_subsequence` |
 | [algo/radix_sort.hpp](../docs/algo/radix_sort.md) | `line_add_get_min`, `minimum_spanning_tree`, `point_set_range_composite_large_array`, `segment_add_get_min` |
 | [ds/dsu/dsu.hpp](../docs/ds/dsu/dsu.md) | `minimum_spanning_tree`, `unionfind` |
-| [ds/fenwick_tree/fast_fenwick_tree.hpp](../docs/ds/fenwick_tree/fast_fenwick_tree.md) | `point_add_range_sum` |
+| [ds/fenwick_tree/fast_fenwick_tree.hpp](../docs/ds/fenwick_tree/fast_fenwick_tree.md) | `point_add_range_sum`, `static_range_count_distinct` |
 | [ds/fenwick_tree/fenwick_tree.hpp](../docs/ds/fenwick_tree/fenwick_tree.md) | none recorded |
 | [ds/fenwick_tree/fenwick_tree_range.hpp](../docs/ds/fenwick_tree/fenwick_tree_range.md) | none recorded |
-| [ds/hash_map/fast_hash_map.hpp](../docs/ds/hash_map/fast_hash_map.md) | `associative_array` |
+| [ds/hash_map/fast_hash_map.hpp](../docs/ds/hash_map/fast_hash_map.md) | `associative_array`, `static_range_count_distinct`, `static_range_frequency` |
 | [ds/hash_map/hash_map.hpp](../docs/ds/hash_map/hash_map.md) | none recorded |
 | [ds/hash_map/hash_map_core.hpp](../docs/ds/hash_map/hash_map_core.md) | none recorded |
 | [ds/hash_map/safe_hash_map.hpp](../docs/ds/hash_map/safe_hash_map.md) | none recorded |
@@ -79,8 +79,8 @@ A listed program includes the header directly or transitively and has a current-
 | [string/z_algo.hpp](../docs/string/z_algo.md) | `zalgorithm` |
 | [tree/parent_to_dfn.hpp](../docs/tree/parent_to_dfn.md) | `lca` |
 | [tree/xor_linked_tree.hpp](../docs/tree/xor_linked_tree.md) | `tree_diameter` |
-| [utils/debug.hpp](../docs/utils/debug.md) | `associative_array`, `bitwise_and_convolution`, `bitwise_xor_convolution`, `counting_spanning_tree_directed`, `counting_spanning_tree_undirected`, `deque`, `lca`, `line_add_get_min`, `longest_increasing_subsequence`, `many_aplusb`, `many_aplusb_128bit`, `matrix_det`, `matrix_det_arbitrary_mod`, `minimum_spanning_tree`, `montmort_number_mod`, `point_add_range_sum`, `point_set_range_composite`, `point_set_range_composite_large_array`, `predecessor_problem`, `range_add_range_min`, `range_affine_point_get`, `range_affine_range_sum`, `segment_add_get_min`, `static_range_sum`, `staticrmq`, `tree_diameter`, `unionfind`, `zalgorithm` |
-| [utils/fast_io.hpp](../docs/utils/fast_io.md) | `bitwise_and_convolution`, `bitwise_xor_convolution`, `counting_spanning_tree_directed`, `counting_spanning_tree_undirected`, `deque`, `lca`, `line_add_get_min`, `longest_increasing_subsequence`, `matrix_det`, `matrix_det_arbitrary_mod`, `minimum_spanning_tree`, `montmort_number_mod`, `point_add_range_sum`, `point_set_range_composite`, `point_set_range_composite_large_array`, `predecessor_problem`, `range_add_range_min`, `range_affine_point_get`, `range_affine_range_sum`, `segment_add_get_min`, `static_range_sum`, `staticrmq`, `tree_diameter`, `unionfind`, `zalgorithm` |
+| [utils/debug.hpp](../docs/utils/debug.md) | `associative_array`, `bitwise_and_convolution`, `bitwise_xor_convolution`, `counting_spanning_tree_directed`, `counting_spanning_tree_undirected`, `deque`, `lca`, `line_add_get_min`, `longest_increasing_subsequence`, `many_aplusb`, `many_aplusb_128bit`, `matrix_det`, `matrix_det_arbitrary_mod`, `minimum_spanning_tree`, `montmort_number_mod`, `point_add_range_sum`, `point_set_range_composite`, `point_set_range_composite_large_array`, `predecessor_problem`, `range_add_range_min`, `range_affine_point_get`, `range_affine_range_sum`, `segment_add_get_min`, `static_range_count_distinct`, `static_range_frequency`, `static_range_sum`, `staticrmq`, `tree_diameter`, `unionfind`, `zalgorithm` |
+| [utils/fast_io.hpp](../docs/utils/fast_io.md) | `bitwise_and_convolution`, `bitwise_xor_convolution`, `counting_spanning_tree_directed`, `counting_spanning_tree_undirected`, `deque`, `lca`, `line_add_get_min`, `longest_increasing_subsequence`, `matrix_det`, `matrix_det_arbitrary_mod`, `minimum_spanning_tree`, `montmort_number_mod`, `point_add_range_sum`, `point_set_range_composite`, `point_set_range_composite_large_array`, `predecessor_problem`, `range_add_range_min`, `range_affine_point_get`, `range_affine_range_sum`, `segment_add_get_min`, `static_range_count_distinct`, `static_range_frequency`, `static_range_sum`, `staticrmq`, `tree_diameter`, `unionfind`, `zalgorithm` |
 | [utils/fast_io_simd.hpp](../docs/utils/fast_io_simd.md) | `associative_array`, `many_aplusb`, `many_aplusb_128bit` |
 | [utils/timer.hpp](../docs/utils/timer.md) | none recorded |
 | [utils/y_combinator.hpp](../docs/utils/y_combinator.md) | none recorded |

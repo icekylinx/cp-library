@@ -77,9 +77,9 @@ These commands rebuild the module catalog and benchmark coverage index, then che
 
 ## Local benchmark
 
-The [coverage index](benchmarks/coverage.md) now includes evaluations for all 31 existing programs. Across the original and [expanded records](benchmarks/results/2026-11-05-expanded.md), 29 programs pass every registered case, with 581/583 official cases passing overall. Passing programs have 79 timed inputs in total.
+The [coverage index](benchmarks/coverage.md) now includes evaluations for all 31 existing programs. With the [zero-query fix recheck](benchmarks/results/2026-11-05-zero-query-fix.md), all 31 programs pass every registered case: 583/583 official cases, with 85 timed inputs in total.
 
-The [recorded failures](docs/known_issues.md) are the two static range programs on an official zero-query input accepted by their input verifiers. They are excluded from timing. Library and solution sources are unchanged by this expansion.
+The two [previously recorded zero-query failures](docs/known_issues.md) are resolved with one initialization-time return in each affected program. Their complete 22-case recheck passed. Query loops and shared library headers remain unchanged.
 
 The original eight-problem measurements are preserved. The expansion adds 23 evaluations, generator-diverse timing inputs, observed timing ranges, and input-contract hashes. Raw JSON records retain individual samples and source/input provenance. Older online performance data remain in the [historical records](docs/benchmarks.md).
 

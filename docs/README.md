@@ -20,7 +20,7 @@ Use this guide to choose a module, understand its algebraic contract, and verify
 | [Verification and benchmark interpretation](guides/verification.md) | Separate compilation, executable examples, official checker results, and timing records. |
 | [LCA from a parent array](recipes/lca.md) | Combine parent_to_dfn with static RMQ under the official query constraints. |
 | [Module catalog](catalog.md) | Browse all 38 header references. |
-| [Recorded verification failures](known_issues.md) | Official-input failures, evidence, and reproduction commands. |
+| [Resolved verification failures](known_issues.md) | Historical failure evidence, the targeted fix, and recheck commands. |
 | [Benchmark coverage](../benchmarks/coverage.md) | Find measured programs, official case counts, and reports. |
 
 ## API conventions
