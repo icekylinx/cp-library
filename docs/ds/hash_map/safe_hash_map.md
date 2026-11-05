@@ -1,30 +1,30 @@
 # SafeHashMap
 
-头文件：[`lib/ds/hash_map/safe_hash_map.hpp`](../../../lib/ds/hash_map/safe_hash_map.hpp)。
+Header: [`lib/ds/hash_map/safe_hash_map.hpp`](../../../lib/ds/hash_map/safe_hash_map.hpp).
 
-固定 2^N 个槽位的哈希映射。HashMapCore 配合 SplitMix64 的别名，哈希种子随对象初始化。
+A hash map with exactly 2^N slots. An alias for HashMapCore with SplitMix64, whose seed is initialized per object.
 
-## 类型与使用条件
+## Types and requirements
 
-`0 < N < 32`，键支持比较，值可以默认构造。表不会扩容，必须始终保留至少一个空槽，否则缺失查询或新键插入可能无法终止。 键应能转换为 uint64_t。
+`0 < N < 32`. Keys must support equality comparison, and values must be default-constructible. The table never grows; keep at least one slot empty, or an absent-key lookup or insertion may not terminate. Keys must be convertible to uint64_t.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `operator[](key)` | 查找或插入；新值由 V{} 初始化，返回可写引用 |
-| `get(key)` | 按值返回；缺失时返回 V{}，不会插入 |
-| `count(key)` | 判断键是否存在 |
-| `clear()` | 清空占用标记，旧值在重新插入时初始化 |
-| `size()` | 当前不同键的个数 |
+| `operator[](key)` | Look up or insert a key; initialize new values with V{} and return a writable reference. |
+| `get(key)` | Return the value by copy, or V{} if absent, without inserting. |
+| `count(key)` | Check whether the key exists. |
+| `clear()` | Clear occupancy markers; values are reinitialized when inserted again. |
+| `size()` | Return the number of distinct keys. |
 
-## 复杂度
+## Complexity
 
-在哈希分布良好且负载率受控时，查找与插入期望 O(1)，最坏 O(2^N)，空间 O(2^N)。 clear 在已插入元素不超过容量的 1/128 时只清理记录过的槽位；否则重置整个位图。
+Lookup and insertion are expected O(1) with a suitable hash distribution and controlled load, and O(2^N) in the worst case. Space is O(2^N). clear resets only recorded slots while the number of inserted keys is at most 1/128 of capacity; otherwise it resets the whole bitmap.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -42,10 +42,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-对象含内嵌数组，N 较大时建议放在静态存储区或堆上；不支持删除单个键或迭代。 “Safe” 指带随机种子的哈希，不能用作密码学安全保证。
+The object contains inline arrays; use static storage or the heap for large N. Individual deletion and iteration are not supported. "Safe" refers to seeded hashing and does not imply cryptographic security.
 
-## 相关示例
+## Related examples
 
-现有 Library Checker 程序未直接包含此头文件；本页示例只验证所示用法。
+No existing Library Checker program directly includes this header. The example above checks only the usage shown.

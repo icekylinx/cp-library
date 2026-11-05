@@ -1,29 +1,29 @@
 # XorLinkedTree
 
-头文件：[`lib/tree/xor_linked_tree.hpp`](../../lib/tree/xor_linked_tree.hpp)。
+Header: [`lib/tree/xor_linked_tree.hpp`](../../lib/tree/xor_linked_tree.hpp).
 
-用度数与邻点异或和存储树，以剥叶方式按子到父的顺序处理每条边。
+Store a tree using degrees and XORs of neighbors, then process child-to-parent edges by leaf removal.
 
-## 类型与使用条件
+## Types and requirements
 
-输入必须为无自环、连通的树。weighted 为 false 时不保存权值；为 true 时 T 需支持异或运算。build 会破坏内部的度数与邻点数据。
+The input must be a connected tree without self-loops. With weighted = false, weights are omitted; otherwise T must support XOR operations. build destroys the stored degrees and neighbor information.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `XorLinkedTree(n) / init(n)` | 创建 n 个点并清空边 |
-| `add_edge(u, v)` | 无权版本加入边 |
-| `add_edge(u, v, w)` | 有权版本加入权值为 w 的边 |
-| `build(root, callback)` | 无权调用 callback(child, parent)，有权调用 callback(child, parent, weight)；根也会触发一次回调，调用者必须跳过 child == root 的情形 |
+| `XorLinkedTree(n) / init(n)` | Create n vertices and remove all edges. |
+| `add_edge(u, v)` | Add an unweighted edge. |
+| `add_edge(u, v, w)` | Add an edge of weight w in the weighted version. |
+| `build(root, callback)` | Call callback(child, parent), or callback(child, parent, weight) for weighted trees. The root also triggers one callback; explicitly skip child == root. |
 
-## 复杂度
+## Complexity
 
-初始化 O(n)，每次加边 O(1)，一次完整 build 为 O(n)，空间 O(n)。
+Initialization takes O(n), each insertion O(1), and a complete build O(n). Space is O(n).
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -39,7 +39,7 @@ int main() {
   std::vector<int> dist(3, 0);
   int edges = 0;
   tree.build(0, [&](uint32_t child, uint32_t parent, int weight) {
-    if (child == 0) return;  // 忽略根的回调
+    if (child == 0) return;  // Skip the root callback.
     dist[parent] = std::max(dist[parent], dist[child] + weight);
     ++edges;
   });
@@ -47,10 +47,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-根回调中的 parent 是内部哨兵 0，不代表树中的父节点；应在访问父节点或累计边数前跳过根。适合树形 DP、自底向上汇总；不提供一般邻居遍历。重复处理前必须 init 并重新加入全部边。
+For the root callback, parent is the internal sentinel 0 rather than an actual parent. Skip the root before accessing its parent or counting edges. This structure supports bottom-up tree DP rather than general neighbor iteration. Before processing again, call init and reinsert every edge.
 
-## 相关示例
+## Related examples
 
 - [tree/tree_diameter.cpp](../../tests/library_checker/tree/tree_diameter.cpp)

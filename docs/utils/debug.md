@@ -1,26 +1,26 @@
-# CHECK 调试断言
+# CHECK debug assertions
 
-头文件：[`lib/utils/debug.hpp`](../../lib/utils/debug.hpp)。
+Header: [`lib/utils/debug.hpp`](../../lib/utils/debug.hpp).
 
-提供受 LOCAL 宏控制的 CHECK(expr)。
+Provide CHECK(expr), controlled by the LOCAL macro.
 
-## 类型与使用条件
+## Types and requirements
 
-在编译时定义 LOCAL 才展开为 assert(expr)；未定义 LOCAL 时展开为 void(0)，表达式不会被求值。若同时定义 NDEBUG，标准 assert 也可能被禁用。
+When LOCAL is defined, CHECK expands to assert(expr). Otherwise it expands to void(0), without evaluating expr. Standard assertions may also be disabled if NDEBUG is defined.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `CHECK(expr)` | 调试模式验证条件，正式模式不求值 |
+| `CHECK(expr)` | Check a condition in debug mode; do not evaluate it in release mode. |
 
-## 复杂度
+## Complexity
 
-正式模式无运行成本；调试模式取决于 expr。
+No runtime cost in release mode; debug-mode cost depends on expr.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -34,10 +34,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-表达式不能带必需的副作用，如递增计数、读取输入或执行实际更新。
+The expression must not contain required side effects, such as incrementing a counter, reading input, or applying an update.
 
-## 相关示例
+## Related examples
 
-现有 Library Checker 程序未直接包含此头文件；本页示例只验证所示用法。
+No existing Library Checker program directly includes this header. The example above checks only the usage shown.

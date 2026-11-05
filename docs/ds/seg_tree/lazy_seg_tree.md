@@ -1,32 +1,32 @@
 # LazySegTree
 
-头文件：[`lib/ds/seg_tree/lazy_seg_tree.hpp`](../../../lib/ds/seg_tree/lazy_seg_tree.hpp)。
+Header: [`lib/ds/seg_tree/lazy_seg_tree.hpp`](../../../lib/ds/seg_tree/lazy_seg_tree.hpp).
 
-维护区间更新与区间聚合，使用可组合的懒标记。
+Maintain interval updates and interval aggregates with composable lazy tags.
 
-## 类型与使用条件
+## Types and requirements
 
-`T` 提供 Info、Tag、id()、tag_id()、op(info, info)、apply(Info&, const Tag&) 和 compose(Tag&, const Tag&)。Info 与 op 构成幺半群；标记作用须与 op 相容。compose(old, newer) 将 newer 合并到 old，顺序是先 old 后 newer。tag_id 对 Info 的作用必须为恒等。区间长度等信息应由 Info 自行携带。
+`T` provides Info, Tag, id(), tag_id(), op(info, info), apply(Info&, const Tag&), and compose(Tag&, const Tag&). Info and op form a monoid, and tag actions must be compatible with op. compose(old, newer) combines the tags in the order old followed by newer. tag_id must act as the identity. Store any required interval length in Info.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `LazySegTree(n) / (n, func) / (first, last)` | 以单位元、函数或迭代器构建 |
-| `build(...) / reset()` | 重建或恢复单位元及空标记 |
-| `set(x, info)` | 把单点覆盖为 info |
-| `get(x)` | 读取单点信息 |
-| `apply(l, r, tag)` | 在 [l, r) 施加标记 |
-| `apply_all(tag)` | 对整棵树施加标记，包括补齐叶子 |
-| `prod(l, r) / all_prod()` | 区间聚合或根结点聚合 |
+| `LazySegTree(n) / (n, func) / (first, last)` | Build from identity values, a generator, or iterators. |
+| `build(...) / reset()` | Rebuild, or reset values and tags to their identities. |
+| `set(x, info)` | Overwrite the value at one position. |
+| `get(x)` | Read the value at one position. |
+| `apply(l, r, tag)` | Apply a tag to [l, r). |
+| `apply_all(tag)` | Apply a tag to the whole tree, including padded leaves. |
+| `prod(l, r) / all_prod()` | Return an interval aggregate or the root aggregate. |
 
-## 复杂度
+## Complexity
 
-若模型操作 O(1)，建树、清空、空间 O(n)，set、get、apply、prod 为 O(log n)，apply_all 和 all_prod 为 O(1)。
+Assuming O(1) model operations, building, clearing, and space are O(n). set, get, apply, and prod take O(log n); apply_all and all_prod take O(1).
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -55,10 +55,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-下标 x < n，区间 0 <= l <= r <= n，空区间返回 id()。实现会将叶子数补为 2 的幂；使用 apply_all 时应保证标记不改变补齐部分的单位元。默认构造后先 build。
+Require x < n and 0 <= l <= r <= n; empty intervals return id(). The leaf count is padded to a power of two. When using apply_all, tags must leave padded identity values unchanged. Call build before using a default-constructed tree.
 
-## 相关示例
+## Related examples
 
 - [data_structure/range_affine_range_sum.cpp](../../../tests/library_checker/data_structure/range_affine_range_sum.cpp)

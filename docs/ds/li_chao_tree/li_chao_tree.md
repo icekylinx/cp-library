@@ -1,30 +1,30 @@
 # LiChaoTree
 
-头文件：[`lib/ds/li_chao_tree/li_chao_tree.hpp`](../../../lib/ds/li_chao_tree/li_chao_tree.hpp)。
+Header: [`lib/ds/li_chao_tree/li_chao_tree.hpp`](../../../lib/ds/li_chao_tree/li_chao_tree.hpp).
 
-在整数坐标域动态插入整条直线并查询最优值。
+Dynamically insert whole lines and query the best value over an integer coordinate domain.
 
-## 类型与使用条件
+## Types and requirements
 
-`T` 提供 Line、Value、Range、id()、range_id()、evaluate(line, x)、compare(a, b)、op(a, b)。对于最小值查询，compare 为小于、op 为 min，id 为在全坐标域内都不会优于真实直线的哨兵。直线对必须满足李超树的一次交点性质；求值和坐标运算不能溢出。 此版本的 range_id() 返回整数半开区间端点 pair{L, R}，且 L < R；查询点满足 L <= x < R。
+`T` provides Line, Value, Range, id(), range_id(), evaluate(line, x), compare(a, b), and op(a, b). For minimum queries, compare is less-than, op is min, and id is a sentinel line that never beats a real line anywhere in the coordinate domain. Pairs of lines must satisfy the single-crossing property used by Li Chao trees. Evaluation and coordinate arithmetic must not overflow. Here range_id() returns pair{L, R} for an integer half-open domain with L < R, and query points must satisfy L <= x < R.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `LiChaoTree() / LiChaoTree(reserved)` | 创建空树；参数只预留结点容量，不是坐标域长度 |
-| `build(reserved = 0)` | 清空直线并重建根结点 |
-| `reserve(size)` | 预留结点数组容量 |
-| `add(line)` | 加入作用于整个坐标域的直线 |
-| `get(x)` | 查询实际坐标 x 上的最优值 |
+| `LiChaoTree() / LiChaoTree(reserved)` | Create an empty tree; the argument reserves node capacity, not coordinate-domain length. |
+| `build(reserved = 0)` | Remove all lines and rebuild the root. |
+| `reserve(size)` | Reserve node-array capacity. |
+| `add(line)` | Insert a line over the entire coordinate domain. |
+| `get(x)` | Query the best value at the actual coordinate x. |
 
-## 复杂度
+## Complexity
 
-设坐标域宽度 U = R - L。单次插入、查询 O(log U)，q 次插入的结点空间上界 O(q log U)。
+For domain width U = R - L, insertion and queries take O(log U). Node space after q insertions is at most O(q log U).
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -52,10 +52,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-get 的参数是原坐标；离线版本 get 的参数则是压缩下标。此版本的 new_node 是底层接口，正常使用无需调用。
+get accepts an actual coordinate; offline variants accept a compressed index instead. new_node is a low-level interface and is not needed for normal use.
 
-## 相关示例
+## Related examples
 
-现有 Library Checker 程序未直接包含此头文件；本页示例只验证所示用法。
+No existing Library Checker program directly includes this header. The example above checks only the usage shown.

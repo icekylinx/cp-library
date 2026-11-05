@@ -1,29 +1,29 @@
-# 整数键基数排序
+# Integer-key radix sort
 
-头文件：[`lib/algo/radix_sort.hpp`](../../lib/algo/radix_sort.hpp)。
+Header: [`lib/algo/radix_sort.hpp`](../../lib/algo/radix_sort.hpp).
 
-对可移动元素按无符号整数键稳定排序。小规模输入自动回退到 stable_sort。
+Stably sort movable elements by unsigned integer keys. Small inputs fall back to stable_sort.
 
-## 类型与使用条件
+## Types and requirements
 
-`T` 是元素类型，`func(element)` 返回 uint32_t 或 uint64_t 排序键。容器版本要求 data() 和 size()。默认 N = 16；完整 32 位或 64 位键应保持默认值。
+`T` is the element type; `func(element)` supplies a uint32_t or uint64_t key. Container overloads require data() and size(). Keep the default N = 16 for full-width 32-bit or 64-bit keys.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `radix_sort_u32<T>(f, n, func)` | 按 32 位无符号键排序 [f, f + n) |
-| `radix_sort_u64<T>(f, n, func)` | 按 64 位无符号键排序 |
-| `radix_sort_u32<T>(array, func)` | 32 位容器版本 |
-| `radix_sort_u64<T>(array, func)` | 64 位容器版本 |
+| `radix_sort_u32<T>(f, n, func)` | Sort [f, f + n) by unsigned 32-bit keys. |
+| `radix_sort_u64<T>(f, n, func)` | Sort by unsigned 64-bit keys. |
+| `radix_sort_u32<T>(array, func)` | Container overload for 32-bit keys. |
+| `radix_sort_u64<T>(array, func)` | Container overload for 64-bit keys. |
 
-## 复杂度
+## Complexity
 
-默认 N = 16 时，大规模为 O(n + 2^16) 时间、O(n + 2^16) 临时空间；小规模回退为 O(n log n)。
+With N = 16, large inputs take O(n + 2^16) time and temporary space. The small-input fallback takes O(n log n) time.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -38,11 +38,11 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-有符号键应先变换为保持顺序的无符号键，例如对 32 位补码键异或 `1u << 31`。N 小于 16 时，最后一段未加掩码，必须限制键值的位宽（u32 为 2N 位，u64 为 4N 位）；N 应为正数。大计数数组位于栈上。
+Convert signed keys to an order-preserving unsigned representation first, for example by XORing a 32-bit two's-complement key with `1u << 31`. For N < 16, the final digit is not masked, so keys must fit in 2N bits for u32 or 4N bits for u64. N must be positive. Large counting arrays are allocated on the stack.
 
-## 相关示例
+## Related examples
 
 - [data_structure/line_add_get_min.cpp](../../tests/library_checker/data_structure/line_add_get_min.cpp)
 - [data_structure/point_set_range_composite_large_array.cpp](../../tests/library_checker/data_structure/point_set_range_composite_large_array.cpp)

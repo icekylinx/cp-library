@@ -1,6 +1,6 @@
-# 历史性能记录
+# Historical performance records
 
-以下保留原 README 的性能数据和提交链接。原文标注更新时间为 2026-05-11T10:30:00+08:00；“Currently Fastest” 等分组沿用历史记录的表述，当前排名需重新查询。
+Performance figures and submission links are retained from the original README, whose recorded update time was 2026-05-11T10:30:00+08:00. Groups such as "Currently Fastest" reflect that historical record; current rankings require a new check.
 
 Updated: 2026-05-11T10:30:00+08:00.
 
@@ -37,12 +37,12 @@ Updated: 2026-05-11T10:30:00+08:00.
 ### Currently Fastest Submissions
 
 - [#1. I/O Test - 28 ms](https://qoj.ac/submission/2076509)
-- [#601. 李超树 - 56 ms](https://qoj.ac/submission/2076625)
-- [#786. Z 函数 - 16 ms](https://qoj.ac/submission/2128639)
-- [#1002. 快速 OR 卷积 - 4 ms](https://qoj.ac/submission/2076634)
-- [#1003. 快速 AND 卷积 - 4 ms](https://qoj.ac/submission/2000420)
-- [#1004. 快速 XOR 卷积 - 4 ms](https://qoj.ac/submission/1998820)
+- [#601. Li Chao Tree - 56 ms](https://qoj.ac/submission/2076625)
+- [#786. Z Function - 16 ms](https://qoj.ac/submission/2128639)
+- [#1002. Fast OR Convolution - 4 ms](https://qoj.ac/submission/2076634)
+- [#1003. Fast AND Convolution - 4 ms](https://qoj.ac/submission/2000420)
+- [#1004. Fast XOR Convolution - 4 ms](https://qoj.ac/submission/1998820)
 - [#4535. V - 142 ms](https://qoj.ac/submission/2089149)
 - [#5057. Prof. Pang's sequence - 298 ms](https://qoj.ac/submission/2089165)
-- [#21608. 行列式 - 13 ms](https://qoj.ac/submission/2151525)
-- [#21979. 最小生成树 - 24 ms](https://qoj.ac/submission/2162111)
+- [#21608. Determinant - 13 ms](https://qoj.ac/submission/2151525)
+- [#21979. Minimum Spanning Tree - 24 ms](https://qoj.ac/submission/2162111)

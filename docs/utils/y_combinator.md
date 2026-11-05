@@ -1,27 +1,27 @@
 # Y Combinator
 
-头文件：[`lib/utils/y_combinator.hpp`](../../lib/utils/y_combinator.hpp)。
+Header: [`lib/utils/y_combinator.hpp`](../../lib/utils/y_combinator.hpp).
 
-把接收自身引用的 lambda 包装为可递归调用对象。
+Wrap a lambda that accepts a reference to itself into a recursively callable object.
 
-## 类型与使用条件
+## Types and requirements
 
-lambda 的第一个参数接收自身，后续参数为普通函数参数。调用运算符为 const；闭包需可在 const 上调用。递归 lambda 通常应显式指定返回类型。
+The first lambda parameter receives the recursive wrapper; subsequent parameters are ordinary arguments. The wrapper's call operator is const, so the closure must be const-callable. Recursive lambdas generally need an explicit return type.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `y_combinator(lambda)` | 衰减并保存可调用对象，返回递归包装器 |
-| `wrapper(args...)` | 等价于调用保存的函数 func(self, args...) |
+| `y_combinator(lambda)` | Decay and store the callable, returning a recursive wrapper. |
+| `wrapper(args...)` | Invoke the stored function as func(self, args...). |
 
-## 复杂度
+## Complexity
 
-包装调用额外开销 O(1)，整体时间与递归栈取决于算法；包装对象空间等于保存闭包的大小量级。
+The wrapper adds O(1) work per call; total time and recursion-stack usage depend on the algorithm. Object space is proportional to the stored closure size.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -36,10 +36,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-不改变递归深度上限；对很深的链式递归仍应考虑显式栈。
+The wrapper does not increase the recursion-depth limit. Consider an explicit stack for very deep recursion.
 
-## 相关示例
+## Related examples
 
-现有 Library Checker 程序未直接包含此头文件；本页示例只验证所示用法。
+No existing Library Checker program directly includes this header. The example above checks only the usage shown.

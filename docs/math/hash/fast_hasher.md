@@ -1,27 +1,27 @@
 # FastHasher
 
-头文件：[`lib/math/hash/fast_hasher.hpp`](../../../lib/math/hash/fast_hasher.hpp)。
+Header: [`lib/math/hash/fast_hasher.hpp`](../../../lib/math/hash/fast_hasher.hpp).
 
-将整数键乘以固定奇常数，生成 64 位无符号哈希值。
+Multiply an integer key by a fixed odd constant to produce an unsigned 64-bit hash.
 
-## 类型与使用条件
+## Types and requirements
 
-`T` 能显式转换为 uint64_t。此哈希是确定性的，主要配合取高位的固定容量哈希表使用。
+`T` must be explicitly convertible to uint64_t. The hash is deterministic and is intended primarily for fixed-capacity tables that use the high bits.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `FastHasher<T>{}(value)` | 返回 Magic * uint64_t(value)，按 uint64_t 自然溢出 |
-| `FastHasher<T>::Magic` | 固定乘数 11400714819323198485 |
+| `FastHasher<T>{}(value)` | Return Magic * uint64_t(value), with ordinary uint64_t wraparound. |
+| `FastHasher<T>::Magic` | The fixed multiplier 11400714819323198485. |
 
-## 复杂度
+## Complexity
 
-单次调用时间、额外空间均为 O(1)。
+O(1) time and extra space per call.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -35,10 +35,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-不提供随机化或密码学抗碰撞保证。
+This hash provides neither randomization nor cryptographic collision resistance.
 
-## 相关示例
+## Related examples
 
-现有 Library Checker 程序未直接包含此头文件；本页示例只验证所示用法。
+No existing Library Checker program directly includes this header. The example above checks only the usage shown.

@@ -1,31 +1,31 @@
 # TagSegTree
 
-头文件：[`lib/ds/seg_tree/tag_seg_tree.hpp`](../../../lib/ds/seg_tree/tag_seg_tree.hpp)。
+Header: [`lib/ds/seg_tree/tag_seg_tree.hpp`](../../../lib/ds/seg_tree/tag_seg_tree.hpp).
 
-维护区间更新与单点查询，适合不需要区间聚合的场景。
+Maintain interval updates and point queries when interval aggregation is unnecessary.
 
-## 类型与使用条件
+## Types and requirements
 
-`T` 提供 Info、Tag、id()、tag_id()、apply(Info&, const Tag&)、compose(Tag&, const Tag&)；无需 op。compose(old, newer) 表示先应用 old，再应用 newer。tag_id 必须是恒等标记。
+`T` provides Info, Tag, id(), tag_id(), apply(Info&, const Tag&), and compose(Tag&, const Tag&); op is not needed. compose(old, newer) means applying old first, then newer. tag_id must be an identity tag.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `TagSegTree(n) / (n, func) / (first, last)` | 初始化单点值 |
-| `build(...) / reset()` | 重建或恢复初始单位元 |
-| `apply(l, r, tag)` | 对 [l, r) 追加变换 |
-| `set(x, value)` | 覆盖单点值，并消除对该点尚未落地的标记 |
-| `get(x)` | 返回单点经过全部标记后的值 |
-| `get_ref(x)` | 下推该点路径上的标记，返回底层值的可写引用 |
+| `TagSegTree(n) / (n, func) / (first, last)` | Initialize point values. |
+| `build(...) / reset()` | Rebuild or reset values and tags to their identities. |
+| `apply(l, r, tag)` | Append a transformation to [l, r). |
+| `set(x, value)` | Overwrite a point and discard pending tags affecting its previous value. |
+| `get(x)` | Return a point value after all pending tags. |
+| `get_ref(x)` | Push tags along the point path and return a writable reference to its stored value. |
 
-## 复杂度
+## Complexity
 
-建树、清空、空间 O(n)，区间更新及单点 set、get、get_ref 为 O(log n)。
+Building, clearing, and space are O(n). Interval updates and point set, get, and get_ref take O(log n).
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -54,10 +54,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-get_ref 返回的引用不会自动跟踪后续尚未下推的更新；再次读取当前逻辑值应调用 get 或 get_ref。不要跨 build 保存引用。
+A reference returned by get_ref does not automatically reflect later updates that have not been pushed down. Call get or get_ref again to read the current logical value. Do not retain references across build.
 
-## 相关示例
+## Related examples
 
 - [data_structure/range_affine_point_get.cpp](../../../tests/library_checker/data_structure/range_affine_point_get.cpp)

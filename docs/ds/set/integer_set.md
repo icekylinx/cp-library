@@ -1,32 +1,32 @@
 # IntegerSet
 
-头文件：[`lib/ds/set/integer_set.hpp`](../../../lib/ds/set/integer_set.hpp)。
+Header: [`lib/ds/set/integer_set.hpp`](../../../lib/ds/set/integer_set.hpp).
 
-使用四层 64 位位图维护有限整数集合，支持严格前驱和严格后继。
+Maintain a bounded set of integers using four levels of 64-bit bitmaps, with strict predecessor and successor queries.
 
-## 类型与使用条件
+## Types and requirements
 
-模板 B 默认 24；使用 0 <= B <= 24，容量上限为 2^B。构造参数 n 决定合法元素域 [0, n)，底层数组仍按 2^B 规模分配。
+B defaults to 24; use 0 <= B <= 24, giving capacity 2^B. The constructor argument n defines the valid element domain [0, n), but internal arrays are still sized for 2^B.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `IntegerSet<B>(n) / build(n)` | 创建或清空集合；默认构造使用 n = 2^B |
-| `insert(pos) / erase(pos)` | 插入或删除，成功改变集合返回 true |
-| `get(pos)` | 是否含有 pos |
-| `prev(pos)` | 最大的小于 pos 的元素，不存在返回 -1 |
-| `next(pos)` | 最小的大于 pos 的元素，不存在返回 -1 |
-| `size()` | 由带检查插入、删除维护的元素个数 |
-| `insert<false>(pos) / erase<false>(pos)` | 跳过存在性检查，返回 void，并且不维护 size 计数 |
+| `IntegerSet<B>(n) / build(n)` | Create or clear the set; default construction uses n = 2^B. |
+| `insert(pos) / erase(pos)` | Insert or erase an element; return true if the set changed. |
+| `get(pos)` | Check whether pos is present. |
+| `prev(pos)` | Return the largest element strictly less than pos, or -1 if none exists. |
+| `next(pos)` | Return the smallest element strictly greater than pos, or -1 if none exists. |
+| `size()` | Return the count maintained by checked insertion and deletion. |
+| `insert<false>(pos) / erase<false>(pos)` | Skip existence checks, return void, and do not maintain the size counter. |
 
-## 复杂度
+## Complexity
 
-固定四层位图下单次更新、查询为 O(1)，初始化与空间为 O(2^B / 64 + 2^B / 4096 + 2^B / 262144 + 1)。
+With four fixed bitmap levels, each update or query takes O(1). Initialization and space are O(2^B / 64 + 2^B / 4096 + 2^B / 262144 + 1).
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -44,10 +44,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-prev、next、get 的参数也必须满足 pos < n，不能传入 n 作为哨兵。要查询大于等于 pos 的元素，先检查 get(pos)，再调用 next(pos)。禁用检查后应自行维护集合操作的有效性，且不能依赖 size()。
+prev, next, and get also require pos < n; n is not a valid sentinel argument. For an inclusive successor query, check get(pos) before next(pos). With checks disabled, maintain operation validity yourself and do not rely on size().
 
-## 相关示例
+## Related examples
 
 - [data_structure/predecessor_problem.cpp](../../../tests/library_checker/data_structure/predecessor_problem.cpp)

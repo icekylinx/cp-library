@@ -1,29 +1,29 @@
 # BlockedSparseTable
 
-头文件：[`lib/ds/sparse_table/blocked_sparse_table.hpp`](../../../lib/ds/sparse_table/blocked_sparse_table.hpp)。
+Header: [`lib/ds/sparse_table/blocked_sparse_table.hpp`](../../../lib/ds/sparse_table/blocked_sparse_table.hpp).
 
-维护静态区间的幂等聚合，如最小值、最大值或 gcd。按 B 个元素分块，默认 B = 16。
+Maintain static interval aggregates for idempotent operations such as minimum, maximum, or gcd. Elements are grouped into blocks of B, with B = 16 by default.
 
-## 类型与使用条件
+## Types and requirements
 
-`T` 提供 Info、id()、op(a, b)。op 必须结合且幂等，因为查询可能重复覆盖元素；幂等要求 op(x, x) = x。区间为 [l, r)，空区间返回 id()。
+`T` provides Info, id(), and op(a, b). The operation must be associative and idempotent, since query blocks may overlap; idempotence means op(x, x) = x. Intervals are [l, r), and an empty interval returns id().
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `BlockedSparseTable(first, last)` | 从迭代器范围建表 |
-| `BlockedSparseTable(n, func)` | 通过 func(i) 生成初值 |
-| `build(first, last) / build(n, func)` | 重建静态表 |
-| `prod(l, r)` | 查询区间聚合，不支持更新 |
+| `BlockedSparseTable(first, last)` | Build from an iterator range. |
+| `BlockedSparseTable(n, func)` | Generate initial values using func(i). |
+| `build(first, last) / build(n, func)` | Rebuild the static table. |
+| `prod(l, r)` | Return the interval aggregate; updates are not supported. |
 
-## 复杂度
+## Complexity
 
-预处理与空间 O(n + (n/B) log(n/B))；同块查询 O(B)，跨块查询 O(1)。B 固定为 16 时查询为常数级。
+Preprocessing and space are O(n + (n/B) log(n/B)). Queries within one block take O(B); queries crossing blocks take O(1). With fixed B = 16, queries have constant cost.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -46,11 +46,11 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-不能直接用于普通区间和；区间和不满足幂等性。 B 必须大于 0。
+Ordinary range sums are not supported because addition is not idempotent. B must be positive.
 
-## 相关示例
+## Related examples
 
 - [data_structure/static_rmq.cpp](../../../tests/library_checker/data_structure/static_rmq.cpp)
 - [tree/lowest_common_ancestor.cpp](../../../tests/library_checker/tree/lowest_common_ancestor.cpp)

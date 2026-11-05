@@ -1,27 +1,27 @@
-# 固定模数行列式
+# Fixed-modulus determinant
 
-头文件：[`lib/math/linalg/det_fixed_mod.hpp`](../../../lib/math/linalg/det_fixed_mod.hpp)。
+Header: [`lib/math/linalg/det_fixed_mod.hpp`](../../../lib/math/linalg/det_fixed_mod.hpp).
 
-计算编译期模数 P 下的方阵行列式。prime = true 使用逆元消元及 AVX2；prime = false 使用欧几里得式消元。
+Compute a square matrix determinant modulo compile-time P. With prime = true, use inverse-based elimination and AVX2; otherwise use Euclidean elimination.
 
-## 类型与使用条件
+## Types and requirements
 
-`Matrix` 支持 mat[row][column]。建议使用 vector<vector<uint64_t>>，并将元素归约到 [0, P)。P > 0，prime = true 时 P 必须为素数。AVX2 分支使用有符号 32 位乘法及 64 位累加，应满足 P < 2^31 且 N * (P - 1)^2 + (P - 1) <= UINT64_MAX；默认 N = 16 适用于 998244353。
+`Matrix` must support mat[row][column]. Prefer vector<vector<uint64_t>> with entries reduced to [0, P). Require P > 0 and prime P when prime = true. The AVX2 branch uses signed 32-bit multiplication and unsigned 64-bit accumulation; require P < 2^31 and N * (P - 1)^2 + (P - 1) <= UINT64_MAX. The default N = 16 works for 998244353.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `det_inplace<P, N = 16, prime = true>(mat, n)` | 原地计算，破坏矩阵 |
-| `det<P, N = 16, prime = true>(mat, n)` | 复制为 64 位矩阵后计算，保留输入 |
+| `det_inplace<P, N = 16, prime = true>(mat, n)` | Compute in place, modifying the matrix. |
+| `det<P, N = 16, prime = true>(mat, n)` | Copy into a 64-bit matrix before computing, preserving the input. |
 
-## 复杂度
+## Complexity
 
-素数分支 O(n³ + n² log P) 时间，另用 O(n) 计数空间；合数分支 O(n³ log P) 量级。det 包装器额外复制 O(n²) 时间与空间。
+The prime branch takes O(n^3 + n^2 log P) time and O(n) counter space; the composite branch is O(n^3 log P). The det wrapper adds O(n^2) time and space for copying.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -40,11 +40,11 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-文件启用 GCC target("avx2")，需要兼容的 x86 CPU。prime = true 的原地接口必须使用 64 位元素，SIMD 每次按 64 位槽位读写；不要直接传 uint32_t 矩阵。N 必须为正。
+The file enables GCC target("avx2") and requires a compatible x86 CPU. With prime = true, the in-place interface requires 64-bit entries because SIMD accesses use 64-bit slots; do not pass a uint32_t matrix directly. N must be positive.
 
-## 相关示例
+## Related examples
 
 - [graph/counting_spanning_trees_directed.cpp](../../../tests/library_checker/graph/counting_spanning_trees_directed.cpp)
 - [graph/counting_spanning_trees_undirected.cpp](../../../tests/library_checker/graph/counting_spanning_trees_undirected.cpp)

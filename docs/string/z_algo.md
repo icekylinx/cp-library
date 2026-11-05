@@ -1,27 +1,27 @@
-# Z 算法
+# Z algorithm
 
-头文件：[`lib/string/z_algo.hpp`](../../lib/string/z_algo.hpp)。
+Header: [`lib/string/z_algo.hpp`](../../lib/string/z_algo.hpp).
 
-计算每个后缀与整个序列的最长公共前缀长度。
+Compute the longest common prefix of the entire sequence and each of its suffixes.
 
-## 类型与使用条件
+## Types and requirements
 
-输入为支持随机访问和相等比较的序列。返回 vector<uint32_t>；非空输入满足 z[0] = n，空输入返回空向量。
+The input must support random access and equality comparison. The result is vector<uint32_t>. For nonempty input, z[0] = n; empty input produces an empty vector.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `z_algo(first, n)` | 处理从 first 开始的 n 个元素 |
-| `z_algo(sequence)` | 处理提供 data() 与 size() 的容器，例如 string、vector |
+| `z_algo(first, n)` | Process n elements starting at first. |
+| `z_algo(sequence)` | Process a container with data() and size(), such as string or vector. |
 
-## 复杂度
+## Complexity
 
-时间 O(n)，返回数组空间 O(n)。
+O(n) time and O(n) space for the result.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -37,6 +37,6 @@ int main() {
 }
 ```
 
-## 相关示例
+## Related examples
 
 - [string/z_algorithm.cpp](../../tests/library_checker/string/z_algorithm.cpp)

@@ -1,28 +1,28 @@
 # Barrett32
 
-头文件：[`lib/math/modular/barrett32.hpp`](../../../lib/math/modular/barrett32.hpp)。
+Header: [`lib/math/modular/barrett32.hpp`](../../../lib/math/modular/barrett32.hpp).
 
-对 32 位无符号整数使用预计算倒数进行固定模数取余。
+Reduce an unsigned 32-bit integer modulo a fixed modulus using a precomputed reciprocal.
 
-## 类型与使用条件
+## Types and requirements
 
-先通过构造函数或 set_mod 设置模数。此实现通过最高位判断负余数修正，使用安全范围 2 <= mod <= 2^31；不要把仅有的 CHECK(mod >= 2) 理解为支持任意满位宽模数。
+Set the modulus through the constructor or set_mod before use. This implementation uses the top bit to detect a negative remainder correction, so use the safe range 2 <= mod <= 2^31. The CHECK(mod >= 2) assertion alone does not imply support for every full-width modulus.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `Barrett32(mod)` | 设置模数与倒数 |
-| `set_mod(mod)` | 切换模数 |
-| `reduce(uint32_t x)` | 返回 x % mod，x 可以使用整个无符号位宽 |
+| `Barrett32(mod)` | Set the modulus and reciprocal. |
+| `set_mod(mod)` | Change the modulus. |
+| `reduce(uint32_t x)` | Return x % mod; x may span the full unsigned 32-bit range. |
 
-## 复杂度
+## Complexity
 
-设置模数包含一次整数除法，reduce 为固定次数乘法及移位，均为 O(1)；空间 O(1)。
+Setting the modulus uses one integer division; reduce uses a fixed number of multiplications and shifts. Both take O(1) time and O(1) space.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -39,10 +39,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-本版本输入只有 32 位；若需计算两个 32 位数的乘积模 m，应使用 64 位取余器或普通 uint64_t 取余。 默认构造不初始化 mod、inv，不能直接 reduce。
+This version accepts only 32-bit inputs. To reduce a product of two 32-bit integers, use the 64-bit reducer or ordinary uint64_t remainder. The default constructor leaves mod and inv uninitialized; call set_mod before reduce.
 
-## 相关示例
+## Related examples
 
-现有 Library Checker 程序未直接包含此头文件；本页示例只验证所示用法。
+No existing Library Checker program directly includes this header. The example above checks only the usage shown.

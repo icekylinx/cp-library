@@ -1,27 +1,27 @@
-# 父数组转 DFS 编号
+# Parent array to DFS order
 
-头文件：[`lib/tree/parent_to_dfn.hpp`](../../lib/tree/parent_to_dfn.hpp)。
+Header: [`lib/tree/parent_to_dfn.hpp`](../../lib/tree/parent_to_dfn.hpp).
 
-在线性时间内把特定编号约束下的父数组转换为 DFS 前序编号。
+Convert a parent array satisfying an ordering constraint into DFS preorder positions in linear time.
 
-## 类型与使用条件
+## Types and requirements
 
-节点编号为 [0, n)，根为 0，且每个 i >= 1 都满足 fa[i] < i。fa[0] 不参与计算。返回 dfn[i] 是节点 i 的前序位置；根位置为 0。
+Vertices are numbered [0, n), vertex 0 is the root, and fa[i] < i for every i >= 1. fa[0] is ignored. The returned dfn[i] is the preorder position of vertex i; the root has position zero.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `parent_to_dfn(first, n)` | 读取 n 个父编号，返回前序位置数组 |
-| `parent_to_dfn(parent)` | 容器版本，要求 data() 与 size() |
+| `parent_to_dfn(first, n)` | Read n parent indices and return the preorder-position array. |
+| `parent_to_dfn(parent)` | Container overload requiring data() and size(). |
 
-## 复杂度
+## Complexity
 
-时间 O(n)，额外空间 O(n)。
+O(n) time and O(n) extra space.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -40,10 +40,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-兄弟子树的访问顺序由实现决定，不应假定为邻接表顺序。返回的是节点到位置的映射，不是按访问顺序排列的节点列表；实现不返回子树大小或子树终点。
+Sibling-subtree order is implementation-defined; do not assume adjacency-list order. The result maps vertices to positions rather than listing vertices in visit order. Subtree sizes and interval endpoints are not returned.
 
-## 相关示例
+## Related examples
 
 - [tree/lowest_common_ancestor.cpp](../../tests/library_checker/tree/lowest_common_ancestor.cpp)

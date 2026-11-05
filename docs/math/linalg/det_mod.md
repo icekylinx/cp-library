@@ -1,27 +1,27 @@
-# 动态模数行列式
+# Runtime-modulus determinant
 
-头文件：[`lib/math/linalg/det_mod.hpp`](../../../lib/math/linalg/det_mod.hpp)。
+Header: [`lib/math/linalg/det_mod.hpp`](../../../lib/math/linalg/det_mod.hpp).
 
-使用欧几里得式消元计算运行时模数下的行列式，支持合数模数。
+Compute a determinant modulo a runtime modulus using Euclidean elimination, including for composite moduli.
 
-## 类型与使用条件
+## Types and requirements
 
-P > 0，输入元素应已归约到 [0, P)。矩阵元素建议为 uint64_t，以容纳乘加中间值；Matrix 支持按行交换和双下标访问。
+Require P > 0 and entries reduced to [0, P). Prefer uint64_t entries to hold intermediate multiply-add results. Matrix must support row swapping and double subscripting.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `det_inplace(mat, n, P)` | 原地消元并返回行列式模 P 的结果 |
-| `det(mat, n, P)` | 按值复制矩阵再计算，不改变调用者输入 |
+| `det_inplace(mat, n, P)` | Eliminate in place and return the determinant modulo P. |
+| `det(mat, n, P)` | Copy the matrix by value before computing, preserving the caller's input. |
 
-## 复杂度
+## Complexity
 
-欧几里得式消元为 O(n³ log P) 量级；原地版本除矩阵外 O(1) 额外空间，复制版本额外 O(n²)。
+Euclidean elimination takes O(n^3 log P) time. The in-place version needs O(1) extra space beyond the matrix; the copying version adds O(n^2) space.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -39,10 +39,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-模 1 返回 0；模数较大时应确认所有乘加均由 64 位无符号类型求值。此接口无需把模数误标记为素数。
+Modulo 1, the result is zero. For large moduli, ensure multiply-add expressions are evaluated in unsigned 64-bit arithmetic. This interface does not require declaring the modulus prime.
 
-## 相关示例
+## Related examples
 
 - [linear_algebra/determinant_of_matrix_arbitrary_mod.cpp](../../../tests/library_checker/linear_algebra/determinant_of_matrix_arbitrary_mod.cpp)

@@ -1,28 +1,28 @@
 # SplitMix64
 
-头文件：[`lib/math/hash/splitmix64.hpp`](../../../lib/math/hash/splitmix64.hpp)。
+Header: [`lib/math/hash/splitmix64.hpp`](../../../lib/math/hash/splitmix64.hpp).
 
-带对象种子的 64 位整数混合函数，可用于哈希表。
+A seeded 64-bit integer mixing function suitable for hash tables.
 
-## 类型与使用条件
+## Types and requirements
 
-构造时从 steady_clock 取得种子；同一对象对相同输入返回相同值。operator() 不推进状态，因此这不是逐次生成新随机数的 RNG 接口。
+The constructor obtains a seed from steady_clock. The same object returns the same hash for the same input. operator() does not advance state, so this is not an interface that produces a new random number on every call.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `SplitMix64()` | 初始化 seed |
-| `operator()(uint64_t value)` | 返回经过种子扰动和两轮乘法混合的 64 位哈希 |
-| `seed` | 可写的公开种子；需确定性复现时在首次插入哈希表之前固定 |
+| `SplitMix64()` | Initialize seed. |
+| `operator()(uint64_t value)` | Return a 64-bit hash after adding the seed and applying two multiplication-based mixing rounds. |
+| `seed` | A public writable seed; set it before the first table insertion when deterministic reproduction is needed. |
 
-## 复杂度
+## Complexity
 
-构造、单次计算及额外空间为 O(1)。
+Construction, each call, and extra space are O(1).
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -37,10 +37,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-对象建立哈希表后不能更改其 seed，否则已有键无法按原槽位查找。时钟种子不提供密码学安全性。
+Do not change a table hasher's seed after insertion, or existing keys will no longer map to their original slots. A clock-based seed does not provide cryptographic security.
 
-## 相关示例
+## Related examples
 
-现有 Library Checker 程序未直接包含此头文件；本页示例只验证所示用法。
+No existing Library Checker program directly includes this header. The example above checks only the usage shown.

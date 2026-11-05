@@ -1,29 +1,29 @@
 # FWT XOR
 
-头文件：[`lib/math/conv/fwt_xor.hpp`](../../../lib/math/conv/fwt_xor.hpp)。
+Header: [`lib/math/conv/fwt_xor.hpp`](../../../lib/math/conv/fwt_xor.hpp).
 
-原地执行按位异或卷积对应的变换与逆变换。用法是分别变换两个数组、逐点相乘，再逆变换。
+Apply the forward or inverse transform for bitwise XOR convolution in place. Transform both inputs, multiply pointwise, then apply the inverse transform.
 
-## 类型与使用条件
+## Types and requirements
 
-`P` 是编译期模数，系数用 uint32_t 表示，输入须已归约到 [0, P)。为避免 32 位加法溢出，使用 2 <= P < 2^31。数组长度为正的 2 的幂。 XOR 逆变换还要求 P 为奇数，因而 2 在模 P 下可逆。
+`P` is a compile-time modulus. Coefficients are uint32_t values already reduced to [0, P). Use 2 <= P < 2^31 to avoid overflow in 32-bit addition. The array length must be a positive power of two. The XOR inverse also requires odd P so that 2 is invertible modulo P.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `fwt_xor<P>(array)` | 对提供 data() 和 size() 的容器进行正变换 |
-| `ifwt_xor<P>(array)` | 逆变换 |
-| `fwt_xor<P>(first, n) / ifwt_xor<P>(first, n)` | 迭代器和长度版本，长度会向上取整到 2 的幂 |
-| `fwt_xor<P, N>(first) / ifwt_xor<P, N>(first)` | 编译期固定长度版本，N 是元素个数，不是指数 |
+| `fwt_xor<P>(array)` | Apply the forward transform to a container providing data() and size(). |
+| `ifwt_xor<P>(array)` | Apply the inverse transform. |
+| `fwt_xor<P>(first, n) / ifwt_xor<P>(first, n)` | Iterator-and-length overloads; the length is rounded up to a power of two. |
+| `fwt_xor<P, N>(first) / ifwt_xor<P, N>(first)` | Compile-time fixed-length overloads; N is the element count, not its exponent. |
 
-## 复杂度
+## Complexity
 
-每次变换 O(n log n) 时间、O(log n) 递归栈；逐点乘法 O(n)。
+Each transform takes O(n log n) time and O(log n) recursion stack space. Pointwise multiplication takes O(n).
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -42,10 +42,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-动态长度入口不会分配或补零。若 n 不是 2 的幂，调用者必须预先提供向上取整后的有效存储，并自行填零；容器版本建议直接把 size 调整为该长度。默认分派支持至 2^30 个元素，超出此范围没有有效处理。
+The dynamic-length entry point does not allocate or zero-pad storage. If n is not a power of two, provide valid storage up to the rounded length and zero-pad it yourself. For container overloads, resize the container to that length first. The default dispatcher supports up to 2^30 elements; larger sizes are not handled.
 
-## 相关示例
+## Related examples
 
 - [convolution/bitwise_xor_convolution.cpp](../../../tests/library_checker/convolution/bitwise_xor_convolution.cpp)

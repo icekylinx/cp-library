@@ -1,31 +1,31 @@
 # FenwickTree
 
-头文件：[`lib/ds/fenwick_tree/fenwick_tree.hpp`](../../../lib/ds/fenwick_tree/fenwick_tree.hpp)。
+Header: [`lib/ds/fenwick_tree/fenwick_tree.hpp`](../../../lib/ds/fenwick_tree/fenwick_tree.hpp).
 
-维护单点增量与前缀、区间聚合。
+Maintain point increments and prefix or interval aggregates.
 
-## 类型与使用条件
+## Types and requirements
 
-`T` 提供 `Info`、`id()`、`op(a, b)`、`inv(a)`。这里按交换群使用：`op` 结合且交换，`id` 为单位元，`inv` 为逆元。例如 `Info = long long`，`op` 为加法，`inv(x) = -x`。从初值建树时还要求 `Info{}` 等于 `id()`，因为前缀辅助数组的第 0 项使用默认初始化。下标从 0 开始。
+`T` provides `Info`, `id()`, `op(a, b)`, and `inv(a)`, forming a commutative group: op is associative and commutative, id is its identity, and inv gives the inverse. For example, Info can be long long with addition and inv(x) = -x. Building from initial values also requires `Info{}` to equal `id()`, because the prefix helper array default-initializes its first entry. Indices are zero-based.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `Class(n) / build(n)` | 创建 n 个单位元 |
-| `Class(n, func) / Class(first, last)` | 从生成函数或迭代器范围线性建树；Class 指本页类型 |
-| `add(x, v)` | 将位置 x 与 v 合并 |
-| `sum(x)` | 聚合 [0, x)，允许 x = 0 或 n |
-| `sum(l, r)` | 聚合 [l, r) |
-| `reset()` | 全部恢复单位元 |
+| `Class(n) / build(n)` | Create n identity elements. |
+| `Class(n, func) / Class(first, last)` | Build in linear time from a generator or iterator range; Class denotes the type on this page. |
+| `add(x, v)` | Combine the value at x with v. |
+| `sum(x)` | Aggregate [0, x), allowing x = 0 or n. |
+| `sum(l, r)` | Aggregate [l, r). |
+| `reset()` | Reset every value to the identity. |
 
-## 复杂度
+## Complexity
 
-建树、清空和空间 O(n)；更新、前缀和及区间查询 O(log n)。
+Building, clearing, and space are O(n). Updates and prefix or interval queries take O(log n).
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -47,10 +47,10 @@ int main() {
 }
 ```
 
-## 注意事项
+## Notes
 
-区间满足 `0 <= l <= r <= n`。`add` 是增量，不是赋值；赋值需先计算差值。
+Intervals must satisfy `0 <= l <= r <= n`. `add` applies an increment rather than an assignment; compute the difference first when assigning a new value.
 
-## 相关示例
+## Related examples
 
-现有 Library Checker 程序未直接包含此头文件；本页示例只验证所示用法。
+No existing Library Checker program directly includes this header. The example above checks only the usage shown.

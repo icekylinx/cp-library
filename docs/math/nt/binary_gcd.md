@@ -1,26 +1,26 @@
 # Binary GCD
 
-头文件：[`lib/math/nt/binary_gcd.hpp`](../../../lib/math/nt/binary_gcd.hpp)。
+Header: [`lib/math/nt/binary_gcd.hpp`](../../../lib/math/nt/binary_gcd.hpp).
 
-用二进制移位与差值计算两个非负整数的最大公约数。
+Compute the greatest common divisor of two nonnegative integers using shifts and differences.
 
-## 类型与使用条件
+## Types and requirements
 
-模板参数 T 必须是有符号整数类型，但调用值应为非负数。负值和最小有符号数不在此实现的使用条件内；差值与移位结果也必须可表示。
+T must be a signed integer type, but argument values must be nonnegative. Negative arguments and the minimum signed value are outside the supported conditions. Differences and shifted results must also be representable.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `binary_gcd(a, b)` | 返回 gcd(a, b)；一方为 0 时返回另一方，二者为 0 时返回 0 |
+| `binary_gcd(a, b)` | Return gcd(a, b); if one argument is zero, return the other, and if both are zero, return zero. |
 
-## 复杂度
+## Complexity
 
-O(log(max(a, b) + 1)) 次整数操作，空间 O(1)。
+O(log(max(a, b) + 1)) integer operations and O(1) space.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -34,6 +34,6 @@ int main() {
 }
 ```
 
-## 相关示例
+## Related examples
 
-现有 Library Checker 程序未直接包含此头文件；本页示例只验证所示用法。
+No existing Library Checker program directly includes this header. The example above checks only the usage shown.

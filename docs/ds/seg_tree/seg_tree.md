@@ -191,7 +191,7 @@ Use `SegTree` when point assignment and interval monoid query are enough.
 
 If you need range updates, use `LazySegTree` or `TagSegTree` instead.
 
-## 可运行示例
+## Runnable example
 
 <!-- runnable-example -->
 ```cpp
@@ -215,4 +215,4 @@ int main() {
 }
 ```
 
-当前实现提供上述接口，不包含 find_first、max_right 等搜索成员。需要搜索时应在调用方实现或扩展此类型。
+The current implementation provides the interfaces above, but no find_first or max_right search members. Implement searches in the caller or extend the type if needed.

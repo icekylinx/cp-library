@@ -1,27 +1,27 @@
-# 快速二分查找
+# Fast binary search
 
-头文件：[`lib/algo/fast_bounds.hpp`](../../lib/algo/fast_bounds.hpp)。
+Header: [`lib/algo/fast_bounds.hpp`](../../lib/algo/fast_bounds.hpp).
 
-在已按比较器排序的随机访问范围中定位 lower_bound 或 upper_bound。
+Find lower_bound or upper_bound in a sorted random-access range.
 
-## 类型与使用条件
+## Types and requirements
 
-`It` 为随机访问迭代器；范围为 [f, f + n)，n 可为 0，但 n + 1 必须能由 uint32_t 表示。`comp` 是与排序一致的严格弱序。
+`It` must be a random-access iterator. The range is [f, f + n); n may be zero, but n + 1 must fit in uint32_t. `comp` must define a strict weak ordering consistent with the sorted range.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
-| `fast_lower_bound(f, n, x, comp)` | 返回首个不满足 comp(element, x) 的迭代器，未找到返回 f + n |
-| `fast_upper_bound(f, n, x, comp)` | 返回首个满足 comp(x, element) 的迭代器，未找到返回 f + n |
+| `fast_lower_bound(f, n, x, comp)` | Return the first iterator for which comp(element, x) is false, or f + n if none exists. |
+| `fast_upper_bound(f, n, x, comp)` | Return the first iterator for which comp(x, element) is true, or f + n if none exists. |
 
-## 复杂度
+## Complexity
 
-O(log(n + 1)) 次比较，额外空间 O(1)。
+O(log(n + 1)) comparisons and O(1) extra space.
 
-## 示例
+## Example
 
-以下示例可以独立编译运行。
+This example can be compiled and run as a standalone program.
 
 <!-- runnable-example -->
 ```cpp
@@ -38,6 +38,6 @@ int main() {
 }
 ```
 
-## 相关示例
+## Related examples
 
 - [other/longest_increasing_subsequence.cpp](../../tests/library_checker/other/longest_increasing_subsequence.cpp)

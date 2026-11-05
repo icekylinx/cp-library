@@ -1,29 +1,29 @@
 # cp-library
 
-面向算法竞赛的 C++ 算法库，包含 38 个头文件、38 篇模块文档、31 个 Library Checker 程序和 37 个 Sublime Text 代码片段。采用 MIT 许可证。
+A C++ competitive programming library with 38 headers, 38 module documents, 31 Library Checker programs, and 37 Sublime Text snippets. Licensed under MIT.
 
-## 目录与文档
+## Layout and documentation
 
-| 路径 | 内容 |
+| Path | Contents |
 | --- | --- |
-| [lib/](lib/) | 算法、数据结构、数学、字符串、树及工具头文件 |
-| [tests/](tests/) | 仅保留 Library Checker 的评测程序 |
-| [sublime_snippets/](sublime_snippets/) | 按模块分类的 Sublime Text 代码片段 |
-| [docs/catalog.md](docs/catalog.md) | 全部模块文档、头文件、代码片段与示例索引 |
-| [docs/usage.md](docs/usage.md) | 原有英文使用说明 |
-| [benchmarks/README.md](benchmarks/README.md) | 官方生成器、本地验证与性能复现说明 |
-| [benchmarks/results/2026-11-05.md](benchmarks/results/2026-11-05.md) | 8 题本地 benchmark 汇总与参考解对比 |
-| [docs/benchmarks.md](docs/benchmarks.md) | 原 README 中的历史性能记录及提交链接 |
-| [template.cpp](template.cpp) | 竞赛程序模板 |
-| [expander.py](expander.py) | 将 `lib/` 中的引用展开为单文件 |
-| `local/` | 本地题目生成器、调试源码及归档，已由 Git 忽略 |
-| `build/` | 本地编译与展开输出，已由 Git 忽略 |
+| [lib/](lib/) | Algorithms, data structures, mathematics, strings, trees, and utilities |
+| [tests/](tests/) | Library Checker programs |
+| [sublime_snippets/](sublime_snippets/) | Sublime Text snippets organized by module |
+| [docs/catalog.md](docs/catalog.md) | Index of module documents, headers, snippets, and examples |
+| [docs/usage.md](docs/usage.md) | Usage reference |
+| [benchmarks/README.md](benchmarks/README.md) | Official generators, local verification, and benchmark reproduction |
+| [benchmarks/results/2026-11-05.md](benchmarks/results/2026-11-05.md) | Local benchmark results for eight problems, compared with official reference solutions |
+| [docs/benchmarks.md](docs/benchmarks.md) | Historical performance records and submission links from the original README |
+| [template.cpp](template.cpp) | Contest program template |
+| [expander.py](expander.py) | Expand includes under `lib/` into a single source file |
+| `local/` | Local generators, scratch programs, and archives; ignored by Git |
+| `build/` | Compiled programs and expanded source files; ignored by Git |
 
-## 快速开始
+## Quick start
 
-以下命令均在项目根目录运行。需要支持 C++20 或更新标准的编译器，通常使用 GCC 与 `-std=c++23 -O2`；部分实现使用 GNU 扩展或平台相关指令。
+Run the following commands from the project root. Library headers require C++20 or later; `-std=c++23 -O2` with GCC is the usual configuration. Some implementations use GNU extensions or platform-specific instructions.
 
-编译并运行现有并查集示例：
+Compile and run the existing union-find example:
 
 ```sh
 mkdir -p build
@@ -32,11 +32,11 @@ printf '4 5\n0 0 1\n1 0 1\n1 0 2\n0 1 2\n1 0 2\n' > build/unionfind.in
 ./build/unionfind < build/unionfind.in
 ```
 
-输出应为三行：`1`、`0`、`1`。
+The expected output is three lines: `1`, `0`, and `1`.
 
-FastIO 在 Unix 下默认使用 `mmap` 读取普通文件，因此示例采用文件重定向。使用管道或终端输入时，编译时添加 `-DDISABLE_MMAP`，启用 `fread` 缓冲读取。
+On Unix, FastIO uses `mmap` with regular input files by default, which is why the example uses file redirection. For pipes or terminal input, compile with `-DDISABLE_MMAP` to enable buffered `fread` input.
 
-新程序可从 `template.cpp` 复制至 `local/`，并通过项目根目录下的 `lib/...` 路径包含头文件：
+Start a new program by copying `template.cpp` into `local/`. Include headers through paths such as `lib/utils/fast_io.hpp`, with the project root on the include path:
 
 ```sh
 mkdir -p local
@@ -44,39 +44,39 @@ cp template.cpp local/main.cpp
 g++ -std=c++23 -O2 -I. local/main.cpp -o build/main
 ```
 
-模板与现有评测程序在定义 `LOCAL` 时使用当前工作目录中的 `test.in` 和 `test.out`；使用标准输入输出时无需添加 `-DLOCAL`。
+When `LOCAL` is defined, the template and existing test programs redirect input and output to `test.in` and `test.out` in the current working directory. Leave `-DLOCAL` out when using standard input and output.
 
-## 展开为单文件
+## Expand into a single file
 
 ```sh
 python3 expander.py tests/library_checker/data_structure/unionfind.cpp -o build/unionfind.cpp
 g++ -std=c++23 -O2 build/unionfind.cpp -o build/unionfind-expanded
 ```
 
-`expander.py` 默认从当前目录解析项目路径；从其他目录调用时使用 `--root` 指定项目根目录。更多参数见 `python3 expander.py --help`。
+`expander.py` resolves project paths from the current directory by default. Use `--root` to specify the project root when calling it from another directory. See `python3 expander.py --help` for additional options.
 
-## 使用约定
+## Conventions
 
-- 数据结构默认使用从 0 开始的下标与左闭右开区间 `[left, right)`。
-- 尺寸通常由 `uint32_t` 表示；零尺寸的行为需查看具体实现。
-- 库仅做有限的参数检查，调用前应确保输入满足对应实现的要求。
-- Sublime Text 片段和头文件分别维护；使用前请核对需要的版本。
+- Data structures use zero-based indices and half-open intervals `[left, right)`.
+- Sizes are generally represented by `uint32_t`; check individual implementations before using zero-sized structures.
+- The library performs limited argument checking. Callers must satisfy each implementation's preconditions.
+- Sublime Text snippets and headers are maintained separately; check the version you need before use.
 
-## 文档与验证
+## Documentation and validation
 
-每个头文件都有对应的 `docs/模块路径/文件名.md`，说明使用条件、公开接口、复杂度和示例。`online_inverse.hpp` 目前仍是占位文件，文档明确标注为未实现。
+Each header has a corresponding `docs/module/path/name.md` page covering requirements, public interfaces, complexity, and examples. `online_inverse.hpp` remains an unimplemented placeholder, as documented on its page.
 
 ```sh
 python3 tools/update_catalog.py
 python3 tools/check_docs.py
 ```
 
-第一条重建模块索引；第二条检查头文件的文档覆盖、内部链接，并编译运行标记为可独立运行的 C++ 示例。完整官方数据的生成、checker 验证和计时方法见 [benchmark 说明](benchmarks/README.md)。
+The first command rebuilds the catalog. The second checks header-document coverage and local links, then compiles and runs examples marked as standalone programs. See the [benchmark guide](benchmarks/README.md) for official data generation, checker verification, and timing.
 
-## 本地 benchmark
+## Local benchmark
 
-[2026 年 11 月 5 日测量](benchmarks/results/2026-11-05.md)覆盖 8 题，全部 158 个官方用例通过 checker；另选每题两个大输入，记录本库程序与官方参考解的 5 次运行耗时。原始 JSON 包含源码、输入及上游版本哈希。历史在线性能数据单独保留在 [历史记录](docs/benchmarks.md)。
+The [November 5, 2026 run](benchmarks/results/2026-11-05.md) covers eight problems, with all 158 official cases accepted by their checkers. Two large inputs per problem were timed for five runs of both the library and reference programs. Raw JSON records include source hashes, input hashes, and the upstream revision. Older online performance data are retained in the [historical records](docs/benchmarks.md).
 
-## 许可证
+## License
 
 [MIT License](LICENSE)

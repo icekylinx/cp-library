@@ -71,24 +71,24 @@ def verify_data(problem_dir):
 
 def render_report(report, output_path):
     lines = [
-        "# Library Checker 本地基准测试", "",
-        f"运行时间：{report['started_at']}。", "",
-        f"上游：[yosupo06/library-checker-problems](https://github.com/yosupo06/library-checker-problems) "
-        f"的提交 [`{report['upstream_commit'][:12]}`]"
-        f"(https://github.com/yosupo06/library-checker-problems/tree/{report['upstream_commit']})。", "",
-        "## 测量方法", "",
-        f"- CPU：{report['cpu_model']}；固定逻辑 CPU {report['cpu']}。",
-        f"- 系统：`{report['platform']}`。",
-        f"- 编译器：`{report['compiler']}`；两份程序的命令行参数均为 `{' '.join(report['flags'])}`。",
-        "- 保留源码中的 GCC optimize/target 指令，因此相同命令行参数不表示相同的有效优化级别；逐题指令记录在 JSON 中。",
-        "- 每题完整生成官方数据，逐项校验上游 SHA256，再用官方 checker 检查本库程序的所有用例。",
-        f"- 每题按输入文件字节数降序、文件名升序，取前 {report['cases_per_problem']} 个用例计时。",
-        f"- 每份程序每例预热 {report['warmups']} 次，测量 {report['repetitions']} 次；交替先运行本库与参考解。",
-        "- 输入为普通文件，输出到 `/dev/null`。表中为包含进程启动、输入解析及输出格式化的墙钟耗时中位数；不含编译、生成及 checker。",
-        "- 文件缓存经过预热，CPU 未独占，频率可动态变化。该结果只比较本机当前程序，不代表在线排名或纯数据结构操作耗时。", "",
-        "## 结果", "",
-        "比值为官方参考解耗时 ÷ 本库耗时；大于 1 表示本库在该用例中更快。", "",
-        "| 题目 | 正确性 | 计时用例 | 输入 MiB | 本库 ms | 官方参考 ms | 比值 |",
+        "# Local Library Checker benchmark", "",
+        f"Run started: {report['started_at']}.", "",
+        f"Upstream: [yosupo06/library-checker-problems](https://github.com/yosupo06/library-checker-problems), "
+        f"commit [`{report['upstream_commit'][:12]}`]"
+        f"(https://github.com/yosupo06/library-checker-problems/tree/{report['upstream_commit']}).", "",
+        "## Methodology", "",
+        f"- CPU: {report['cpu_model']}; pinned to logical CPU {report['cpu']}.",
+        f"- Platform: `{report['platform']}`.",
+        f"- Compiler: `{report['compiler']}`; both programs use the command-line flags `{' '.join(report['flags'])}`.",
+        "- Source-level GCC optimize/target directives are retained. Equal command-line flags do not imply equal effective optimization settings; per-problem directives are recorded in the JSON.",
+        "- Generate every official case, verify inputs and expected outputs against upstream SHA256 hashes, and check the library program on every case with the official checker.",
+        f"- For each problem, time the first {report['cases_per_problem']} cases sorted by descending input byte size, then ascending filename.",
+        f"- Warm up each program {report['warmups']} time(s) per case, then measure {report['repetitions']} runs; alternate which program runs first.",
+        "- Read stdin from regular files and send stdout to `/dev/null`. The table reports median wall-clock time, including process startup, input parsing, and output formatting; compilation, generation, and checking are excluded.",
+        "- File caches are warm, the CPU is shared, and frequency may vary. These results compare complete programs on this machine, not current online rankings or isolated data-structure operations.", "",
+        "## Results", "",
+        "The ratio is reference time divided by library time; values above 1 mean the library was faster on that case.", "",
+        "| Problem | Correctness | Timed case | Input MiB | Library ms | Reference ms | Ratio |",
         "| --- | --- | --- | ---: | ---: | ---: | ---: |",
     ]
     for problem in report["problems"]:
@@ -99,15 +99,15 @@ def render_report(report, output_path):
                 f"| [{problem['id']}](https://judge.yosupo.jp/problem/{problem['id']}) "
                 f"| {problem['passed_cases']}/{problem['total_cases']} "
                 f"| `{case['case']}` | {case['input_bytes'] / 2**20:.2f} "
-                f"| {candidate:.3f} | {reference:.3f} | {reference / candidate:.2f}× |"
+                f"| {candidate:.3f} | {reference:.3f} | {reference / candidate:.2f}x |"
             )
     total = sum(p["total_cases"] for p in report["problems"])
     lines.extend([
-        "", f"共 {len(report['problems'])} 题、{total} 个官方用例通过 checker。", "",
-        "## 复现与原始数据", "",
-        "执行方法见 [benchmark 使用说明](../README.md)。同名 JSON 保存所有单次墙钟与 CPU 时间、"
-        "编译命令、输入及源码哈希、官方用例验证记录。", "",
-        f"本次库源码摘要：`{report['library_sources_sha256']}`。", "",
+        "", f"All {total} official cases across {len(report['problems'])} problems passed the checker.", "",
+        "## Reproduction and raw data", "",
+        "See the [benchmark guide](../README.md) for commands. The matching JSON file contains every wall-clock "
+        "and CPU-time sample, compilation commands, input and source hashes, and case verification records.", "",
+        f"Library source digest for this run: `{report['library_sources_sha256']}`.", "",
     ])
     output_path.write_text("\n".join(lines), encoding="utf-8")
 

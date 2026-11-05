@@ -1,26 +1,26 @@
-# 在线逆元占位文件
+# Online inverse placeholder
 
-头文件：[`lib/math/modular/online_inverse.hpp`](../../../lib/math/modular/online_inverse.hpp)。
+Header: [`lib/math/modular/online_inverse.hpp`](../../../lib/math/modular/online_inverse.hpp).
 
-此头文件目前只有 TODO 注释，尚未实现在线逆元算法。
+This header currently contains only a TODO comment; online modular inversion is not implemented.
 
-## 类型与使用条件
+## Types and requirements
 
-当前没有可调用的类型或函数。
+No callable types or functions are available.
 
-## 接口
+## Interface
 
-| 接口 | 行为 |
+| Interface | Behavior |
 | --- | --- |
 
-## 复杂度
+## Complexity
 
-无实现，不能据此声称已有在线求逆元能力。
+No implementation is present, so no complexity or online-inversion capability is provided.
 
-## 注意事项
+## Notes
 
-需要求逆时使用题目所需的模幂或扩展欧几里得算法；此文件没有相应接口。
+Use modular exponentiation or the extended Euclidean algorithm as appropriate for the problem; this file supplies neither interface.
 
-## 相关示例
+## Related examples
 
-现有 Library Checker 程序未直接包含此头文件；本页示例只验证所示用法。
+No existing Library Checker program directly includes this header.
